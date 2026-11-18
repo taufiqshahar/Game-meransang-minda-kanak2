@@ -5,22 +5,22 @@ Simpan sebagai `assets/audio/<kunci>.mp3` (64 kbps mono), kemudian tambah kunci 
 
 | Kunci | Teks (tag nada dalam kurungan siku) | Status |
 |---|---|---|
-| intro | [excited] Jom, kita tolong haiwan melintas jalan! | perlu dijana |
-| prac-go | [warmly] Lampu hijau! Tekan haiwan tu, biar dia melintas. | perlu dijana |
-| prac-nogo | [softly] Lampu merah… tunggu dulu. Jangan tekan, ya. | perlu dijana |
-| start | [happy] Pandai! Sekarang kita main betul-betul. | perlu dijana |
+| intro | [excited] Jom, kita tolong haiwan melintas jalan! | ✅ ada |
+| prac-go | [warmly] Lampu hijau! Tekan haiwan tu, biar dia melintas. | ✅ ada |
+| prac-nogo | [softly] Lampu merah… tunggu dulu. Jangan tekan, ya. | ✅ ada |
+| start | [happy] Pandai! Sekarang kita main betul-betul. | ✅ ada |
 | go1 | [happy] Bagus! | ✅ ada |
-| go2 | [excited] Pandainya! | perlu dijana |
-| go3 | [excited] Yeay, dia dah sampai seberang! | perlu dijana |
-| go4 | [warmly] Terima kasih, adik! | perlu dijana |
-| wait1 | [warmly] Pandai adik tunggu! | perlu dijana |
-| wait2 | [happy] Bagus, adik sabar! | perlu dijana |
+| go2 | [excited] Pandainya! | ✅ ada |
+| go3 | [excited] Yeay, dia dah sampai seberang! | ✅ ada |
+| go4 | [warmly] Terima kasih, adik! | ✅ ada |
+| wait1 | [warmly] Pandai adik tunggu! | ✅ ada |
+| wait2 | [happy] Bagus, adik sabar! | ✅ ada |
 | wait3 | [happy] Kereta dah lalu. Selamat! | ✅ ada |
-| miss | [warmly] Lampu dah hijau. Tekan haiwan tu, ya! | perlu dijana |
-| oops | [softly] Alamak, lampu masih merah. Kita tunggu dulu, ya. | perlu dijana |
-| end | [excited] Syabas! Semua haiwan dah selamat melintas. | perlu dijana |
-| breath-in | [softly] Tarik nafas dalam-dalam… | perlu dijana |
-| breath-out | [softly] Hembus perlahan-lahan… | perlu dijana |
+| miss | [warmly] Lampu dah hijau. Tekan haiwan tu, ya! | ✅ ada |
+| oops | [softly] Alamak, lampu masih merah. Kita tunggu dulu, ya. | ✅ ada |
+| end | [excited] Syabas! Semua haiwan dah selamat melintas. | ✅ ada |
+| breath-in | [softly] Tarik nafas dalam-dalam… | ✅ ada |
+| breath-out | [softly] Hembus perlahan-lahan… | ✅ ada |
 
 ## Panduan bahasa (Melayu Malaysia, bukan Indonesia)
 - Skrin: **tekan** (bukan "ketik"/"ketuk"/"klik").

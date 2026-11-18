@@ -484,7 +484,11 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     'breath-out': 'Hembus perlahan-lahan…',
   };
   // Baris yang rakaman suaranya sepadan dengan teks semasa. Tambah kunci di sini selepas rakaman baharu dijana.
-  const RECORDED = new Set(['go1', 'wait3']);
+  const RECORDED = new Set([
+    'intro', 'prac-go', 'prac-nogo', 'start',
+    'go1', 'go2', 'go3', 'go4', 'wait1', 'wait2', 'wait3',
+    'miss', 'oops', 'end', 'breath-in', 'breath-out',
+  ]);
   const PRAISE_GO = ['go1', 'go2', 'go3', 'go4'];
   const PRAISE_WAIT = ['wait1', 'wait2', 'wait3'];
 

@@ -33,4 +33,4 @@ Versi 3D (Three.js) telah dibina untuk perbandingan, kemudian **ditolak**: kekal
 - Kancil kini ada belang putih di leher (ciri sebenar).
 - Bahasa disemak ke bahasa Melayu Malaysia harian: "tekan" (bukan "ketik"), "adik" (bukan "kamu"), "Alamak", "Syabas".
 - Sandaran suara peranti hanya `ms-*` (Bahasa Melayu). Sandaran Bahasa Indonesia dibuang.
-- Rakaman suara: hanya baris yang ayatnya tak berubah (`RECORDED` dalam `game.html`). Baris lain perlu dijana semula dengan skrip baharu.
+- Rakaman suara: semua 16 baris dirakam (ElevenLabs Hafiz, `eleven_v4`, 64 kbps mono) dan disenaraikan dalam `RECORDED` dalam `game.html`. Jika teks baris diubah, buang kuncinya dari `RECORDED` sehingga dirakam semula.
