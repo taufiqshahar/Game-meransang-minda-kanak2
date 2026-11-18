@@ -23,3 +23,10 @@ Rakaman dimuat dengan `fetch` + Web Audio semasa anak tekan Main. Jika gagal (co
 
 ## Sementara (akan diganti)
 - Seni haiwan: SVG dilukis dalam kod → akan diganti aset vektor setelah gaya dipilih
+
+## Versi 3D (perbandingan)
+- `game-3d.html`: logik, suara & zon ibu bapa sama seperti 2D; paparan guna **Three.js r128** (cdnjs) dalam gaya low-poly.
+- 6 haiwan dibina dari bentuk asas dalam kod (tiada fail model), dengan animasi jalan/lompat, bayang, lampu bercahaya dan kereta 3D.
+- Gelung render hanya berjalan semasa skrin permainan (jimat bateri). `pixelRatio` dihadkan ke 2.
+- Jika WebGL tiada, laman utama papar mesej dan butang Main dimatikan.
+- `assets/tangkapan-3d.png`: tangkapan skrin ujian.
