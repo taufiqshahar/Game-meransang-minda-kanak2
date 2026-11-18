@@ -449,8 +449,22 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   const MAX_ROUNDS_PER_SESSION = 3;
   const LEVEL_UP_AT = 0.85;
   const LEVEL_DOWN_AT = 0.6;
-  const PRAISE_GO = ['Bagus!', 'Pandai!', 'Hebat, dia dah melintas!', 'Terima kasih, kawan!'];
-  const PRAISE_WAIT = ['Pandai tunggu!', 'Bagus, kamu sabar!', 'Kereta dah lalu. Selamat!'];
+  // Setiap baris: kunci fail suara (assets/audio/<key>.mp3) + kapsyen.
+  const LINES = {
+    intro: 'Jom bantu haiwan melintas jalan!',
+    'prac-go': 'Lampu hijau. Ketik haiwan supaya ia melintas!',
+    'prac-nogo': 'Lampu merah. Tunggu… jangan ketik!',
+    start: 'Bagus! Sekarang kita main betul-betul.',
+    go1: 'Bagus!', go2: 'Pandai!', go3: 'Hebat, dia dah melintas!', go4: 'Terima kasih, kawan!',
+    wait1: 'Pandai tunggu!', wait2: 'Bagus, kamu sabar!', wait3: 'Kereta dah lalu. Selamat!',
+    miss: 'Lampu hijau. Ketik untuk jalan!',
+    oops: 'Alamak, lampu merah. Kita tunggu dulu, ya.',
+    end: 'Hebat! Semua haiwan selamat melintas.',
+    'breath-in': 'Tarik nafas…',
+    'breath-out': 'Hembus perlahan…',
+  };
+  const PRAISE_GO = ['go1', 'go2', 'go3', 'go4'];
+  const PRAISE_WAIT = ['wait1', 'wait2', 'wait3'];
 
   /* ================= ART (SVG) ================= */
   const eyes = (y, l, r, ring) => ring
@@ -588,11 +602,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   /* ================= AUDIO ================= */
   let ac = null, master = null, muted = false;
   function initAudio() {
-    if (ac) { if (ac.state === 'suspended') ac.resume().catch(() => {}); return; }
+    if (ac) { if (ac.state === 'suspended') ac.resume().catch(() => {}); loadClips(); return; }
     try {
       ac = new (window.AudioContext || window.webkitAudioContext)();
       master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination);
     } catch (e) { ac = null; }
+    loadClips();
   }
   function tone(f, dur, { type = 'triangle', gain = .18, when = 0 } = {}) {
     if (!ac || muted) return;
@@ -619,23 +634,55 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     },
   };
 
-  /* ================= SPEECH (placeholder until recorded BM voice) ================= */
+  /* ================= VOICE ================= */
+  // Utama: rakaman suara BM (ElevenLabs, "Hafiz"). Sandaran: suara pelayar ms/id jika rakaman gagal dimuat.
+  const clips = {};
+  let clipsLoading = null, voiceSrc = null;
+  function loadClips() {
+    if (clipsLoading || !ac) return clipsLoading;
+    clipsLoading = Promise.all(Object.keys(LINES).map(async (k) => {
+      try {
+        const res = await fetch(`assets/audio/${k}.mp3`);
+        if (!res.ok) return;
+        clips[k] = await ac.decodeAudioData(await res.arrayBuffer());
+      } catch (e) { /* missing clip: fallback below */ }
+    }));
+    return clipsLoading;
+  }
   let voice = null;
   function pickVoice() {
     try { const vs = window.speechSynthesis.getVoices(); voice = vs.find((v) => /^ms/i.test(v.lang)) || vs.find((v) => /^id/i.test(v.lang)) || null; }
     catch (e) { voice = null; }
   }
   if ('speechSynthesis' in window) { pickVoice(); try { window.speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { /* older browsers */ } }
-  function stopSpeech() { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) { /* ignore */ } }
-  function say(text) {
+  function stopSpeech() {
+    if (voiceSrc) { try { voiceSrc.stop(); } catch (e) { /* already stopped */ } voiceSrc = null; }
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+  }
+  const hasRecordedVoice = () => Object.keys(clips).length > 0;
+  // Papar kapsyen dan mainkan baris. Pulangkan anggaran tempoh (ms) supaya urutan boleh tunggu suara habis.
+  function say(key) {
+    const text = LINES[key] || '';
     $('#caption').textContent = text;
-    if (muted || !data.settings.voice || !voice) return;
-    try {
-      stopSpeech();
-      const u = new SpeechSynthesisUtterance(text);
-      u.voice = voice; u.lang = voice.lang; u.rate = .95; u.pitch = 1.1;
-      window.speechSynthesis.speak(u);
-    } catch (e) { /* captions still shown */ }
+    const estimate = 600 + text.length * 55;
+    if (muted || !data.settings.voice) return estimate;
+    stopSpeech();
+    const buf = clips[key];
+    if (buf && ac && master) {
+      try {
+        const src = ac.createBufferSource(); src.buffer = buf; src.connect(master); src.start();
+        voiceSrc = src;
+        return Math.round(buf.duration * 1000);
+      } catch (e) { /* fall through */ }
+    }
+    if (voice) {
+      try {
+        const u = new SpeechSynthesisUtterance(text);
+        u.voice = voice; u.lang = voice.lang; u.rate = .95; u.pitch = 1.1;
+        window.speechSynthesis.speak(u);
+      } catch (e) { /* captions still shown */ }
+    }
+    return estimate;
   }
 
   /* ================= HELPERS ================= */
@@ -725,7 +772,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     resetAnimal(nextAnimal());
     setLight('off');
     await enter(); alive(id);
-    if (practice) say(tr.go ? 'Lampu hijau. Ketik haiwan supaya ia melintas!' : 'Lampu merah. Tunggu, jangan ketik!');
+    if (practice) say(tr.go ? 'prac-go' : 'prac-nogo');
     await sleep(300); alive(id);
     setLight(tr.go ? 'green' : 'red'); sfx.light();
     const W = practice ? (tr.go ? 8000 : 3200) : LEVEL_MS[data.level];
@@ -740,12 +787,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     if (tr.go) {
       if (r.tapped) { sfx.good(); say(pick(PRAISE_GO)); await cross(); }
       else {
-        say('Lampu hijau. Ketik untuk jalan!'); showHand(true);
+        say('miss'); showHand(true);
         await waitTap(3000); alive(id);
         showHand(false); sfx.pop(); await cross();
       }
     } else {
-      if (r.tapped) { sfx.soft(); say('Oops, lampu merah. Kita tunggu dulu ya.'); await shake(); }
+      if (r.tapped) { sfx.soft(); say('oops'); await shake(); }
       if (carP) await carP;
       alive(id);
       if (!r.tapped) { sfx.good(); say(pick(PRAISE_WAIT)); }
@@ -779,12 +826,11 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     roundStart = performance.now();
     try {
       if (sessionRounds === 0) {
-        say('Jom bantu haiwan melintas jalan!');
-        await sleep(1700); alive(id);
+        await Promise.race([loadClips(), sleep(4000)]); alive(id);
+        await sleep(Math.max(1700, say('intro') + 200)); alive(id);
         await runTrial({ go: true }, id, true);
         await runTrial({ go: false }, id, true);
-        say('Bagus! Sekarang kita main betul-betul.');
-        await sleep(1600); alive(id);
+        await sleep(Math.max(1600, say('start') + 200)); alive(id);
       }
       const recs = [];
       const trials = makeTrials();
@@ -822,7 +868,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const canPlay = sessionRounds < MAX_ROUNDS_PER_SESSION && timeLeft() > 0;
     $('#btn-again').hidden = !canPlay;
     show('result');
-    say('Hebat! Semua haiwan selamat melintas.');
+    say('end');
   }
 
   async function breathe() {
@@ -832,10 +878,10 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     try {
       for (let i = 0; i < 3; i++) {
-        txt.textContent = 'Tarik nafas…'; say('Tarik nafas');
+        txt.textContent = LINES['breath-in']; say('breath-in');
         if (!reduce) anim(b, [{ transform: 'scale(1)' }, { transform: 'scale(1.9)' }], { duration: 4000 });
         await sleep(4000); alive(id);
-        txt.textContent = 'Hembus perlahan…'; say('Hembus perlahan');
+        txt.textContent = LINES['breath-out']; say('breath-out');
         if (!reduce) anim(b, [{ transform: 'scale(1.9)' }, { transform: 'scale(1)' }], { duration: 4000 });
         await sleep(4000); alive(id);
       }
@@ -911,9 +957,9 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     $('#set-age').value = String(data.settings.age);
     $('#set-limit').value = String(data.settings.dailyMin);
     $('#set-voice').checked = !!data.settings.voice;
-    $('#voice-note').textContent = voice
-      ? `Suara sementara: ${voice.name}. Versi seterusnya guna rakaman suara BM.`
-      : 'Peranti ini tiada suara Bahasa Melayu. Arahan dipaparkan sebagai teks. Versi seterusnya guna rakaman suara BM.';
+    $('#voice-note').textContent = hasRecordedVoice()
+      ? 'Suara: rakaman Bahasa Melayu.'
+      : (voice ? `Rakaman suara belum dimuat. Guna suara peranti: ${voice.name}.` : 'Rakaman suara dimuat bila anak mula bermain. Arahan juga dipaparkan sebagai teks.');
     const usedMin = Math.floor(data.today.ms / 60000), totalMin = data.settings.dailyMin + data.today.extraMin;
     $('#today-info').textContent = `Hari ini: ${usedMin} daripada ${totalMin} minit digunakan.`;
     $('#reset-confirm').hidden = true; $('#btn-reset').hidden = false;

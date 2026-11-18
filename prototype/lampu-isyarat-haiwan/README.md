@@ -15,7 +15,11 @@ Bantu haiwan hutan Malaysia (kancil, harimau Malaya, orang utan, gajah, tapir, e
 
 ## Fail
 - `game.html`: sumber artifact (tanpa `<!doctype>`/`<html>`; skeleton ditambah semasa diterbitkan)
+- `assets/audio/*.mp3`: 16 baris suara BM (ElevenLabs `eleven_v4`, suara "Hafiz – Energetic Cartoon Character"), dimampat 64 kbps mono. Kunci fail = kunci dalam `LINES` di `game.html`.
+- `assets/kancil-pilihan/`: 4 pilihan gaya kancil (Recraft v4.1 Pro Vector, SVG) untuk dipilih
+
+## Suara
+Rakaman dimuat dengan `fetch` + Web Audio semasa anak tekan Main. Jika gagal (contoh dibuka sebagai `file://`), sandaran ke suara pelayar `ms-*`/`id-*`, dan kapsyen sentiasa dipaparkan.
 
 ## Sementara (akan diganti)
-- Suara: Web Speech API (`ms-*`/`id-*` jika ada) → akan diganti rakaman suara BM (ElevenLabs)
-- Seni: SVG dilukis dalam kod → akan diganti aset rasmi
+- Seni haiwan: SVG dilukis dalam kod → akan diganti aset vektor setelah gaya dipilih
