@@ -15,7 +15,7 @@ Bantu haiwan hutan Malaysia (kancil, harimau Malaya, orang utan, gajah, tapir, e
 
 ## Fail
 - `game.html`: sumber artifact (tanpa `<!doctype>`/`<html>`; skeleton ditambah semasa diterbitkan)
-- `assets/audio/*.mp3`: 16 baris suara BM (ElevenLabs `eleven_v4`, suara "Hafiz – Energetic Cartoon Character"), dimampat 64 kbps mono. Kunci fail = kunci dalam `LINES` di `game.html`.
+- `assets/audio/*.mp3`: rakaman suara BM (ElevenLabs `eleven_v4`, suara "Hafiz – Energetic Cartoon Character"), dimampat 64 kbps mono. Kunci fail = kunci dalam `LINES` di `game.html`.
 - `assets/kancil-pilihan/`: 4 pilihan gaya kancil (Recraft v4.1 Pro Vector, SVG) untuk dipilih
 
 ## Suara
@@ -24,9 +24,13 @@ Rakaman dimuat dengan `fetch` + Web Audio semasa anak tekan Main. Jika gagal (co
 ## Sementara (akan diganti)
 - Seni haiwan: SVG dilukis dalam kod → akan diganti aset vektor setelah gaya dipilih
 
-## Versi 3D (perbandingan)
-- `game-3d.html`: logik, suara & zon ibu bapa sama seperti 2D; paparan guna **Three.js r128** (cdnjs) dalam gaya low-poly.
-- 6 haiwan dibina dari bentuk asas dalam kod (tiada fail model), dengan animasi jalan/lompat, bayang, lampu bercahaya dan kereta 3D.
-- Gelung render hanya berjalan semasa skrin permainan (jimat bateri). `pixelRatio` dihadkan ke 2.
-- Jika WebGL tiada, laman utama papar mesej dan butang Main dimatikan.
-- `assets/tangkapan-3d.png`: tangkapan skrin ujian.
+## Keputusan: 2D sahaja
+Versi 3D (Three.js) telah dibina untuk perbandingan, kemudian **ditolak**: kekal 2D vektor (lebih ringan, cepat dibina, tajam). Kod 3D masih ada dalam sejarah git (commit `40b5c04`).
+
+## v0.3: grafik & bahasa
+- Semua haiwan, latar, kereta & lampu isyarat dilukis semula sebagai SVG vektor (tajam di semua skrin): garis luar lembut, gradien, mata berkilat, bayang.
+- Latar hutan Malaysia: pokok tualang, kanopi berlapis, kerb hitam-putih, garisan tepi kuning, papan tanda kuning "lintasan gajah".
+- Kancil kini ada belang putih di leher (ciri sebenar).
+- Bahasa disemak ke bahasa Melayu Malaysia harian: "tekan" (bukan "ketik"), "adik" (bukan "kamu"), "Alamak", "Syabas".
+- Sandaran suara peranti hanya `ms-*` (Bahasa Melayu). Sandaran Bahasa Indonesia dibuang.
+- Rakaman suara: hanya baris yang ayatnya tak berubah (`RECORDED` dalam `game.html`). Baris lain perlu dijana semula dengan skrip baharu.

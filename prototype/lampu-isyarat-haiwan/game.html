@@ -127,17 +127,17 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
   z-index: 6; transition: opacity .2s;
 }
 .caption:empty { opacity: 0; }
-.light { right: 3%; top: 27%; width: 15%; z-index: 3; pointer-events: none; }
+.light { right: 2.5%; top: 25%; width: 15.5%; z-index: 3; pointer-events: none; }
 .light svg { width: 100%; height: auto; display: block; }
-.light .lamp { transition: fill .15s; }
-.light .lamp-r { fill: var(--merah-malap); }
-.light .lamp-g { fill: var(--hijau-malap); }
-.light .paw { opacity: .18; transition: opacity .15s; }
-.light.red .lamp-r { fill: var(--merah); filter: drop-shadow(0 0 6px var(--merah)); }
-.light.red .paw-r { opacity: .95; }
-.light.green .lamp-g { fill: var(--hijau); filter: drop-shadow(0 0 6px var(--hijau)); }
-.light.green .paw-g { opacity: .95; }
-.car { left: -40%; top: 44.5%; width: 34%; z-index: 2; pointer-events: none; }
+.light .lamp-r { fill: #4A2426; }
+.light .lamp-g { fill: #193A2B; }
+.light .paw { opacity: .14; transition: opacity .15s; }
+.light .glow { opacity: 0; transition: opacity .15s; }
+.light.red .lamp-r { fill: url(#ag-lamp-r); }
+.light.red .paw-r, .light.red .glow-r { opacity: 1; }
+.light.green .lamp-g { fill: url(#ag-lamp-g); }
+.light.green .paw-g, .light.green .glow-g { opacity: 1; }
+.car { left: -40%; top: 43.5%; width: 36%; z-index: 2; pointer-events: none; }
 .car svg { width: 100%; height: auto; display: block; }
 .animal { left: -35%; top: 64%; width: 30%; z-index: 4; transform-origin: 50% 100%; pointer-events: none; }
 .animal .bob { width: 100%; }
@@ -254,7 +254,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     </div>
     <div class="hero">
       <h1>Lampu Isyarat <span class="lamp-dot" style="background:var(--merah)"></span><span class="lamp-dot" style="background:var(--hijau)"></span> Haiwan</h1>
-      <p>Bantu haiwan hutan Malaysia melintas jalan. Hijau, ketik. Merah, tunggu.</p>
+      <p>Tolong haiwan hutan Malaysia melintas jalan. Lampu hijau, tekan. Lampu merah, tunggu.</p>
     </div>
     <div class="parade" id="parade" aria-label="Haiwan dalam permainan"></div>
     <button class="play" id="btn-play" type="button" aria-label="Main">
@@ -266,7 +266,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <span>UMUR ANAK</span>
       <div id="age-chips" style="display:flex;gap:8px"></div>
     </div>
-    <p class="home-note">Prototaip v0.1 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
+    <p class="home-note">Prototaip v0.3 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
   </section>
 
   <!-- GAME -->
@@ -281,46 +281,66 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       </button>
     </div>
     <div class="stage-wrap" id="stage-wrap">
-      <div class="stage" id="stage" role="application" aria-label="Jalan hutan. Ketik bila lampu hijau, tunggu bila lampu merah.">
+      <div class="stage" id="stage" role="application" aria-label="Jalan hutan. Tekan bila lampu hijau, tunggu bila lampu merah.">
         <svg class="bg" viewBox="0 0 200 300" preserveAspectRatio="none" aria-hidden="true">
           <defs>
-            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#BFE6F2"/><stop offset="1" stop-color="#E6F5DF"/>
-            </linearGradient>
+            <linearGradient id="bg-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FD8EE"/><stop offset=".7" stop-color="#D2EFE9"/><stop offset="1" stop-color="#E3F5E4"/></linearGradient>
+            <radialGradient id="bg-sun"><stop offset="0" stop-color="#FFF6C8"/><stop offset=".45" stop-color="#FFE48A"/><stop offset="1" stop-color="#FFE48A" stop-opacity="0"/></radialGradient>
+            <linearGradient id="bg-road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A4350"/><stop offset="1" stop-color="#454F5D"/></linearGradient>
+            <linearGradient id="bg-grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7CC879"/><stop offset="1" stop-color="#5EAE62"/></linearGradient>
+            <linearGradient id="bg-haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7DB996"/><stop offset="1" stop-color="#5E9F7A"/></linearGradient>
+            <pattern id="bg-kerb" width="16" height="7" patternUnits="userSpaceOnUse"><rect width="8" height="7" fill="#F4F2EA"/><rect x="8" width="8" height="7" fill="#22262B"/></pattern>
           </defs>
-          <rect width="200" height="80" fill="url(#sky)"/>
-          <circle cx="158" cy="22" r="11" fill="#FFE59A"/>
-          <path d="M0 62 q30 -26 60 -6 q30 -24 70 -2 q40 -22 70 4 V114 H0z" fill="#5FA877"/>
-          <g fill="#6B4A2E">
-            <rect x="18" y="78" width="5" height="34"/><rect x="62" y="74" width="6" height="38"/><rect x="118" y="80" width="5" height="32"/><rect x="170" y="76" width="6" height="36"/>
+          <rect width="200" height="115" fill="url(#bg-sky)"/>
+          <circle cx="160" cy="24" r="22" fill="url(#bg-sun)"/>
+          <g fill="#FFFFFF" opacity=".85">
+            <path d="M22 30 a7 7 0 0 1 12 -4 a8 8 0 0 1 14 3 a5 5 0 0 1 1 10 h-27 a5 5 0 0 1 0 -9z"/>
+            <path d="M104 18 a5 5 0 0 1 9 -3 a6 6 0 0 1 11 2 a4 4 0 0 1 1 8 h-21 a4 4 0 0 1 0 -7z" opacity=".8"/>
           </g>
-          <g fill="#2F7A4F">
-            <circle cx="20" cy="74" r="18"/><circle cx="44" cy="82" r="14"/><circle cx="66" cy="68" r="20"/><circle cx="94" cy="84" r="14"/>
-            <circle cx="120" cy="74" r="17"/><circle cx="146" cy="84" r="14"/><circle cx="174" cy="70" r="20"/><circle cx="198" cy="86" r="13"/>
+          <path d="M0 64 C20 50 34 52 50 60 C66 46 86 44 104 56 C122 44 146 44 162 56 C176 50 190 52 200 58 V110 H0Z" fill="#A9D5BC" opacity=".9"/>
+          <path d="M0 76 C18 64 36 66 54 74 C74 62 96 62 114 72 C134 62 160 62 178 72 C186 68 194 68 200 70 V110 H0Z" fill="url(#bg-haze)"/>
+          <g>
+            <rect x="27" y="40" width="5" height="70" fill="#6B4A2E"/>
+            <ellipse cx="29.5" cy="40" rx="22" ry="10" fill="#2E7A4C"/><ellipse cx="24" cy="36" rx="12" ry="6" fill="#3E9660"/>
+            <ellipse cx="38" cy="45" rx="13" ry="6" fill="#2A6E45"/>
           </g>
-          <g fill="#3F9159">
-            <circle cx="8" cy="100" r="12"/><circle cx="34" cy="104" r="10"/><circle cx="58" cy="100" r="11"/><circle cx="84" cy="105" r="9"/><circle cx="108" cy="101" r="11"/>
-            <circle cx="134" cy="105" r="9"/><circle cx="160" cy="100" r="12"/><circle cx="186" cy="104" r="10"/>
+          <g>
+            <g fill="#2C744A"><circle cx="8" cy="88" r="15"/><circle cx="52" cy="84" r="16"/><circle cx="78" cy="90" r="13"/><circle cx="124" cy="86" r="15"/><circle cx="150" cy="82" r="17"/><circle cx="188" cy="88" r="15"/></g>
+            <g fill="#3B8F5B"><circle cx="5" cy="83" r="9"/><circle cx="48" cy="78" r="10"/><circle cx="75" cy="85" r="8"/><circle cx="120" cy="80" r="9"/><circle cx="145" cy="76" r="10"/><circle cx="184" cy="83" r="9"/></g>
+            <g fill="#2A6A44"><circle cx="30" cy="98" r="13"/><circle cx="64" cy="100" r="11"/><circle cx="100" cy="96" r="14"/><circle cx="136" cy="99" r="12"/><circle cx="170" cy="98" r="13"/></g>
+            <g fill="#47A066"><circle cx="26" cy="94" r="7"/><circle cx="96" cy="91" r="8"/><circle cx="166" cy="93" r="7"/></g>
+            <path d="M88 108 q2 -8 12 -8 q10 0 12 8z" fill="#C9A86A" opacity=".9"/>
           </g>
-          <rect y="107" width="200" height="7" fill="#CDB98E"/>
-          <rect y="114" width="200" height="72" fill="#3B4552"/>
-          <g fill="#F2F2EA" opacity=".9">
-            <rect x="6" y="149" width="14" height="2.4" rx="1"/><rect x="30" y="149" width="14" height="2.4" rx="1"/><rect x="54" y="149" width="10" height="2.4" rx="1"/>
-            <rect x="136" y="149" width="10" height="2.4" rx="1"/><rect x="156" y="149" width="14" height="2.4" rx="1"/><rect x="180" y="149" width="14" height="2.4" rx="1"/>
+          <rect y="107" width="200" height="7" fill="url(#bg-kerb)"/>
+          <rect y="113.5" width="200" height="1" fill="#000" opacity=".25"/>
+          <rect y="114" width="200" height="72" fill="url(#bg-road)"/>
+          <rect y="117" width="200" height="1.6" fill="#F5C842"/><rect y="182" width="200" height="1.6" fill="#F5C842"/>
+          <g fill="#F2F2EA" opacity=".92">
+            <rect x="4" y="149" width="14" height="2.4" rx="1"/><rect x="26" y="149" width="14" height="2.4" rx="1"/><rect x="48" y="149" width="12" height="2.4" rx="1"/>
+            <rect x="140" y="149" width="12" height="2.4" rx="1"/><rect x="160" y="149" width="14" height="2.4" rx="1"/><rect x="182" y="149" width="14" height="2.4" rx="1"/>
           </g>
-          <g fill="#F2F2EA">
-            <rect x="70" y="118" width="6" height="64" rx="1"/><rect x="80" y="118" width="6" height="64" rx="1"/><rect x="90" y="118" width="6" height="64" rx="1"/>
-            <rect x="100" y="118" width="6" height="64" rx="1"/><rect x="110" y="118" width="6" height="64" rx="1"/><rect x="120" y="118" width="6" height="64" rx="1"/>
+          <g fill="#F7F7F0">
+            <rect x="69" y="121" width="6.5" height="58" rx="1.2"/><rect x="79.5" y="121" width="6.5" height="58" rx="1.2"/><rect x="90" y="121" width="6.5" height="58" rx="1.2"/>
+            <rect x="100.5" y="121" width="6.5" height="58" rx="1.2"/><rect x="111" y="121" width="6.5" height="58" rx="1.2"/><rect x="121.5" y="121" width="6.5" height="58" rx="1.2"/>
           </g>
-          <rect y="186" width="200" height="7" fill="#D9C59A"/>
-          <rect y="193" width="200" height="107" fill="#79C27A"/>
-          <g fill="#8BD08B">
-            <ellipse cx="30" cy="232" rx="26" ry="8"/><ellipse cx="170" cy="250" rx="30" ry="9"/><ellipse cx="96" cy="286" rx="40" ry="10"/>
+          <rect y="186" width="200" height="7" fill="url(#bg-kerb)"/>
+          <rect y="192.5" width="200" height="1.2" fill="#000" opacity=".18"/>
+          <rect y="193.5" width="200" height="106.5" fill="url(#bg-grass)"/>
+          <g fill="#8ED48A" opacity=".8"><ellipse cx="30" cy="232" rx="26" ry="7"/><ellipse cx="172" cy="252" rx="30" ry="8"/><ellipse cx="98" cy="288" rx="44" ry="9"/></g>
+          <g fill="#4E9B57">
+            <path d="M0 300 C4 280 12 268 26 262 C18 274 14 286 14 300Z"/><path d="M8 300 C14 286 24 278 38 276 C28 284 22 292 22 300Z" fill="#5BAA60"/>
+            <path d="M200 300 C196 280 188 268 174 262 C182 274 186 286 186 300Z"/><path d="M192 300 C186 286 176 278 162 276 C172 284 178 292 178 300Z" fill="#5BAA60"/>
           </g>
-          <g fill="none" stroke="#3F9159" stroke-width="2.4" stroke-linecap="round">
-            <path d="M14 296 q2 -20 14 -30"/><path d="M14 296 q-6 -16 -12 -22"/><path d="M186 298 q-2 -22 -12 -32"/><path d="M186 298 q6 -14 12 -18"/>
+          <g><circle cx="46" cy="262" r="3" fill="#F5B82E"/><circle cx="46" cy="262" r="1.2" fill="#FFF3C4"/>
+            <circle cx="150" cy="216" r="3" fill="#F06A9A"/><circle cx="150" cy="216" r="1.2" fill="#FFE1EC"/>
+            <circle cx="164" cy="282" r="3" fill="#F5B82E"/><circle cx="164" cy="282" r="1.2" fill="#FFF3C4"/>
+            <circle cx="24" cy="212" r="2.6" fill="#F06A9A"/><circle cx="24" cy="212" r="1" fill="#FFE1EC"/>
+            <circle cx="120" cy="296" r="2.6" fill="#FFFFFF"/><circle cx="120" cy="296" r="1" fill="#F5B82E"/></g>
+          <g transform="translate(16 196)">
+            <rect x="9" y="22" width="3" height="40" rx="1.2" fill="#8C96A1"/>
+            <rect x="0" y="1" width="21" height="21" rx="3" transform="rotate(45 10.5 11.5)" fill="#F7C62F" stroke="#1C1C1C" stroke-width="1.6"/>
+            <g fill="#1C1C1C"><ellipse cx="9.6" cy="12.6" rx="4.6" ry="3.1"/><circle cx="14.4" cy="10.6" r="2.7"/><path d="M16.4 11.2 q1.6 2.2 .6 4.6" stroke="#1C1C1C" stroke-width="1.3" fill="none" stroke-linecap="round"/><ellipse cx="13.2" cy="10.8" rx="1.5" ry="2" fill="#F7C62F" opacity=".55"/><rect x="5.9" y="14" width="1.6" height="3.4" rx=".5"/><rect x="8.4" y="14" width="1.6" height="3.4" rx=".5"/><rect x="10.9" y="14" width="1.6" height="3.4" rx=".5"/><rect x="12.9" y="13.6" width="1.6" height="3.8" rx=".5"/><path d="M5.2 11.6 q-1.2 1 -.8 2.6" stroke="#1C1C1C" stroke-width=".7" fill="none"/></g>
           </g>
-          <g><circle cx="44" cy="262" r="3" fill="#F5B82E"/><circle cx="150" cy="214" r="3" fill="#E86A9A"/><circle cx="162" cy="280" r="3" fill="#F5B82E"/><circle cx="24" cy="210" r="2.6" fill="#E86A9A"/></g>
         </svg>
         <div class="car" id="car" aria-hidden="true"></div>
         <div class="light off" id="light" aria-hidden="true"></div>
@@ -334,7 +354,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   <!-- RESULT -->
   <section id="scr-result" class="screen" aria-label="Keputusan" hidden>
     <div class="center-col">
-      <h2>Hebat!</h2>
+      <h2>Syabas!</h2>
       <div class="crossed" id="crossed" aria-hidden="true"></div>
       <p id="result-text"></p>
       <div class="btn-row">
@@ -362,8 +382,8 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
         <ol>
           <li>Ibu atau ayah sebut <b>"HIJAU!"</b>: anak berjalan atau melompat macam kancil.</li>
           <li>Sebut <b>"MERAH!"</b>: anak berhenti dan jadi patung.</li>
-          <li>Tukar laju dan perlahan. Kadang-kadang sebut "Merah" dua kali berturut-turut.</li>
-          <li>Bergilir: biar anak pula jadi lampu isyarat.</li>
+          <li>Sebut cepat dan perlahan bersilih ganti. Sesekali sebut "Merah" dua kali berturut-turut.</li>
+          <li>Bergilir-gilir: biar anak pula jadi lampu isyarat.</li>
         </ol>
         <p class="why">Kenapa? Kanak-kanak bawah 6 tahun belajar lebih baik bila kemahiran dari skrin diulang di dunia sebenar. Permainan ini melatih kawalan diri, iaitu kemahiran menahan diri sebelum bertindak.</p>
       </div>
@@ -400,7 +420,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     <div class="stats" id="stats"></div>
     <div class="explain">
       <b>Apa yang diukur?</b>
-      <span><b>Ketik tepat</b>: anak ketik bila lampu hijau (perhatian). <b>Sabar</b>: anak tidak ketik bila lampu merah (kawalan diri). Permainan ini berasaskan tugasan <i>Go/No-Go</i> yang digunakan penyelidik untuk mengukur kawalan diri kanak-kanak.</span>
+      <span><b>Tekan tepat</b>: anak tekan bila lampu hijau (tumpuan). <b>Sabar</b>: anak tak tekan bila lampu merah (kawalan diri). Permainan ini berasaskan tugasan <i>Go/No-Go</i> yang digunakan penyelidik untuk mengukur kawalan diri kanak-kanak.</span>
       <span>Tahap kelajuan naik sendiri bila anak betul 85% atau lebih, dan turun bila bawah 60%. Ini bukan alat diagnosis.</span>
     </div>
     <div>
@@ -451,101 +471,159 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   const LEVEL_DOWN_AT = 0.6;
   // Setiap baris: kunci fail suara (assets/audio/<key>.mp3) + kapsyen.
   const LINES = {
-    intro: 'Jom bantu haiwan melintas jalan!',
-    'prac-go': 'Lampu hijau. Ketik haiwan supaya ia melintas!',
-    'prac-nogo': 'Lampu merah. Tunggu… jangan ketik!',
-    start: 'Bagus! Sekarang kita main betul-betul.',
-    go1: 'Bagus!', go2: 'Pandai!', go3: 'Hebat, dia dah melintas!', go4: 'Terima kasih, kawan!',
-    wait1: 'Pandai tunggu!', wait2: 'Bagus, kamu sabar!', wait3: 'Kereta dah lalu. Selamat!',
-    miss: 'Lampu hijau. Ketik untuk jalan!',
-    oops: 'Alamak, lampu merah. Kita tunggu dulu, ya.',
-    end: 'Hebat! Semua haiwan selamat melintas.',
-    'breath-in': 'Tarik nafas…',
-    'breath-out': 'Hembus perlahan…',
+    intro: 'Jom, kita tolong haiwan melintas jalan!',
+    'prac-go': 'Lampu hijau! Tekan haiwan tu, biar dia melintas.',
+    'prac-nogo': 'Lampu merah… tunggu dulu. Jangan tekan, ya.',
+    start: 'Pandai! Sekarang kita main betul-betul.',
+    go1: 'Bagus!', go2: 'Pandainya!', go3: 'Yeay, dia dah sampai seberang!', go4: 'Terima kasih, adik!',
+    wait1: 'Pandai adik tunggu!', wait2: 'Bagus, adik sabar!', wait3: 'Kereta dah lalu. Selamat!',
+    miss: 'Lampu dah hijau. Tekan haiwan tu, ya!',
+    oops: 'Alamak, lampu masih merah. Kita tunggu dulu, ya.',
+    end: 'Syabas! Semua haiwan dah selamat melintas.',
+    'breath-in': 'Tarik nafas dalam-dalam…',
+    'breath-out': 'Hembus perlahan-lahan…',
   };
+  // Baris yang rakaman suaranya sepadan dengan teks semasa. Tambah kunci di sini selepas rakaman baharu dijana.
+  const RECORDED = new Set(['go1', 'wait3']);
   const PRAISE_GO = ['go1', 'go2', 'go3', 'go4'];
   const PRAISE_WAIT = ['wait1', 'wait2', 'wait3'];
 
-  /* ================= ART (SVG) ================= */
-  const eyes = (y, l, r, ring) => ring
-    ? `<circle cx="${l}" cy="${y}" r="6.5" fill="#fff"/><circle cx="${r}" cy="${y}" r="6.5" fill="#fff"/><circle cx="${l + 1}" cy="${y + .5}" r="3.8" fill="#16130F"/><circle cx="${r + 1}" cy="${y + .5}" r="3.8" fill="#16130F"/><circle cx="${l + 2.2}" cy="${y - 1}" r="1.3" fill="#fff"/><circle cx="${r + 2.2}" cy="${y - 1}" r="1.3" fill="#fff"/>`
-    : `<circle cx="${l}" cy="${y}" r="5" fill="#16130F"/><circle cx="${r}" cy="${y}" r="5" fill="#16130F"/><circle cx="${l + 1.6}" cy="${y - 1.6}" r="1.7" fill="#fff"/><circle cx="${r + 1.6}" cy="${y - 1.6}" r="1.7" fill="#fff"/>`;
-  const cheeks = (y, l, r) => `<circle cx="${l}" cy="${y}" r="5.5" fill="#F28CA0" opacity=".45"/><circle cx="${r}" cy="${y}" r="5.5" fill="#F28CA0" opacity=".45"/>`;
-  const wrap = (inner, label) => `<svg viewBox="0 0 120 130" role="img" aria-label="${label}">${inner}</svg>`;
+  /* ================= ART (SVG vektor: tajam pada semua skrin) ================= */
+  // Gaya: pelekat kartun, garis luar lembut, bayang gradien, mata berkilat. Gradien dikongsi dalam #art-defs.
+  const eye = (cx, cy, r, iris = '#2A1C14') => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${iris}"/><circle cx="${cx}" cy="${cy}" r="${r * .55}" fill="#120C08"/><circle cx="${cx + r * .32}" cy="${cy - r * .36}" r="${r * .36}" fill="#fff"/><circle cx="${cx - r * .38}" cy="${cy + r * .36}" r="${r * .16}" fill="#fff" opacity=".85"/>`;
+  const ringEye = (cx, cy, r, iris) => `<circle cx="${cx}" cy="${cy}" r="${r * 1.45}" fill="#FFFDF7"/>${eye(cx, cy, r, iris)}`;
+  const cheeks = (y, l, r, s = 7) => `<ellipse cx="${l}" cy="${y}" rx="${s}" ry="${s * .7}" fill="url(#ag-cheek)"/><ellipse cx="${r}" cy="${y}" rx="${s}" ry="${s * .7}" fill="url(#ag-cheek)"/>`;
+  const shadow = (rx = 34) => `<ellipse cx="70" cy="143" rx="${rx}" ry="5.5" fill="#0B2A1C" opacity=".18"/>`;
+  // Anggota berbentuk garisan tebal dengan garis luar (dua lapis).
+  const limb = (d, w, fill, line) => `<path d="${d}" stroke="${line}" stroke-width="${w + 5}" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${fill}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+  const wrap = (inner, label) => `<svg viewBox="0 0 140 150" role="img" aria-label="${label}">${inner}</svg>`;
 
   const ART = {
-    kancil: () => wrap(`
-      <rect x="45" y="106" width="7" height="20" rx="3" fill="#7A5030"/><rect x="68" y="106" width="7" height="20" rx="3" fill="#7A5030"/>
-      <ellipse cx="60" cy="100" rx="25" ry="19" fill="#B07848"/><ellipse cx="60" cy="104" rx="13" ry="11" fill="#F1DCC0"/>
-      <ellipse cx="36" cy="28" rx="9" ry="19" transform="rotate(-25 36 28)" fill="#B07848"/><ellipse cx="84" cy="28" rx="9" ry="19" transform="rotate(25 84 28)" fill="#B07848"/>
-      <ellipse cx="36" cy="30" rx="4" ry="11" transform="rotate(-25 36 30)" fill="#E9B98F"/><ellipse cx="84" cy="30" rx="4" ry="11" transform="rotate(25 84 30)" fill="#E9B98F"/>
-      <circle cx="60" cy="58" r="31" fill="#B07848"/>
-      <ellipse cx="60" cy="76" rx="15" ry="11" fill="#F1DCC0"/>
-      <ellipse cx="60" cy="71" rx="5" ry="3.6" fill="#2B1B12"/>
-      <path d="M55 79 q5 4 10 0" stroke="#2B1B12" stroke-width="2" fill="none" stroke-linecap="round"/>
-      ${eyes(55, 47, 73)}${cheeks(70, 38, 82)}`, 'Kancil'),
+    kancil: () => wrap(`${shadow(30)}
+      ${limb('M54 112 L52 138', 6, '#9A5F33', '#5E3519')}${limb('M86 112 L88 138', 6, '#9A5F33', '#5E3519')}
+      ${limb('M62 116 L61 140', 6.5, '#B57442', '#5E3519')}${limb('M78 116 L79 140', 6.5, '#B57442', '#5E3519')}
+      <ellipse cx="61" cy="140.5" rx="4.5" ry="2.6" fill="#2A1C14"/><ellipse cx="79" cy="140.5" rx="4.5" ry="2.6" fill="#2A1C14"/>
+      <ellipse cx="70" cy="104" rx="27" ry="21" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <path d="M58 90 l12 9 l12 -9" stroke="#FFF6E8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M61 101 l9 6.5 l9 -6.5" stroke="#FFF6E8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <ellipse cx="45" cy="36" rx="9" ry="12.5" transform="rotate(-32 45 36)" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <ellipse cx="95" cy="36" rx="9" ry="12.5" transform="rotate(32 95 36)" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <ellipse cx="46" cy="37" rx="4.2" ry="7" transform="rotate(-32 46 37)" fill="#E9B98F"/><ellipse cx="94" cy="37" rx="4.2" ry="7" transform="rotate(32 94 37)" fill="#E9B98F"/>
+      <path d="M70 30 C92 30 102 46 102 62 C102 80 88 90 70 90 C52 90 38 80 38 62 C38 46 48 30 70 30 Z" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <path d="M60 50 q-6 10 -2 22 M80 50 q6 10 2 22" stroke="#E4B48A" stroke-width="3" stroke-linecap="round" fill="none" opacity=".9"/>
+      <ellipse cx="70" cy="78" rx="14.5" ry="10.5" fill="url(#ag-cream)"/>
+      <ellipse cx="70" cy="72" rx="5.5" ry="4" fill="#2A1C14"/><ellipse cx="68.4" cy="70.8" rx="1.6" ry="1" fill="#fff" opacity=".7"/>
+      <path d="M64 81 q6 5 12 0" stroke="#5A3420" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      ${eye(56, 60, 7)}${eye(84, 60, 7)}${cheeks(73, 47, 93, 6.5)}`, 'Kancil'),
 
-    harimau: () => wrap(`
-      <rect x="44" y="106" width="9" height="20" rx="4" fill="#D9741C"/><rect x="67" y="106" width="9" height="20" rx="4" fill="#D9741C"/>
-      <ellipse cx="60" cy="100" rx="27" ry="20" fill="#F0892A"/><ellipse cx="60" cy="104" rx="13" ry="11" fill="#FFF6EA"/>
-      <path d="M38 94 l7 4 M82 94 l-7 4 M36 104 l7 2 M84 104 l-7 2" stroke="#2A1A10" stroke-width="3.5" stroke-linecap="round"/>
-      <circle cx="33" cy="31" r="12" fill="#F0892A"/><circle cx="87" cy="31" r="12" fill="#F0892A"/>
-      <circle cx="33" cy="31" r="6" fill="#FFE3C8"/><circle cx="87" cy="31" r="6" fill="#FFE3C8"/>
-      <circle cx="60" cy="60" r="34" fill="#F0892A"/>
-      <g stroke="#2A1A10" stroke-width="4" stroke-linecap="round" fill="none">
-        <path d="M60 28 v10"/><path d="M49 31 l3 9"/><path d="M71 31 l-3 9"/>
-        <path d="M27 57 h9"/><path d="M28 66 h7"/><path d="M93 57 h-9"/><path d="M92 66 h-7"/>
+    harimau: () => wrap(`${shadow(36)}
+      <path d="M99 116 q22 -2 19 -27" stroke="#8E4211" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M99 116 q22 -2 19 -27" stroke="#F28A2C" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M114 101 l6 2 M117 93 l6 1" stroke="#2B1B12" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="70" cy="110" rx="31" ry="24" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <ellipse cx="70" cy="116" rx="17" ry="14" fill="url(#ag-white)"/>
+      <path d="M42 101 q7 2 10 8 M41 114 q7 1 9 6 M98 101 q-7 2 -10 8 M99 114 q-7 1 -9 6" stroke="#2B1B12" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <rect x="50" y="116" width="16" height="25" rx="8" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <rect x="74" y="116" width="16" height="25" rx="8" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <ellipse cx="58" cy="137" rx="8.5" ry="5" fill="url(#ag-white)" stroke="#8E4211" stroke-width="2.4"/><ellipse cx="82" cy="137" rx="8.5" ry="5" fill="url(#ag-white)" stroke="#8E4211" stroke-width="2.4"/>
+      <circle cx="42" cy="34" r="12" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/><circle cx="98" cy="34" r="12" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <circle cx="42" cy="35" r="6" fill="#FFE2CF"/><circle cx="98" cy="35" r="6" fill="#FFE2CF"/>
+      <ellipse cx="70" cy="63" rx="37" ry="33" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <g stroke="#2B1B12" stroke-linecap="round" fill="none">
+        <path d="M70 31 v11" stroke-width="5"/><path d="M58 34 q4 5 2 11" stroke-width="4"/><path d="M82 34 q-4 5 -2 11" stroke-width="4"/>
+        <path d="M34 56 q7 1 11 5" stroke-width="4"/><path d="M35 68 q7 0 10 3" stroke-width="3.5"/>
+        <path d="M106 56 q-7 1 -11 5" stroke-width="4"/><path d="M105 68 q-7 0 -10 3" stroke-width="3.5"/>
       </g>
-      <circle cx="52" cy="76" r="10" fill="#FFF6EA"/><circle cx="68" cy="76" r="10" fill="#FFF6EA"/>
-      <path d="M54 70 h12 l-6 6 z" fill="#3A2418" stroke="#3A2418" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M60 76 v4" stroke="#3A2418" stroke-width="2" stroke-linecap="round"/>
-      ${eyes(55, 46, 74)}${cheeks(68, 37, 83)}`, 'Harimau Malaya'),
+      <ellipse cx="56" cy="49" rx="6.5" ry="3.6" fill="#FFF8EE"/><ellipse cx="84" cy="49" rx="6.5" ry="3.6" fill="#FFF8EE"/>
+      <ellipse cx="61" cy="79" rx="12" ry="9.5" fill="url(#ag-white)"/><ellipse cx="79" cy="79" rx="12" ry="9.5" fill="url(#ag-white)"/>
+      <ellipse cx="70" cy="89" rx="9" ry="5.5" fill="url(#ag-white)"/>
+      <path d="M62.5 72 h15 q-2 6.5 -7.5 7.5 q-5.5 -1 -7.5 -7.5 z" fill="#E87E8E" stroke="#5A2A1A" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M70 79.5 v3.5 M70 83 q-5 4.5 -9.5 1 M70 83 q5 4.5 9.5 1" stroke="#5A2A1A" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <g fill="#5A2A1A" opacity=".55"><circle cx="58" cy="80" r="1.1"/><circle cx="55" cy="83" r="1.1"/><circle cx="82" cy="80" r="1.1"/><circle cx="85" cy="83" r="1.1"/></g>
+      ${eye(57, 61, 7)}${eye(83, 61, 7)}${cheeks(74, 44, 96, 6)}`, 'Harimau Malaya'),
 
-    orangutan: () => wrap(`
-      <ellipse cx="27" cy="104" rx="9" ry="22" transform="rotate(14 27 104)" fill="#B44A24"/><ellipse cx="93" cy="104" rx="9" ry="22" transform="rotate(-14 93 104)" fill="#B44A24"/>
-      <ellipse cx="60" cy="102" rx="27" ry="22" fill="#C4522A"/>
-      <path d="M30 50 q2 -28 30 -28 q28 0 30 28 z" fill="#C4522A"/>
-      <path d="M50 24 l5 -11 l4 10 M60 23 l6 -12 l3 12" fill="#C4522A" stroke="#C4522A" stroke-width="5" stroke-linejoin="round"/>
-      <circle cx="60" cy="60" r="32" fill="#C4522A"/>
-      <ellipse cx="60" cy="64" rx="24" ry="25" fill="#EDB98F"/>
-      ${eyes(56, 50, 70)}
-      <circle cx="56.5" cy="70" r="1.8" fill="#7A3A1E"/><circle cx="63.5" cy="70" r="1.8" fill="#7A3A1E"/>
-      <path d="M48 78 q12 9 24 0" stroke="#7A3A1E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-      ${cheeks(70, 42, 78)}`, 'Orang utan'),
+    orangutan: () => wrap(`${shadow(40)}
+      ${limb('M47 96 C33 108 30 122 33 136', 13, '#C2532A', '#7A2D10')}${limb('M93 96 C107 108 110 122 107 136', 13, '#C2532A', '#7A2D10')}
+      <ellipse cx="33" cy="139" rx="8.5" ry="6" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.4"/><ellipse cx="107" cy="139" rx="8.5" ry="6" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.4"/>
+      ${limb('M60 126 L59 137', 11, '#B04822', '#7A2D10')}${limb('M80 126 L81 137', 11, '#B04822', '#7A2D10')}
+      <ellipse cx="58" cy="140" rx="8" ry="4.5" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.2"/><ellipse cx="82" cy="140" rx="8" ry="4.5" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.2"/>
+      <ellipse cx="70" cy="108" rx="27" ry="25" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3"/>
+      <path d="M60 98 q4 6 2 12 M72 96 q3 7 0 14 M82 100 q-2 6 1 11" stroke="#E9824F" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".8"/>
+      <path d="M44 48 C40 26 56 20 70 20 C84 20 100 26 96 48 Z" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M62 22 l3 -10 l5 9 l5 -10 l3 11" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="70" cy="58" r="31" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3"/>
+      <path d="M70 41 C78 37 92 40 92 54 C92 62 88 68 86 72 C84 84 78 90 70 90 C62 90 56 84 54 72 C52 68 48 62 48 54 C48 40 62 37 70 41 Z" fill="url(#ag-face)" stroke="#9A4A26" stroke-width="2"/>
+      ${eye(61, 56, 5.5)}${eye(79, 56, 5.5)}
+      <circle cx="67" cy="69" r="1.9" fill="#6B3218"/><circle cx="73" cy="69" r="1.9" fill="#6B3218"/>
+      <path d="M58 77 q12 9 24 0" stroke="#7A3A1E" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      ${cheeks(72, 54, 86, 5)}`, 'Orang utan'),
 
-    gajah: () => wrap(`
-      <ellipse cx="25" cy="58" rx="22" ry="27" fill="#8796A6"/><ellipse cx="95" cy="58" rx="22" ry="27" fill="#8796A6"/>
-      <ellipse cx="25" cy="59" rx="13" ry="17" fill="#E7B8B8"/><ellipse cx="95" cy="59" rx="13" ry="17" fill="#E7B8B8"/>
-      <rect x="41" y="106" width="13" height="20" rx="5" fill="#8796A6"/><rect x="66" y="106" width="13" height="20" rx="5" fill="#8796A6"/>
-      <ellipse cx="60" cy="100" rx="28" ry="21" fill="#9AA8B7"/>
-      <circle cx="60" cy="56" r="30" fill="#9AA8B7"/>
-      <path d="M48 76 q-5 9 2 13" fill="#FFFDF5"/><path d="M72 76 q5 9 -2 13" fill="#FFFDF5"/>
-      <path d="M60 68 C60 88 55 96 63 104 C67 108 74 104 71 98" stroke="#9AA8B7" stroke-width="13" fill="none" stroke-linecap="round"/>
-      <path d="M57 84 h6 M57 92 h6" stroke="#8796A6" stroke-width="1.6" stroke-linecap="round"/>
-      ${eyes(52, 47, 73)}${cheeks(64, 39, 81)}`, 'Gajah'),
+    gajah: () => wrap(`${shadow(38)}
+      <path d="M50 44 C28 34 10 46 12 68 C14 88 30 96 46 88 Z" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M90 44 C112 34 130 46 128 68 C126 88 110 96 94 88 Z" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M46 52 C32 46 22 54 23 68 C24 80 34 84 44 80 Z" fill="#EFC3C8"/><path d="M94 52 C108 46 118 54 117 68 C116 80 106 84 96 80 Z" fill="#EFC3C8"/>
+      <ellipse cx="70" cy="110" rx="31" ry="23" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <rect x="47" y="114" width="19" height="27" rx="8" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <rect x="74" y="114" width="19" height="27" rx="8" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <g fill="#F4F1EA"><ellipse cx="52" cy="139" rx="2.6" ry="1.8"/><ellipse cx="57" cy="139.5" rx="2.6" ry="1.8"/><ellipse cx="62" cy="139" rx="2.6" ry="1.8"/><ellipse cx="78" cy="139" rx="2.6" ry="1.8"/><ellipse cx="83" cy="139.5" rx="2.6" ry="1.8"/><ellipse cx="88" cy="139" rx="2.6" ry="1.8"/></g>
+      <ellipse cx="70" cy="58" rx="33" ry="30" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <path d="M64 30 q1 -6 -2 -10 M70 29 v-9 M76 30 q-1 -6 2 -10" stroke="#5B6B7D" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M70 70 C70 92 63 100 71 110 C77 116 88 112 86 103" stroke="#5B6B7D" stroke-width="17" stroke-linecap="round" fill="none"/>
+      <path d="M70 70 C70 92 63 100 71 110 C77 116 88 112 86 103" stroke="#A5B2C1" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M65 82 h9 M64.5 90 h8 M66 98 h7" stroke="#7D8C9E" stroke-width="1.8" stroke-linecap="round"/>
+      ${eye(55, 56, 6.5)}${eye(85, 56, 6.5)}${cheeks(70, 47, 93, 6.5)}`, 'Gajah'),
 
-    tapir: () => wrap(`
-      <rect x="43" y="106" width="9" height="20" rx="4" fill="#23262B"/><rect x="68" y="106" width="9" height="20" rx="4" fill="#23262B"/>
-      <ellipse cx="60" cy="100" rx="28" ry="21" fill="#F2F2EC"/>
-      <path d="M33 104 q27 22 54 0 q-2 16 -27 17 q-25 -1 -27 -17z" fill="#23262B"/>
-      <ellipse cx="38" cy="32" rx="8" ry="11" fill="#23262B" stroke="#F2F2EC" stroke-width="3"/><ellipse cx="82" cy="32" rx="8" ry="11" fill="#23262B" stroke="#F2F2EC" stroke-width="3"/>
-      <circle cx="60" cy="58" r="30" fill="#23262B"/>
-      <ellipse cx="60" cy="79" rx="13" ry="10" fill="#3A3E45"/>
-      <circle cx="56" cy="80" r="1.8" fill="#16130F"/><circle cx="64" cy="80" r="1.8" fill="#16130F"/>
-      ${eyes(54, 48, 72, true)}${cheeks(68, 40, 80)}`, 'Tapir'),
+    tapir: () => wrap(`${shadow(36)}
+      <ellipse cx="70" cy="106" rx="33" ry="22" fill="url(#ag-cream)" stroke="#15171A" stroke-width="3"/>
+      <path d="M38 108 C44 128 96 128 102 108 C98 124 86 130 70 130 C54 130 42 124 38 108 Z" fill="url(#ag-tapir)"/>
+      <path d="M40 104 C46 118 94 118 100 104" fill="none" stroke="#15171A" stroke-width="0"/>
+      <rect x="49" y="114" width="16" height="27" rx="7" fill="url(#ag-tapir)" stroke="#15171A" stroke-width="3"/>
+      <rect x="75" y="114" width="16" height="27" rx="7" fill="url(#ag-tapir)" stroke="#15171A" stroke-width="3"/>
+      <ellipse cx="47" cy="36" rx="8" ry="10.5" transform="rotate(-20 47 36)" fill="url(#ag-tapir)" stroke="#F4F1EA" stroke-width="3"/>
+      <ellipse cx="93" cy="36" rx="8" ry="10.5" transform="rotate(20 93 36)" fill="url(#ag-tapir)" stroke="#F4F1EA" stroke-width="3"/>
+      <ellipse cx="70" cy="60" rx="30" ry="28" fill="url(#ag-tapir)" stroke="#15171A" stroke-width="3"/>
+      <ellipse cx="60" cy="46" rx="12" ry="7" fill="#fff" opacity=".1" transform="rotate(-20 60 46)"/>
+      <path d="M59 72 C59 66 81 66 81 72 L80 90 C80 96 60 96 60 90 Z" fill="#4A4F58" stroke="#15171A" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M62 80 q8 3 16 0" stroke="#2C3036" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="65.5" cy="90" rx="2" ry="1.4" fill="#15171A"/><ellipse cx="74.5" cy="90" rx="2" ry="1.4" fill="#15171A"/>
+      ${ringEye(57, 57, 5)}${ringEye(83, 57, 5)}${cheeks(70, 46, 94, 5.5)}`, 'Tapir'),
 
-    enggang: () => wrap(`
-      <rect x="50" y="110" width="20" height="17" rx="4" fill="#F4F4EE"/><rect x="50" y="116" width="20" height="4" fill="#1E1E22"/>
-      <path d="M50 116 l-3 10 M70 116 l3 10" stroke="#F5B82E" stroke-width="3" stroke-linecap="round"/>
-      <ellipse cx="36" cy="98" rx="10" ry="19" transform="rotate(16 36 98)" fill="#2C2C32"/><ellipse cx="84" cy="98" rx="10" ry="19" transform="rotate(-16 84 98)" fill="#2C2C32"/>
-      <ellipse cx="60" cy="98" rx="25" ry="23" fill="#1E1E22"/><ellipse cx="60" cy="106" rx="13" ry="11" fill="#F4F4EE"/>
-      <circle cx="56" cy="54" r="26" fill="#1E1E22"/>
-      <path d="M66 39 q22 -12 38 1 q-14 3 -36 8 z" fill="#E8622A"/>
-      <path d="M70 50 q30 1 40 20 q-22 -1 -40 -9 z" fill="#F5B82E"/>
-      <path d="M72 56 q18 3 30 10" stroke="#C98E12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <circle cx="54" cy="50" r="7" fill="#fff"/><circle cx="55.5" cy="50.5" r="4" fill="#16130F"/><circle cx="57" cy="49" r="1.4" fill="#fff"/>
-      <circle cx="45" cy="62" r="5" fill="#F28CA0" opacity=".45"/>`, 'Burung enggang'),
+    enggang: () => wrap(`${shadow(30)}
+      <path d="M58 122 l-2 18 M70 122 l2 18" stroke="#F0B43A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M50 141 h10 M66 141 h10" stroke="#C98A1C" stroke-width="3" stroke-linecap="round"/>
+      <path d="M50 118 L44 140 L80 140 L74 118 Z" fill="#FBFAF4" stroke="#15151A" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M46.5 131 h31" stroke="#15151A" stroke-width="5"/>
+      <ellipse cx="62" cy="100" rx="27" ry="29" fill="url(#ag-bird)" stroke="#0A0A0D" stroke-width="3"/>
+      <ellipse cx="62" cy="114" rx="15" ry="11" fill="url(#ag-white)"/>
+      <ellipse cx="38" cy="102" rx="9" ry="20" transform="rotate(12 38 102)" fill="#2C2C33" stroke="#0A0A0D" stroke-width="2.6"/>
+      <ellipse cx="86" cy="102" rx="9" ry="20" transform="rotate(-12 86 102)" fill="#2C2C33" stroke="#0A0A0D" stroke-width="2.6"/>
+      <circle cx="60" cy="56" r="23" fill="url(#ag-bird)" stroke="#0A0A0D" stroke-width="3"/>
+      <path d="M74 46 C84 30 106 26 118 34 C108 36 96 42 84 50 Z" fill="url(#ag-casque)" stroke="#9E3A12" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M76 52 C96 50 116 60 124 80 C108 72 92 68 76 64 Z" fill="url(#ag-beak)" stroke="#A86A12" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M80 59 C96 60 110 66 118 74" stroke="#D08A1C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      ${ringEye(58, 52, 5, '#B3261E')}${cheeks(66, 48, 48, 5)}`, 'Burung enggang'),
   };
+  const ART_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+    <radialGradient id="ag-kancil" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#D49A62"/><stop offset="1" stop-color="#A2652F"/></radialGradient>
+    <radialGradient id="ag-cream" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFF8EC"/><stop offset="1" stop-color="#EBD6B6"/></radialGradient>
+    <radialGradient id="ag-tiger" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#FFB25C"/><stop offset="1" stop-color="#E7741A"/></radialGradient>
+    <radialGradient id="ag-white" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#ECE6DC"/></radialGradient>
+    <radialGradient id="ag-orang" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#E5773F"/><stop offset="1" stop-color="#AE4220"/></radialGradient>
+    <radialGradient id="ag-face" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FBD6AF"/><stop offset="1" stop-color="#E0A577"/></radialGradient>
+    <radialGradient id="ag-ele" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#C3CEDA"/><stop offset="1" stop-color="#8D9CAE"/></radialGradient>
+    <radialGradient id="ag-tapir" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#4A505A"/><stop offset="1" stop-color="#1B1E22"/></radialGradient>
+    <radialGradient id="ag-bird" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#454550"/><stop offset="1" stop-color="#121216"/></radialGradient>
+    <linearGradient id="ag-beak" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset="1" stop-color="#F0A21E"/></linearGradient>
+    <linearGradient id="ag-casque" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F06A2C"/><stop offset="1" stop-color="#FF9E5A"/></linearGradient>
+    <radialGradient id="ag-cheek"><stop offset="0" stop-color="#FF8FA3" stop-opacity=".75"/><stop offset="1" stop-color="#FF8FA3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ag-car" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3FA6DA"/><stop offset="1" stop-color="#1F78AC"/></linearGradient>
+    <linearGradient id="ag-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6F7FF"/><stop offset="1" stop-color="#A9DBF3"/></linearGradient>
+    <linearGradient id="ag-housing" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2E353E"/><stop offset=".5" stop-color="#3C444F"/><stop offset="1" stop-color="#22282F"/></linearGradient>
+    <radialGradient id="ag-glow-r"><stop offset="0" stop-color="#FF5A5F" stop-opacity=".75"/><stop offset="1" stop-color="#FF5A5F" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ag-glow-g"><stop offset="0" stop-color="#3BE08A" stop-opacity=".75"/><stop offset="1" stop-color="#3BE08A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ag-lamp-r" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFB3B5"/><stop offset=".45" stop-color="#FF4A50"/><stop offset="1" stop-color="#C22026"/></radialGradient>
+    <radialGradient id="ag-lamp-g" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#B8FFD8"/><stop offset=".45" stop-color="#2FD47E"/><stop offset="1" stop-color="#11914E"/></radialGradient>
+  </defs></svg>`;
   const ANIMALS = [
     { id: 'kancil', name: 'Kancil' },
     { id: 'harimau', name: 'Harimau Malaya' },
@@ -554,19 +632,26 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     { id: 'tapir', name: 'Tapir' },
     { id: 'enggang', name: 'Enggang' },
   ];
-  const CAR_SVG = `<svg viewBox="0 0 160 80" aria-hidden="true">
-    <path d="M40 32 q8 -24 32 -24 h26 q18 0 28 24 z" fill="#2B8CBE"/>
-    <path d="M50 30 q6 -16 22 -16 h8 v16 z" fill="#CFEFFF"/><path d="M86 14 h10 q12 0 20 16 h-30 z" fill="#CFEFFF"/>
-    <rect x="8" y="30" width="144" height="32" rx="13" fill="#2B8CBE"/>
-    <rect x="140" y="38" width="10" height="7" rx="3" fill="#F5D76E"/><rect x="10" y="38" width="8" height="7" rx="3" fill="#E5484D"/>
-    <circle cx="44" cy="62" r="13" fill="#1E2328"/><circle cx="44" cy="62" r="5" fill="#C9D1D9"/>
-    <circle cx="118" cy="62" r="13" fill="#1E2328"/><circle cx="118" cy="62" r="5" fill="#C9D1D9"/></svg>`;
-  const PAW = (cls, cy) => `<g class="paw ${cls}" fill="#fff"><ellipse cx="30" cy="${cy + 5}" rx="7" ry="5.5"/><circle cx="21.5" cy="${cy - 2}" r="3"/><circle cx="27" cy="${cy - 6.5}" r="3"/><circle cx="33" cy="${cy - 6.5}" r="3"/><circle cx="38.5" cy="${cy - 2}" r="3"/></g>`;
-  const LIGHT_SVG = `<svg viewBox="0 0 60 170" aria-hidden="true">
-    <rect x="26" y="96" width="8" height="74" rx="3" fill="#3D4650"/>
-    <rect x="5" y="2" width="50" height="98" rx="13" fill="#22282F"/>
-    <circle class="lamp lamp-r" cx="30" cy="28" r="18"/>${PAW('paw-r', 28)}
-    <circle class="lamp lamp-g" cx="30" cy="74" r="18"/>${PAW('paw-g', 74)}</svg>`;
+  const CAR_SVG = `<svg viewBox="0 0 170 86" aria-hidden="true">
+    <ellipse cx="85" cy="80" rx="70" ry="5" fill="#000" opacity=".22"/>
+    <path d="M44 34 C52 12 64 8 80 8 H104 C122 8 132 16 142 34 Z" fill="url(#ag-car)" stroke="#155A82" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M55 32 C60 18 68 15 80 15 H90 V32 Z" fill="url(#ag-glass)"/><path d="M96 15 H104 C116 15 124 20 131 32 H96 Z" fill="url(#ag-glass)"/>
+    <path d="M62 30 l10 -13" stroke="#fff" stroke-width="3" opacity=".6" stroke-linecap="round"/>
+    <rect x="8" y="32" width="154" height="34" rx="15" fill="url(#ag-car)" stroke="#155A82" stroke-width="3"/>
+    <path d="M14 46 H156" stroke="#7CCBF0" stroke-width="2.4" opacity=".7"/>
+    <rect x="146" y="39" width="12" height="8" rx="3.5" fill="#FFE68A"/><rect x="11" y="39" width="10" height="8" rx="3.5" fill="#FF6B6B"/>
+    <rect x="86" y="44" width="10" height="3" rx="1.5" fill="#155A82"/>
+    <circle cx="47" cy="66" r="14" fill="#1E2328"/><circle cx="47" cy="66" r="6.5" fill="#C9D1D9"/><circle cx="47" cy="66" r="2.4" fill="#6B7684"/>
+    <circle cx="124" cy="66" r="14" fill="#1E2328"/><circle cx="124" cy="66" r="6.5" fill="#C9D1D9"/><circle cx="124" cy="66" r="2.4" fill="#6B7684"/></svg>`;
+  const PAW = (cls, cy) => `<g class="paw ${cls}" fill="#fff"><ellipse cx="30" cy="${cy + 5}" rx="6.5" ry="5"/><circle cx="22" cy="${cy - 2}" r="2.8"/><circle cx="27.2" cy="${cy - 6.3}" r="2.8"/><circle cx="32.8" cy="${cy - 6.3}" r="2.8"/><circle cx="38" cy="${cy - 2}" r="2.8"/></g>`;
+  const LIGHT_SVG = `<svg viewBox="0 0 60 176" aria-hidden="true">
+    <rect x="25.5" y="98" width="9" height="78" rx="3" fill="#3D4650"/><rect x="25.5" y="98" width="3" height="78" fill="#57616D"/>
+    <circle class="glow glow-r" cx="30" cy="30" r="30" fill="url(#ag-glow-r)"/>
+    <circle class="glow glow-g" cx="30" cy="76" r="30" fill="url(#ag-glow-g)"/>
+    <rect x="6" y="4" width="48" height="98" rx="14" fill="url(#ag-housing)" stroke="#161A1F" stroke-width="2.5"/>
+    <path d="M10 14 q20 -10 40 0 v4 q-20 -8 -40 0 z" fill="#161A1F"/><path d="M10 60 q20 -10 40 0 v4 q-20 -8 -40 0 z" fill="#161A1F"/>
+    <circle class="lamp lamp-r" cx="30" cy="30" r="16"/>${PAW('paw-r', 30)}
+    <circle class="lamp lamp-g" cx="30" cy="76" r="16"/>${PAW('paw-g', 76)}</svg>`;
   const HAND_SVG = `<svg viewBox="0 0 64 72" aria-hidden="true">
     <path d="M24 8 a6 6 0 0 1 12 0 v24 l3 -1 a6 6 0 0 1 7 4 l1 1 a6 6 0 0 1 9 5 v14 c0 10 -8 15 -18 15 h-6 c-8 0 -12 -4 -16 -10 l-10 -16 a5 5 0 0 1 8 -6 l10 10 z" fill="#FFFDF5" stroke="#15302A" stroke-width="3" stroke-linejoin="round"/>
     <circle cx="30" cy="6" r="10" fill="none" stroke="#FFFDF5" stroke-width="3" opacity=".8"/></svg>`;
@@ -575,6 +660,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     <ellipse cx="50" cy="50" rx="40" ry="46" fill="#E5484D"/>
     <path d="M44 96 h12 l-6 6 z" fill="#C73A3F"/>
     <ellipse cx="36" cy="32" rx="9" ry="14" fill="#fff" opacity=".35" transform="rotate(-20 36 32)"/></svg>`;
+  document.body.insertAdjacentHTML('afterbegin', ART_DEFS);
 
   /* ================= STORAGE ================= */
   const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
@@ -635,12 +721,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   };
 
   /* ================= VOICE ================= */
-  // Utama: rakaman suara BM (ElevenLabs, "Hafiz"). Sandaran: suara pelayar ms/id jika rakaman gagal dimuat.
+  // Utama: rakaman suara BM Malaysia (ElevenLabs, "Hafiz"). Sandaran: suara peranti Bahasa Melayu (ms) sahaja; jika tiada, kapsyen sahaja.
   const clips = {};
   let clipsLoading = null, voiceSrc = null;
   function loadClips() {
     if (clipsLoading || !ac) return clipsLoading;
-    clipsLoading = Promise.all(Object.keys(LINES).map(async (k) => {
+    clipsLoading = Promise.all([...RECORDED].map(async (k) => {
       try {
         const res = await fetch(`assets/audio/${k}.mp3`);
         if (!res.ok) return;
@@ -651,7 +737,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   }
   let voice = null;
   function pickVoice() {
-    try { const vs = window.speechSynthesis.getVoices(); voice = vs.find((v) => /^ms/i.test(v.lang)) || vs.find((v) => /^id/i.test(v.lang)) || null; }
+    try { const vs = window.speechSynthesis.getVoices(); voice = vs.find((v) => /^ms/i.test(v.lang)) || null; /* Bahasa Melayu sahaja, tiada sandaran Bahasa Indonesia */ }
     catch (e) { voice = null; }
   }
   if ('speechSynthesis' in window) { pickVoice(); try { window.speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { /* older browsers */ } }
@@ -864,7 +950,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     sessionRounds++;
 
     $('#crossed').innerHTML = recs.map((_, i) => ART[ANIMALS[i % ANIMALS.length].id]()).join('');
-    $('#result-text').innerHTML = `Kamu bantu <span class="big-num">${recs.length}</span> haiwan melintas, dan sabar <span class="big-num">${nogoHold}</span> kali bila lampu merah.`;
+    $('#result-text').innerHTML = `Adik tolong <span class="big-num">${recs.length}</span> haiwan melintas, dan sabar <span class="big-num">${nogoHold}</span> kali masa lampu merah.`;
     const canPlay = sessionRounds < MAX_ROUNDS_PER_SESSION && timeLeft() > 0;
     $('#btn-again').hidden = !canPlay;
     show('result');
@@ -930,7 +1016,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   $('#gate-answers').addEventListener('click', (e) => {
     const btn = e.target.closest('button'); if (!btn) return;
     if (Number(btn.dataset.v) === gateAnswer) { $('#gate').hidden = true; openParent(); }
-    else { $('#gate-msg').textContent = 'Belum tepat. Cuba soalan baru.'; newGateQ(); }
+    else { $('#gate-msg').textContent = 'Belum betul. Cuba soalan lain.'; newGateQ(); }
   });
   $('#gate-close').addEventListener('click', () => { $('#gate').hidden = true; });
 
@@ -945,12 +1031,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const goP = pct(sum('goHit'), sum('goN')), waitP = pct(sum('nogoHold'), sum('nogoN'));
     const rt = rtList.length ? Math.round(rtList.reduce((a, r) => a + r.rtAvg, 0) / rtList.length) : null;
     $('#stats').innerHTML = `
-      <div class="stat"><b>${goP === null ? '–' : goP + '%'}</b><span>Ketik tepat</span></div>
+      <div class="stat"><b>${goP === null ? '–' : goP + '%'}</b><span>Tekan tepat</span></div>
       <div class="stat"><b>${waitP === null ? '–' : waitP + '%'}</b><span>Sabar</span></div>
       <div class="stat"><b>${data.level + 1}<small style="font-size:.55em;color:var(--muted)">/${LEVEL_MS.length}</small></b><span>Tahap kelajuan</span></div>`;
     const rows = data.rounds.slice(-10).reverse();
     $('#history').innerHTML = rows.length
-      ? `<table><thead><tr><th>Masa</th><th>Tahap</th><th>Ketik tepat</th><th>Sabar</th><th>Reaksi</th></tr></thead><tbody>${
+      ? `<table><thead><tr><th>Masa</th><th>Tahap</th><th>Tekan tepat</th><th>Sabar</th><th>Reaksi</th></tr></thead><tbody>${
         rows.map((r) => `<tr><td>${fmtDate(r.t)}</td><td>${r.level + 1}</td><td>${meter(pct(r.goHit, r.goN))}</td><td>${meter(pct(r.nogoHold, r.nogoN))}</td><td>${r.rtAvg ? (r.rtAvg / 1000).toFixed(2) + ' s' : '–'}</td></tr>`).join('')
       }</tbody></table>${rt ? `<p class="sub" style="margin-top:8px">Purata masa reaksi (7 pusingan terkini): ${(rt / 1000).toFixed(2)} saat.</p>` : ''}`
       : '<p class="empty">Belum ada rekod. Rekod muncul selepas anak tamat satu pusingan (12 haiwan).</p>';
