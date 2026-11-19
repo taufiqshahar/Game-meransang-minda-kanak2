@@ -69,6 +69,10 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
 .parade figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .parade svg { width: 100%; max-width: 76px; height: auto; }
 .parade figcaption { font-size: 11px; font-weight: 700; color: rgba(255, 253, 245, .78); text-align: center; line-height: 1.15; }
+.parade figure.secret svg { filter: brightness(0); opacity: .3; }
+.parade figure.secret figcaption { font-family: var(--font-display); font-size: 16px; }
+.stars { font-size: 12px; letter-spacing: 1px; line-height: 1; color: rgba(255, 253, 245, .25); white-space: nowrap; }
+.stars b { color: var(--kuning); font-weight: 400; }
 .play {
   width: 132px; height: 132px; border-radius: 50%;
   background: var(--hijau); color: var(--kertas);
@@ -160,6 +164,14 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
 .big-num { font-family: var(--font-display); font-weight: 700; font-size: 1.25em; color: var(--kuning); font-variant-numeric: tabular-nums; }
 .crossed { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 360px; }
 .crossed svg { width: 44px; height: auto; }
+.new-friend {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  background: var(--kertas); color: var(--ink); border-radius: 20px; padding: 10px 18px 10px 10px;
+  box-shadow: 0 6px 0 var(--kuning-tekan); border: 3px solid var(--kuning);
+}
+.new-friend svg { width: 76px; height: auto; flex: none; }
+.new-friend small { display: block; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.new-friend b { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
 .btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 .btn {
   min-height: 60px; padding: 0 28px; border-radius: 20px;
@@ -266,7 +278,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <span>UMUR ANAK</span>
       <div id="age-chips" style="display:flex;gap:8px"></div>
     </div>
-    <p class="home-note">Prototaip v0.3 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
+    <p class="home-note">Prototaip v0.4 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
   </section>
 
   <!-- GAME -->
@@ -355,6 +367,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   <section id="scr-result" class="screen" aria-label="Keputusan" hidden>
     <div class="center-col">
       <h2>Syabas!</h2>
+      <div class="new-friend" id="new-friend" hidden></div>
       <div class="crossed" id="crossed" aria-hidden="true"></div>
       <p id="result-text"></p>
       <div class="btn-row">
@@ -422,6 +435,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <b>Apa yang diukur?</b>
       <span><b>Tekan tepat</b>: anak tekan bila lampu hijau (tumpuan). <b>Sabar</b>: anak tak tekan bila lampu merah (kawalan diri). Permainan ini berasaskan tugasan <i>Go/No-Go</i> yang digunakan penyelidik untuk mengukur kawalan diri kanak-kanak.</span>
       <span>Tahap kelajuan naik sendiri bila anak betul 85% atau lebih, dan turun bila bawah 60%. Ini bukan alat diagnosis.</span>
+      <span><b>Koleksi haiwan</b>: anak mula dengan 3 haiwan. Haiwan baharu dibuka selepas pusingan ke-1, ke-3 dan ke-5. Bintang (★) diberi bila anak betul dengan haiwan itu 3, 10 dan 25 kali, jadi ganjaran datang dari kawalan diri. Tiada streak dan tiada apa-apa yang hilang jika anak tidak bermain.</span>
     </div>
     <div>
       <h3 style="margin-bottom:8px">Pusingan terkini</h3>
@@ -482,12 +496,16 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     end: 'Syabas! Semua haiwan dah selamat melintas.',
     'breath-in': 'Tarik nafas dalam-dalam…',
     'breath-out': 'Hembus perlahan-lahan…',
+    'baru-orangutan': 'Wah, kawan baharu! Orang utan nak ikut melintas!',
+    'baru-tapir': 'Wah, kawan baharu! Tapir nak ikut melintas!',
+    'baru-enggang': 'Wah, kawan baharu! Burung enggang nak ikut melintas!',
   };
   // Baris yang rakaman suaranya sepadan dengan teks semasa. Tambah kunci di sini selepas rakaman baharu dijana.
   const RECORDED = new Set([
     'intro', 'prac-go', 'prac-nogo', 'start',
     'go1', 'go2', 'go3', 'go4', 'wait1', 'wait2', 'wait3',
     'miss', 'oops', 'end', 'breath-in', 'breath-out',
+    'baru-orangutan', 'baru-tapir', 'baru-enggang',
   ]);
   const PRAISE_GO = ['go1', 'go2', 'go3', 'go4'];
   const PRAISE_WAIT = ['wait1', 'wait2', 'wait3'];
@@ -636,6 +654,10 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     { id: 'tapir', name: 'Tapir' },
     { id: 'enggang', name: 'Enggang' },
   ];
+  // Koleksi: 3 haiwan awal; selebihnya dibuka ikut jumlah pusingan tamat (diterbitkan daripada data.rounds, tiada keadaan berasingan).
+  const STARTER = ['kancil', 'harimau', 'gajah'];
+  const UNLOCKS = [{ id: 'orangutan', rounds: 1 }, { id: 'tapir', rounds: 3 }, { id: 'enggang', rounds: 5 }];
+  const STAR_AT = [3, 10, 25]; // bintang ikut bilangan percubaan betul dengan haiwan itu
   const CAR_SVG = `<svg viewBox="0 0 170 86" aria-hidden="true">
     <ellipse cx="85" cy="80" rx="70" ry="5" fill="#000" opacity=".22"/>
     <path d="M44 34 C52 12 64 8 80 8 H104 C122 8 132 16 142 34 Z" fill="url(#ag-car)" stroke="#155A82" stroke-width="3" stroke-linejoin="round"/>
@@ -668,7 +690,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
 
   /* ================= STORAGE ================= */
   const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
-  const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true }, level: AGE_LEVEL[4], rounds: [], today: { date: todayStr(), ms: 0, extraMin: 0 } });
+  const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true }, level: AGE_LEVEL[4], rounds: [], helped: {}, today: { date: todayStr(), ms: 0, extraMin: 0 } });
   function load() {
     const base = defaultData();
     try {
@@ -677,6 +699,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       const d = JSON.parse(raw) || {};
       const out = { ...base, ...d, settings: { ...base.settings, ...(d.settings || {}) }, today: { ...base.today, ...(d.today || {}) } };
       if (!Array.isArray(out.rounds)) out.rounds = [];
+      if (!out.helped || typeof out.helped !== 'object' || Array.isArray(out.helped)) out.helped = {};
       if (![3, 4, 5, 6].includes(out.settings.age)) out.settings.age = 4;
       if (![5, 10, 15, 20].includes(out.settings.dailyMin)) out.settings.dailyMin = 10;
       if (!Number.isInteger(out.level) || out.level < 0 || out.level >= LEVEL_MS.length) out.level = AGE_LEVEL[out.settings.age];
@@ -688,6 +711,8 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   function rollDay() { if (data.today.date !== todayStr()) { data.today = { date: todayStr(), ms: 0, extraMin: 0 }; save(); } }
   const limitMs = () => (data.settings.dailyMin + data.today.extraMin) * 60000;
   const timeLeft = () => { rollDay(); return limitMs() - data.today.ms; };
+  const unlockedIds = () => new Set([...STARTER, ...UNLOCKS.filter((u) => data.rounds.length >= u.rounds).map((u) => u.id)]);
+  const starsOf = (id) => { const n = Number(data.helped[id]) || 0; return STAR_AT.filter((t) => n >= t).length; };
 
   /* ================= AUDIO ================= */
   let ac = null, master = null, muted = false;
@@ -811,7 +836,10 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   function showHand(on) { hand.hidden = !on; }
 
   let animalQueue = [];
-  function nextAnimal() { if (!animalQueue.length) animalQueue = shuffle(ANIMALS); return animalQueue.pop(); }
+  function nextAnimal() {
+    if (!animalQueue.length) { const ok = unlockedIds(); animalQueue = shuffle(ANIMALS.filter((a) => ok.has(a.id))); }
+    return animalQueue.pop();
+  }
   function resetAnimal(a) {
     animal.getAnimations().forEach((x) => x.cancel());
     bob.innerHTML = ART[a.id]();
@@ -859,7 +887,8 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   let roundStart = 0;
 
   async function runTrial(tr, id, practice) {
-    resetAnimal(nextAnimal());
+    const who = nextAnimal();
+    resetAnimal(who);
     setLight('off');
     await enter(); alive(id);
     if (practice) say(tr.go ? 'prac-go' : 'prac-nogo');
@@ -871,7 +900,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const t0 = performance.now();
     const r = await waitTap(W); alive(id);
     showHand(false);
-    const rec = { go: tr.go, tapped: r.tapped, rt: r.tapped ? Math.round(r.t - t0) : null };
+    const rec = { go: tr.go, tapped: r.tapped, rt: r.tapped ? Math.round(r.t - t0) : null, animal: who.id };
     rec.correct = tr.go ? r.tapped : !r.tapped;
 
     if (tr.go) {
@@ -912,6 +941,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const id = ++run;
     show('game'); buildProgress(); setLight('off'); $('#caption').textContent = '';
     car.getAnimations().forEach((x) => x.cancel()); car.style.left = '-40%';
+    animalQueue = []; // haiwan yang baru dibuka terus masuk giliran
     resetAnimal(nextAnimal()); animal.style.opacity = '0';
     roundStart = performance.now();
     try {
@@ -946,6 +976,8 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const rtAvg = rts.length ? Math.round(rts.reduce((a, b) => a + b, 0) / rts.length) : null;
     const acc = (goHit + nogoHold) / recs.length;
     const levelPlayed = data.level;
+    const before = unlockedIds();
+    recs.forEach((r) => { if (r.correct) data.helped[r.animal] = (Number(data.helped[r.animal]) || 0) + 1; });
     if (acc >= LEVEL_UP_AT) data.level = Math.min(LEVEL_MS.length - 1, data.level + 1);
     else if (acc < LEVEL_DOWN_AT) data.level = Math.max(0, data.level - 1);
     data.rounds.push({ t: Date.now(), level: levelPlayed, goHit, goN: go.length, nogoHold, nogoN: nogo.length, rtAvg });
@@ -953,12 +985,23 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     save();
     sessionRounds++;
 
-    $('#crossed').innerHTML = recs.map((_, i) => ART[ANIMALS[i % ANIMALS.length].id]()).join('');
+    const after = unlockedIds();
+    const fresh = ANIMALS.find((a) => after.has(a.id) && !before.has(a.id));
+    const nf = $('#new-friend');
+    nf.hidden = !fresh;
+    nf.innerHTML = fresh ? `${ART[fresh.id]()}<div><small>Kawan baharu!</small><b>${fresh.name}</b></div>` : '';
+    if (fresh) anim(nf, [{ transform: 'scale(.4)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1, offset: .7 }, { transform: 'scale(1)', opacity: 1 }], { duration: 600, delay: 400, fill: 'backwards' });
+    $('#crossed').innerHTML = recs.map((r) => ART[r.animal]()).join('');
     $('#result-text').innerHTML = `Adik tolong <span class="big-num">${recs.length}</span> haiwan melintas, dan sabar <span class="big-num">${nogoHold}</span> kali masa lampu merah.`;
     const canPlay = sessionRounds < MAX_ROUNDS_PER_SESSION && timeLeft() > 0;
     $('#btn-again').hidden = !canPlay;
     show('result');
-    say('end');
+    const endMs = say('end');
+    if (fresh) {
+      const id = run;
+      // Umum kawan baharu selepas "Syabas" habis, hanya jika anak masih di skrin keputusan.
+      setTimeout(() => { if (id === run && !$('#scr-result').hidden) say('baru-' + fresh.id); }, endMs + 300);
+    }
   }
 
   async function breathe() {
@@ -995,7 +1038,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   }
 
   function renderHome() {
-    $('#parade').innerHTML = ANIMALS.map((a) => `<figure>${ART[a.id]()}<figcaption>${a.name}</figcaption></figure>`).join('');
+    const ok = unlockedIds();
+    $('#parade').innerHTML = ANIMALS.map((a) => {
+      if (!ok.has(a.id)) return `<figure class="secret" aria-label="Haiwan rahsia">${ART[a.id]().replace(/role="img" aria-label="[^"]*"/, 'aria-hidden="true"')}<figcaption>?</figcaption></figure>`;
+      const n = starsOf(a.id);
+      return `<figure>${ART[a.id]()}<figcaption>${a.name}</figcaption><span class="stars" role="img" aria-label="${n} daripada ${STAR_AT.length} bintang"><b>${'★'.repeat(n)}</b>${'★'.repeat(STAR_AT.length - n)}</span></figure>`;
+    }).join('');
     $('#age-chips').innerHTML = [3, 4, 5, 6].map((n) => `<button class="chip" type="button" data-age="${n}" aria-pressed="${data.settings.age === n}" aria-label="Umur ${n} tahun">${n}</button>`).join('');
     const locked = timeLeft() <= 0;
     $('#locked').hidden = !locked;

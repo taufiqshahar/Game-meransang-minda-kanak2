@@ -33,6 +33,9 @@ ffmpeg -i asal.mp3 -af "volume=6.5dB,alimiter=limit=0.84:level=false" -ac 1 -b:a
 | end | [excited] Syabas! Semua haiwan dah selamat melintas. | ✅ ada |
 | breath-in | [softly] Tarik nafas dalam-dalam… | ✅ ada |
 | breath-out | [softly] Hembus perlahan-lahan… | ✅ ada |
+| baru-orangutan | [excited] Wah, kawan baharu! Orang utan nak ikut melintas! | ✅ ada |
+| baru-tapir | [excited] Wah, kawan baharu! Tapir nak ikut melintas! | ✅ ada |
+| baru-enggang | [excited] Wah, kawan baharu! Burung enggang nak ikut melintas! | ✅ ada |
 
 ## Panduan bahasa (Melayu Malaysia, bukan Indonesia)
 - Skrin: **tekan** (bukan "ketik"/"ketuk"/"klik").
