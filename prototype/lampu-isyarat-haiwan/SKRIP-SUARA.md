@@ -3,6 +3,18 @@
 Suara: ElevenLabs **Hafiz – Energetic Cartoon Character** (`LkSPBLr5WF7APTCqF4ZJ`, loghat Malaysia), model `eleven_v4`, 1 versi setiap baris.
 Simpan sebagai `assets/audio/<kunci>.mp3` (64 kbps mono), kemudian tambah kunci ke `RECORDED` dalam `game.html`.
 
+## Kelantangan (wajib sebelum simpan)
+- Baris biasa: **−18 LUFS**. Baris `[softly]`: **−20 LUFS** (lembut tapi masih jelas pada pembesar suara tablet).
+- Puncak maksimum **−1.5 dBTP**. Gain linear sahaja + limiter, jangan mampat dinamik.
+- Encode dari fail asal ElevenLabs, bukan dari MP3 64k (elak kualiti jatuh dua kali).
+
+```bash
+# 1) Ukur: ambil nilai "input_i"
+ffmpeg -i asal.mp3 -af loudnorm=print_format=json -f null - 2>&1 | grep input_i
+# 2) GAIN = sasaran − input_i (cth. −18 − (−24.5) = 6.5)
+ffmpeg -i asal.mp3 -af "volume=6.5dB,alimiter=limit=0.84:level=false" -ac 1 -b:a 64k -map_metadata -1 assets/audio/<kunci>.mp3
+```
+
 | Kunci | Teks (tag nada dalam kurungan siku) | Status |
 |---|---|---|
 | intro | [excited] Jom, kita tolong haiwan melintas jalan! | ✅ ada |
