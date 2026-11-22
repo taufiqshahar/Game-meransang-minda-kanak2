@@ -118,6 +118,13 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
 .instant, .instant * { transition: none !important; }
 .walker { z-index: 5; pointer-events: none; }
 .walker svg { width: 100%; height: auto; display: block; }
+.walker.asking { animation: ask-bob 1.1s ease-in-out infinite; }
+@keyframes ask-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6%); } }
+/* Isyarat "giliran adik": semak bergoyang perlahan bila boleh ditekan. */
+.bush:not(:disabled) .leaf { transform-origin: 50% 100%; animation: wiggle 1.4s ease-in-out infinite; }
+.bush:not(:disabled):nth-child(2n) .leaf { animation-delay: .35s; }
+.bush:not(:disabled):nth-child(3n) .leaf { animation-delay: .7s; }
+@keyframes wiggle { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.045, .96); } }
 .hand { width: 15%; z-index: 6; pointer-events: none; animation: tap 1s ease-in-out infinite; }
 .hand svg { width: 100%; height: auto; display: block; }
 @keyframes tap { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-8%, -10%) scale(.9); } }
@@ -198,7 +205,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   .form-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hand, .hero-bush .peek { animation: none; }
+  .hand, .hero-bush .peek, .walker.asking, .bush:not(:disabled) .leaf { animation: none; }
   .hero-bush .peek { transform: translateY(0); }
   .play, .btn, .bush .hider { transition: none; }
 }
@@ -228,7 +235,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <span>UMUR ANAK</span>
       <div id="age-chips" style="display:flex;gap:8px"></div>
     </div>
-    <p class="home-note">Prototaip v0.1 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
+    <p class="home-note">Prototaip v0.2 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
   </section>
 
   <!-- GAME -->
@@ -350,6 +357,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <b>Apa yang diukur?</b>
       <span><b>Ingatan kerja</b>: berapa banyak tempat anak boleh simpan dalam fikiran sekali gus. Tugasan ini serupa dengan ujian "ingatan lokasi" yang digunakan penyelidik untuk kanak-kanak prasekolah.</span>
       <span>Bilangan haiwan naik seekor bila anak betul 2 kali berturut-turut, dan turun seekor bila tersilap. <b>Betul</b> dikira hanya bila anak jumpa pada cubaan pertama. Tiada had masa menjawab. Ini bukan alat diagnosis.</span>
+      <span><b>Umur 3 tahun</b>: biasa sebahagian anak belum faham pada mulanya. Main bersama 1–2 pusingan pertama: tunjuk haiwan, sebut namanya, dan tanya "Mana kancil?" sama-sama. Anak 3 tahun mula dengan 1 haiwan dan rentak lebih perlahan.</span>
     </div>
     <div>
       <h3 style="margin-bottom:8px">Pusingan terkini</h3>
@@ -393,7 +401,9 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   const TRIALS_PER_ROUND = 8;
   const MAX_ROUNDS_PER_SESSION = 3;
   const SPAN_MIN = 1, SPAN_MAX = 5;          // bilangan haiwan menyorok
-  const AGE_SPAN = { 3: 2, 4: 2, 5: 3, 6: 3 };
+  const AGE_SPAN = { 3: 1, 4: 2, 5: 3, 6: 3 };
+  const PRACTICE_MAX = 3;                    // demo + sehingga 2 cubaan sendiri
+  const pace = () => (data.settings.age <= 3 ? 1.4 : 1); // rentak lebih perlahan untuk 3 tahun
   const UP_AFTER = 2;                        // betul berturut-turut untuk tambah seekor
   const REMIND_MS = 8000, REMINDERS = 2;     // ulang soalan jika anak senyap; tiada had masa "gagal"
   // Kedudukan semak (% pentas) ikut bilangan semak. Lebar semak 30%, tinggi 25% pentas.
@@ -420,12 +430,15 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     end: 'Syabas! Adik pandai ingat.',
     'breath-in': 'Tarik nafas dalam-dalam…',
     'breath-out': 'Hembus perlahan-lahan…',
+    'sorok-kancil': 'Kancil menyorok!', 'sorok-harimau': 'Harimau menyorok!', 'sorok-orangutan': 'Orang utan menyorok!',
+    'sorok-gajah': 'Gajah menyorok!', 'sorok-tapir': 'Tapir menyorok!', 'sorok-enggang': 'Burung enggang menyorok!',
   };
   // Baris yang rakaman suaranya sepadan dengan teks semasa. Buang kunci di sini jika teks diubah sebelum dirakam semula.
   const RECORDED = new Set([
     'intro', 'prac', 'start', 'watch', 'more',
     'ask-kancil', 'ask-harimau', 'ask-orangutan', 'ask-gajah', 'ask-tapir', 'ask-enggang',
     'right1', 'right2', 'right3', 'retry', 'reveal', 'end', 'breath-in', 'breath-out',
+    'sorok-kancil', 'sorok-harimau', 'sorok-orangutan', 'sorok-gajah', 'sorok-tapir', 'sorok-enggang',
   ]);
   const PRAISE = ['right1', 'right2', 'right3'];
 
@@ -758,12 +771,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
     const to = upRect(h);
     const from = { left: SPOT.left + '%', top: SPOT.top + '%', width: SPOT.width + '%' };
     walker.innerHTML = ART[a.id]();
-    walker.hidden = false;
-    $('#caption').textContent = a.name;
+    walker.classList.remove('asking'); walker.hidden = false;
+    const said = say('sorok-' + a.id); // nama disebut: anak 3 tahun belum boleh baca kapsyen
     sfx.pop();
     await anim(walker, [{ ...from, opacity: 0, transform: 'scale(.5)' }, { ...from, opacity: 1, transform: 'scale(1)' }], { duration: 380, easing: 'cubic-bezier(.3,1.5,.5,1)' }); alive(id);
-    await sleep(500); alive(id);
-    await anim(walker, [{ ...from, opacity: 1, transform: 'scale(1)' }, { left: to.left + '%', top: to.top + '%', width: to.width + '%', opacity: 1, transform: 'scale(1)' }], { duration: 700 }); alive(id);
+    await sleep(Math.max(500 * pace(), said * .6)); alive(id);
+    await anim(walker, [{ ...from, opacity: 1, transform: 'scale(1)' }, { left: to.left + '%', top: to.top + '%', width: to.width + '%', opacity: 1, transform: 'scale(1)' }], { duration: 700 * pace() }); alive(id);
     // Tukar ke haiwan dalam semak (kedudukan sama), kemudian tunduk.
     h.classList.add('instant', 'up'); void h.offsetWidth; h.classList.remove('instant');
     walker.hidden = true; walker.getAnimations().forEach((x) => x.cancel());
@@ -797,35 +810,45 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   let roundStart = 0;
   let lastAsked = null;
 
-  async function runTrial(k, id, practice, announce) {
+  // mode: null (biasa), 'demo' (tangan tunjuk jawapan), 'solo' (latihan tanpa bantuan; tangan hanya selepas salah).
+  async function runTrial(k, id, mode, announce) {
+    const practice = !!mode;
     const n = bushCount(k);
     layoutBushes(n); arm(false); hand.hidden = true;
     const slots = shuffle([...Array(n).keys()]).slice(0, k);
     const who = shuffle(ANIMALS).slice(0, k);
-    if (practice) await sleep(Math.max(1200, say('prac') + 200));
+    if (mode === 'demo') await sleep(Math.max(1200, say('prac') + 200));
+    else if (mode === 'solo') await sleep(Math.max(1000, say('watch') + 200));
     else if (announce) await sleep(Math.max(1000, say(announce) + 200));
     alive(id);
     for (let j = 0; j < k; j++) { await hide(who[j], slots[j], id); await sleep(200); alive(id); }
     $('#caption').textContent = '';
-    await sleep(500 + 250 * k); alive(id); // jeda pendek: maklumat mesti disimpan dalam ingatan
+    await sleep((500 + 250 * k) * pace()); alive(id); // jeda pendek: maklumat mesti disimpan dalam ingatan
 
     // Elak tanya haiwan yang sama dua kali berturut-turut (terasa berulang bagi kanak-kanak).
     const choices = [...Array(k).keys()].filter((j) => k === 1 || who[j].id !== lastAsked);
     const q = pick(choices), target = who[q], slot = slots[q];
     lastAsked = target.id;
     say('ask-' + target.id, iconOf(target.id));
+    // Tunjuk haiwan yang dicari di tengah: anak tak perlu kenal nama tapir/enggang untuk menjawab.
+    walker.innerHTML = iconOf(target.id);
+    Object.assign(walker.style, { left: SPOT.left + '%', top: SPOT.top + '%', width: SPOT.width + '%' });
+    walker.hidden = false; walker.classList.add('asking');
+    anim(walker, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, fill: 'none' });
     arm(true);
-    if (practice) showHandAt(slot);
+    if (mode === 'demo') showHandAt(slot);
     const t0 = performance.now();
     let tap = await askUntilTap(target, id);
     const rec = { k, correct: tap === slot, rt: tap >= 0 ? Math.round(performance.now() - t0) : null, animal: target.id, found: tap === slot };
     if (tap >= 0 && tap !== slot) {
       sfx.soft(); shake(tap); say('retry');
       await sleep(300); alive(id);
+      if (mode === 'solo') showHandAt(slot); // latihan: bantu selepas salah
       tap = await askUntilTap(target, id);
       rec.found = tap === slot;
     }
     arm(false); hand.hidden = true;
+    walker.hidden = true; walker.classList.remove('asking');
     if (rec.found) {
       popUp(slot, true); sfx.good();
       await sleep(Math.max(1300, say(pick(PRAISE)) + 200)); alive(id);
@@ -862,7 +885,11 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       if (sessionRounds === 0) {
         await Promise.race([loadClips(), sleep(4000)]); alive(id);
         await sleep(Math.max(1700, say('intro') + 200)); alive(id);
-        await runTrial(1, id, true);
+        // Latihan sehingga faham: demo dengan tangan, kemudian cuba sendiri. Lulus bila betul tanpa bantuan.
+        for (let p = 0; p < PRACTICE_MAX; p++) {
+          const r = await runTrial(1, id, p === 0 ? 'demo' : 'solo');
+          if (p > 0 && r.correct) break;
+        }
         await sleep(Math.max(1600, say('start') + 200)); alive(id);
       }
       const recs = [];
@@ -932,7 +959,7 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
   function goHome() {
     run++;
     if (bushResolver) bushResolver(-2);
-    stopSpeech(); hand.hidden = true; walker.hidden = true;
+    stopSpeech(); hand.hidden = true; walker.hidden = true; walker.classList.remove('asking');
     sessionRounds = 0;
     renderHome(); show('home');
   }

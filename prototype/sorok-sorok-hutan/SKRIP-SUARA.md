@@ -25,6 +25,12 @@ Kelantangan: baris biasa −18 LUFS, baris `[softly]` −20 LUFS, puncak ≤ −
 | end | [excited] Syabas! Adik pandai ingat. | ✅ ada |
 | breath-in | [softly] Tarik nafas dalam-dalam… | ✅ ada (salinan Lampu Isyarat) |
 | breath-out | [softly] Hembus perlahan-lahan… | ✅ ada (salinan Lampu Isyarat) |
+| sorok-kancil | [excited] Kancil menyorok! | ✅ ada (v0.2) |
+| sorok-harimau | [excited] Harimau menyorok! | ✅ ada (v0.2) |
+| sorok-orangutan | [excited] Orang utan menyorok! | ✅ ada (v0.2) |
+| sorok-gajah | [excited] Gajah menyorok! | ✅ ada (v0.2) |
+| sorok-tapir | [excited] Tapir menyorok! | ✅ ada (v0.2) |
+| sorok-enggang | [excited] Burung enggang menyorok! | ✅ ada (v0.2) |
 
 ## Panduan bahasa (Melayu Malaysia, bukan Indonesia)
 - **menyorok / sorok** (bukan "sembunyi"), **semak**, **kat** (harian untuk "di").
