@@ -1,0 +1,1047 @@
+<title>Rumah Haiwan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: one-screen app. Home → Kampung dua rumah (stage 2:3) → Keputusan → Tarik nafas → Misi dunia sebenar. Zon ibu bapa di belakang "parental gate". */
+:root {
+  --hutan-gelap: #173F30;
+  --daun: #5DB36A;
+  --rumput: #79C27A;
+  --kertas: #FFFDF5;
+  --ink: #15302A;
+  --muted: #557466;
+  --merah: #E5484D;
+  --hijau: #22B26A;
+  --hijau-tekan: #178A50;
+  --hijau-malap: #1F4433;
+  --kuning: #F5B82E;
+  --kuning-tekan: #C98E12;
+  --garis: rgba(21, 48, 42, .14);
+  --overlay: rgba(8, 26, 19, .62);
+  --font-display: 'Fredoka', 'Baloo 2', ui-rounded, 'Arial Rounded MT Bold', system-ui, sans-serif;
+  --font-body: 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: light;
+}
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  background: var(--hutan-gelap); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px;
+  -webkit-tap-highlight-color: transparent; overscroll-behavior: none;
+}
+#app {
+  height: 100%; box-sizing: border-box; display: flex; flex-direction: column;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px;
+}
+.screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+button:focus-visible, select:focus-visible { outline: 3px solid var(--kuning); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+
+/* ---------- HOME ---------- */
+#scr-home { overflow-y: auto; align-items: center; color: var(--kertas); gap: 20px; padding-block: 8px 4px; }
+.home-top { width: 100%; max-width: 560px; display: flex; justify-content: flex-end; }
+.parent-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+  background: rgba(255, 253, 245, .1); color: var(--kertas); font-weight: 700; font-size: 14px; letter-spacing: .02em;
+}
+.parent-btn svg { width: 18px; height: 18px; }
+.hero { text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; max-width: 560px; }
+.hero h1 { font-size: clamp(34px, 9vw, 54px); font-weight: 700; }
+.hero p { margin: 0; font-size: 17px; color: rgba(255, 253, 245, .82); max-width: 34ch; }
+.hero-pair { display: flex; gap: 8px; align-items: flex-end; justify-content: center; }
+.hero-pair .hp { width: min(30vw, 120px); animation: hp-bob 2.4s ease-in-out infinite; }
+.hero-pair .hp:nth-child(2) { animation-delay: 1.2s; }
+.hero-pair svg { width: 100%; height: auto; display: block; }
+@keyframes hp-bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6%) rotate(2deg); } }
+.play {
+  width: 132px; height: 132px; border-radius: 50%; background: var(--hijau); color: var(--kertas);
+  box-shadow: 0 8px 0 var(--hijau-tekan), 0 14px 30px rgba(0, 0, 0, .3);
+  display: grid; place-items: center; transition: transform .12s, box-shadow .12s;
+}
+.play:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--hijau-tekan), 0 6px 16px rgba(0, 0, 0, .3); }
+.play svg { width: 54px; height: 54px; margin-left: 8px; }
+.play[disabled] { background: var(--hijau-malap); box-shadow: none; cursor: not-allowed; opacity: .7; }
+.play-label { font-family: var(--font-display); font-size: 22px; font-weight: 600; margin-top: -6px; }
+.age-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.age-row span { font-weight: 700; font-size: 14px; color: rgba(255, 253, 245, .8); letter-spacing: .02em; }
+.chip {
+  min-width: 48px; height: 48px; border-radius: 14px; padding: 0 12px;
+  background: rgba(255, 253, 245, .1); color: var(--kertas); font-family: var(--font-display); font-size: 20px; font-weight: 600;
+}
+.chip[aria-pressed="true"] { background: var(--kuning); color: var(--ink); }
+.limit-msg { max-width: 420px; text-align: center; background: rgba(255, 253, 245, .1); border-radius: 18px; padding: 14px 18px; font-weight: 700; line-height: 1.4; }
+.home-note { font-size: 13px; color: rgba(255, 253, 245, .6); text-align: center; max-width: 44ch; margin: 0; }
+
+/* ---------- GAME ---------- */
+#scr-game { gap: 10px; }
+.bar { display: flex; align-items: center; gap: 10px; }
+.icon-btn { width: 48px; height: 48px; border-radius: 14px; flex: none; background: rgba(255, 253, 245, .12); color: var(--kertas); display: grid; place-items: center; }
+.icon-btn svg { width: 26px; height: 26px; }
+.progress { flex: 1; display: flex; gap: 4px; justify-content: center; min-width: 0; }
+.progress i { width: 16px; height: 16px; flex: 0 1 16px; min-width: 5px; border-radius: 50% 0 50% 0; background: rgba(255, 253, 245, .16); transition: background .3s, transform .3s; }
+.progress i.done { background: var(--daun); transform: rotate(-8deg) scale(1.08); }
+.progress i.gap { margin-left: 8px; }
+.stage-wrap { flex: 1; min-height: 0; display: grid; place-items: center; }
+.stage {
+  position: relative; overflow: hidden; border-radius: 22px; --u: 4px;
+  touch-action: manipulation; user-select: none; -webkit-user-select: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35); background: var(--rumput);
+}
+.stage > * { position: absolute; }
+.bg { inset: 0; width: 100%; height: 100%; }
+.caption {
+  left: 50%; top: 2.2%; transform: translateX(-50%); max-width: 88%; width: max-content;
+  display: flex; align-items: center; gap: calc(var(--u) * 1.6);
+  background: var(--kertas); color: var(--ink); font-family: var(--font-display); font-weight: 600;
+  font-size: calc(var(--u) * 5.2); line-height: 1.2; text-align: center;
+  padding: calc(var(--u) * 2) calc(var(--u) * 4.2); border-radius: calc(var(--u) * 6);
+  box-shadow: 0 calc(var(--u) * .8) 0 rgba(0, 0, 0, .12); z-index: 7; transition: opacity .2s;
+}
+.caption:empty { opacity: 0; }
+.cap-ico { width: calc(var(--u) * 8); flex: none; margin-block: calc(var(--u) * -1); color: var(--ink); }
+.cap-ico svg { width: 100%; height: auto; display: block; }
+/* Rumah: sama rupa; hanya papan tanda (haiwan + warna topi) yang berbeza. */
+#houses { inset: 0; }
+.house { position: absolute; width: 44%; aspect-ratio: 160 / 150; top: 60%; padding: 0; z-index: 3; }
+.house:disabled { cursor: default; }
+.house .hs { position: absolute; inset: 0; transform-origin: 50% 100%; }
+.house .hs > svg { width: 100%; height: auto; display: block; }
+.house .sign {
+  position: absolute; left: 50%; bottom: 84%; width: 58%; aspect-ratio: 1; transform: translateX(-50%);
+  background: var(--kertas); border-radius: 50%; border: calc(var(--u) * .9) solid #8A5A32;
+  box-shadow: 0 calc(var(--u) * .8) 0 rgba(0, 0, 0, .15); display: grid; place-items: center; overflow: hidden;
+}
+.house .sign svg { height: 86%; width: auto; display: block; }
+.house:not(:disabled) .hs { animation: wiggle 1.4s ease-in-out infinite; }
+.house:not(:disabled):nth-of-type(2) .hs { animation-delay: .5s; }
+@keyframes wiggle { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.03, .975); } }
+.card { left: 33%; top: 13%; width: 34%; z-index: 5; pointer-events: none; }
+.card svg { width: 100%; height: auto; display: block; }
+.rule {
+  left: 50%; bottom: 2.4%; transform: translateX(-50%); z-index: 4; white-space: nowrap;
+  display: flex; align-items: center; gap: calc(var(--u) * 1.4);
+  background: rgba(21, 48, 42, .78); color: var(--kertas); font-family: var(--font-display); font-weight: 600;
+  font-size: calc(var(--u) * 3.8); padding: calc(var(--u) * 1.2) calc(var(--u) * 3.2); border-radius: 999px;
+}
+.rule svg { width: 1.3em; height: 1.3em; display: block; }
+.rule:empty { display: none; }
+.hand { width: 15%; z-index: 6; pointer-events: none; animation: tap 1s ease-in-out infinite; }
+.hand svg { width: 100%; height: auto; display: block; }
+@keyframes tap { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-8%, -10%) scale(.9); } }
+
+/* ---------- RESULT / BREATHE / MISSION ---------- */
+.center-col {
+  flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; text-align: center; color: var(--kertas); padding-block: 8px;
+}
+.center-col h2 { font-size: clamp(34px, 9vw, 48px); font-weight: 700; }
+.center-col p { margin: 0; font-size: 18px; line-height: 1.45; max-width: 32ch; color: rgba(255, 253, 245, .88); }
+.big-num { font-family: var(--font-display); font-weight: 700; font-size: 1.25em; color: var(--kuning); font-variant-numeric: tabular-nums; }
+.found { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 360px; }
+.found svg { width: 84px; height: auto; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.btn { min-height: 60px; padding: 0 28px; border-radius: 20px; font-family: var(--font-display); font-size: 22px; font-weight: 600; transition: transform .1s, box-shadow .1s; }
+.btn-primary { background: var(--hijau); color: var(--kertas); box-shadow: 0 6px 0 var(--hijau-tekan); }
+.btn-warm { background: var(--kuning); color: var(--ink); box-shadow: 0 6px 0 var(--kuning-tekan); }
+.btn:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0, 0, 0, .2); }
+.balloon-wrap { width: min(62vw, 260px); aspect-ratio: 1; max-width: 100%; display: grid; place-items: center; }
+.balloon { width: 46%; transform-origin: 50% 70%; }
+.balloon svg { width: 100%; height: auto; display: block; }
+.breath-text { font-family: var(--font-display); font-size: 28px; font-weight: 600; min-height: 1.3em; }
+.mission-card {
+  background: var(--kertas); color: var(--ink); border-radius: 24px; padding: 22px 22px 24px; max-width: 440px; width: 100%;
+  box-sizing: border-box; text-align: left; display: flex; flex-direction: column; gap: 12px;
+}
+.mission-card .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.mission-card h3 { font-size: 26px; }
+.mission-card p { color: var(--ink); font-size: 16px; max-width: none; }
+.mission-card ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; line-height: 1.45; }
+.mission-card .why { font-size: 14px; color: var(--muted); border-top: 1px solid var(--garis); padding-top: 10px; }
+
+/* ---------- OVERLAYS (gate + parent) ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 20; background: var(--overlay); display: grid; place-items: center;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-bottom, 0px));
+}
+.panel {
+  background: var(--kertas); color: var(--ink); border-radius: 22px; width: 100%; max-width: 560px; max-height: 100%;
+  overflow-y: auto; box-sizing: border-box; padding: 22px; display: flex; flex-direction: column; gap: 18px;
+}
+.panel h2 { font-size: 26px; }
+.panel h3 { font-size: 18px; }
+.panel p { margin: 0; line-height: 1.5; }
+.panel .sub { color: var(--muted); font-size: 14px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.close-btn { width: 44px; height: 44px; border-radius: 12px; background: rgba(21, 48, 42, .07); display: grid; place-items: center; flex: none; }
+.close-btn svg { width: 22px; height: 22px; }
+.gate-q { font-family: var(--font-display); font-size: 40px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+.gate-answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.gate-answers button { height: 64px; border-radius: 16px; background: rgba(21, 48, 42, .07); font-family: var(--font-display); font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.gate-msg { text-align: center; min-height: 1.4em; color: var(--merah); font-weight: 700; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { background: rgba(21, 48, 42, .05); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat b { font-family: var(--font-display); font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--garis); white-space: nowrap; }
+th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.meter { display: inline-block; width: 46px; height: 6px; border-radius: 3px; background: var(--garis); vertical-align: middle; margin-right: 6px; overflow: hidden; }
+.meter > i { display: block; height: 100%; background: var(--hijau); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 14px; min-width: 0; }
+.field select { height: 44px; border-radius: 12px; border: 1px solid var(--garis); background: var(--kertas); color: var(--ink); font: inherit; font-weight: 600; padding: 0 10px; }
+.toggle-row { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+.toggle-row input { width: 22px; height: 22px; accent-color: var(--hijau); }
+.btn-sm { min-height: 44px; padding: 0 16px; border-radius: 12px; font-weight: 800; font-size: 14px; background: rgba(21, 48, 42, .08); }
+.btn-sm.danger { color: var(--merah); }
+.btn-sm.go { background: var(--hijau); color: var(--kertas); }
+.explain { background: rgba(245, 184, 46, .14); border-radius: 14px; padding: 14px; font-size: 14px; line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+.empty { color: var(--muted); font-size: 14px; }
+@media (max-width: 420px) {
+  .stats { gap: 6px; }
+  .stat b { font-size: 22px; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hand, .hero-pair .hp, .house:not(:disabled) .hs { animation: none; }
+  .play, .btn { transition: none; }
+}
+</style>
+
+
+<div id="app">
+
+  <!-- HOME -->
+  <section id="scr-home" class="screen" aria-label="Laman utama">
+    <div class="home-top">
+      <button class="parent-btn" id="btn-parent" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Untuk ibu bapa
+      </button>
+    </div>
+    <div class="hero">
+      <h1>Rumah Haiwan</h1>
+      <p>Bantu haiwan balik ke rumah yang betul. Dengar baik-baik: ikut warna topi, atau ikut haiwan?</p>
+    </div>
+    <div class="hero-pair" id="hero-pair" aria-hidden="true"></div>
+    <button class="play" id="btn-play" type="button" aria-label="Main">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z" fill="currentColor"/></svg>
+    </button>
+    <div class="play-label" id="play-label">Main</div>
+    <div class="limit-msg" id="limit-msg" hidden>Masa main hari ini dah cukup. Haiwan hutan sedang tidur. Jumpa esok!</div>
+    <div class="age-row" role="group" aria-label="Umur anak">
+      <span>UMUR ANAK</span>
+      <div id="age-chips" style="display:flex;gap:8px"></div>
+    </div>
+    <p class="home-note">Prototaip v0.1 · Tiada iklan · Data disimpan dalam peranti ini sahaja</p>
+  </section>
+
+  <!-- GAME -->
+  <section id="scr-game" class="screen" aria-label="Permainan" hidden>
+    <div class="bar">
+      <button class="icon-btn" id="btn-home" type="button" aria-label="Kembali ke laman utama">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>
+      </button>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <button class="icon-btn" id="btn-mute" type="button" aria-label="Senyapkan bunyi" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+      </button>
+    </div>
+    <div class="stage-wrap" id="stage-wrap">
+      <div class="stage" id="stage" role="application" aria-label="Kampung. Tekan rumah yang betul untuk setiap haiwan.">
+        <svg class="bg" viewBox="0 0 200 300" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="rh-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FD8EE"/><stop offset="1" stop-color="#DDF2E6"/></linearGradient>
+            <radialGradient id="rh-sun"><stop offset="0" stop-color="#FFF6C8"/><stop offset=".45" stop-color="#FFE48A"/><stop offset="1" stop-color="#FFE48A" stop-opacity="0"/></radialGradient>
+            <linearGradient id="rh-grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86CF80"/><stop offset="1" stop-color="#5EAE62"/></linearGradient>
+          </defs>
+          <rect width="200" height="90" fill="url(#rh-sky)"/>
+          <circle cx="166" cy="22" r="20" fill="url(#rh-sun)"/>
+          <g fill="#FFFFFF" opacity=".85"><path d="M18 26 a7 7 0 0 1 12 -4 a8 8 0 0 1 14 3 a5 5 0 0 1 1 10 h-27 a5 5 0 0 1 0 -9z"/></g>
+          <path d="M0 64 C24 50 44 52 64 60 C88 46 112 46 134 58 C156 48 180 50 200 56 V96 H0Z" fill="#A9D5BC" opacity=".9"/>
+          <g>
+            <rect x="170" y="44" width="3" height="50" fill="#7A5A3A"/>
+            <path d="M171.5 44 c-12 -2 -20 4 -24 10 c8 -5 16 -6 24 -6z M171.5 44 c12 -2 20 4 24 10 c-8 -5 -16 -6 -24 -6z M171.5 44 c-6 -10 -16 -12 -22 -10 c8 1 15 5 22 12z M171.5 44 c6 -10 16 -12 22 -10 c-8 1 -15 5 -22 12z" fill="#3E9660"/>
+            <circle cx="170" cy="47" r="2.2" fill="#8A6A3A"/><circle cx="173.5" cy="47.5" r="2.2" fill="#8A6A3A"/>
+            <rect x="24" y="52" width="3" height="42" fill="#7A5A3A"/>
+            <path d="M25.5 52 c-10 -2 -17 3 -20 9 c7 -4 13 -5 20 -5z M25.5 52 c10 -2 17 3 20 9 c-7 -4 -13 -5 -20 -5z M25.5 52 c-5 -9 -13 -10 -18 -8 c7 1 12 4 18 10z M25.5 52 c5 -9 13 -10 18 -8 c-7 1 -12 4 -18 10z" fill="#2E7A4C"/>
+          </g>
+          <rect y="88" width="200" height="212" fill="url(#rh-grass)"/>
+          <path d="M100 300 C96 250 60 230 54 196 L146 196 C140 230 104 250 100 300Z" fill="#E9D3A8" opacity=".55"/>
+          <g fill="#8ED48A" opacity=".8"><ellipse cx="34" cy="120" rx="24" ry="6"/><ellipse cx="170" cy="134" rx="26" ry="7"/></g>
+          <g><circle cx="22" cy="104" r="2.6" fill="#F06A9A"/><circle cx="22" cy="104" r="1" fill="#FFE1EC"/>
+            <circle cx="182" cy="112" r="3" fill="#F5B82E"/><circle cx="182" cy="112" r="1.2" fill="#FFF3C4"/>
+            <circle cx="40" cy="292" r="3" fill="#F5B82E"/><circle cx="40" cy="292" r="1.2" fill="#FFF3C4"/>
+            <circle cx="164" cy="294" r="2.6" fill="#F06A9A"/><circle cx="164" cy="294" r="1" fill="#FFE1EC"/></g>
+        </svg>
+        <div id="houses"></div>
+        <div class="card" id="card" hidden aria-live="polite"></div>
+        <div class="rule" id="rule" aria-live="polite"></div>
+        <div class="hand" id="hand" hidden aria-hidden="true"></div>
+        <div class="caption" id="caption" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="scr-result" class="screen" aria-label="Keputusan" hidden>
+    <div class="center-col">
+      <h2>Syabas!</h2>
+      <div class="found" id="found" aria-hidden="true"></div>
+      <p id="result-text"></p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-again" type="button">Main lagi</button>
+        <button class="btn btn-warm" id="btn-rest" type="button">Rehat</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREATHE -->
+  <section id="scr-breathe" class="screen" aria-label="Tarik nafas" hidden>
+    <div class="center-col">
+      <h2>Tarik Nafas Belon</h2>
+      <div class="balloon-wrap"><div class="balloon" id="balloon"></div></div>
+      <div class="breath-text" id="breath-text" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section id="scr-mission" class="screen" aria-label="Misi dunia sebenar" hidden>
+    <div class="center-col">
+      <div class="mission-card">
+        <span class="eyebrow">Misi dunia sebenar · untuk ibu bapa &amp; anak</span>
+        <h3>Main "Isih Mainan" di rumah</h3>
+        <ol>
+          <li>Sediakan 2 bakul dan beberapa mainan dua warna, contohnya kereta dan bola merah serta biru.</li>
+          <li>Mula-mula isih <b>ikut warna</b>: semua yang merah ke bakul merah.</li>
+          <li>Kemudian sebut <b>"Tukar!"</b> dan isih semula <b>ikut jenis</b>: semua kereta ke satu bakul, semua bola ke bakul lain.</li>
+          <li>Bila dah senang, tukar peraturan lebih kerap. Bergilir-gilir: biar anak pula beri arahan.</li>
+        </ol>
+        <p class="why">Kenapa? Permainan ini melatih fleksibiliti kognitif, iaitu kebolehan menukar cara berfikir bila peraturan berubah. Kemahiran ini membantu anak menyesuaikan diri, menyelesaikan masalah dan bermain dengan rakan.</p>
+      </div>
+      <button class="btn btn-primary" id="btn-done" type="button">Selesai</button>
+    </div>
+  </section>
+</div>
+
+<!-- PARENTAL GATE -->
+<div class="overlay" id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="panel" style="max-width:380px">
+    <div class="panel-head">
+      <h2 id="gate-title">Untuk ibu bapa</h2>
+      <button class="close-btn" id="gate-close" type="button" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <p class="sub">Jawab soalan ini untuk masuk ke tetapan.</p>
+    <div class="gate-q" id="gate-q"></div>
+    <div class="gate-answers" id="gate-answers"></div>
+    <div class="gate-msg" id="gate-msg" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- PARENT AREA -->
+<div class="overlay" id="parent" hidden role="dialog" aria-modal="true" aria-labelledby="parent-title">
+  <div class="panel">
+    <div class="panel-head">
+      <h2 id="parent-title">Perkembangan anak</h2>
+      <button class="close-btn" id="parent-close" type="button" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="explain">
+      <b>Apa yang diukur?</b>
+      <span><b>Fleksibiliti kognitif</b>: kebolehan menukar peraturan dalam fikiran. Permainan ini berasaskan tugasan <i>Dimensional Change Card Sort</i> (DCCS) yang digunakan penyelidik: setiap haiwan sepadan dengan satu rumah ikut warna dan dengan rumah yang lain ikut jenis haiwan, jadi anak mesti benar-benar tukar cara berfikir.</span>
+      <span><b>Tukar peraturan</b> ialah peratus betul selepas peraturan bertukar. Biasa: ramai kanak-kanak 3 tahun masih ikut peraturan lama, dan kebanyakan kanak-kanak 4–5 tahun boleh tukar. <b>Campur</b> (tahap 2) mengukur pertukaran setiap kali, yang lebih mencabar walaupun untuk 6 tahun.</span>
+      <span>Tahap naik bila anak betul sekurang-kurangnya 5 daripada 6 selepas tukar, dan turun bila 3 atau kurang. Ini bukan alat diagnosis.</span>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Pusingan terkini</h3>
+      <div class="table-wrap" id="history"></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:10px">Tetapan</h3>
+      <div class="form-grid">
+        <label class="field" for="set-age">Umur anak
+          <select id="set-age"><option value="3">3 tahun</option><option value="4">4 tahun</option><option value="5">5 tahun</option><option value="6">6 tahun</option></select>
+        </label>
+        <label class="field" for="set-limit">Had masa sehari
+          <select id="set-limit"><option value="5">5 minit</option><option value="10">10 minit</option><option value="15">15 minit</option><option value="20">20 minit</option></select>
+        </label>
+      </div>
+      <label class="toggle-row" for="set-voice" style="margin-top:12px"><input type="checkbox" id="set-voice"> Suara arahan</label>
+      <p class="sub" id="voice-note" style="margin-top:6px"></p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="sub" id="today-info" style="flex:1 1 200px"></span>
+      <button class="btn-sm go" id="btn-extend" type="button">Tambah 5 minit hari ini</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--garis);padding-top:14px">
+      <button class="btn-sm danger" id="btn-reset" type="button">Padam semua data</button>
+      <span id="reset-confirm" hidden style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="sub">Pasti? Semua rekod akan hilang.</span>
+        <button class="btn-sm danger" id="btn-reset-yes" type="button">Ya, padam</button>
+        <button class="btn-sm" id="btn-reset-no" type="button">Batal</button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+
+  /* ================= CONFIG ================= */
+  const STORE_KEY = 'rumah-haiwan.v1';
+  const TRIALS_PER_BLOCK = 6, MIX_TRIALS = 8;
+  const MAX_ROUNDS_PER_SESSION = 3;
+  const AGE_LEVEL = { 3: 1, 4: 1, 5: 2, 6: 2 };
+  const PASS_POST = 5, FAIL_POST = 3;        // tahap 1→2 bila ≥5/6 betul selepas tukar; 2→1 bila ≤3/6
+  const REMIND_MS = 8000, REMINDERS = 2;     // ulang arahan bila anak senyap; tiada had masa "gagal"
+  const COLORS = { merah: { fill: '#E5484D', dark: '#A8262B' }, biru: { fill: '#2F7DE1', dark: '#1A4F99' } };
+  // Kedudukan topi (tengah tepi bawah topi, dalam koordinat lukisan 140×150) dan kecondongan.
+  const HAT_AT = { kancil: [70, 32, 0], harimau: [70, 33, 0], orangutan: [70, 24, 0], gajah: [70, 30, 0], tapir: [70, 34, 0], enggang: [56, 36, -12] };
+  const RULE_TEXT = { warna: 'Ikut warna topi', haiwan: 'Ikut haiwan', campur: 'Dengar: warna atau haiwan?' };
+  // Setiap baris: kunci fail suara (assets/audio/<key>.mp3) + kapsyen.
+  const LINES = {
+    intro: 'Jom tolong haiwan balik rumah! Dengar baik-baik, ya.',
+    'rule-warna': 'Kita main warna. Topi merah masuk rumah topi merah, topi biru masuk rumah topi biru.',
+    'rule-haiwan': 'Kita main haiwan. Setiap haiwan masuk rumah haiwan yang sama, tak kira warna topi.',
+    switch: 'Sekarang kita tukar permainan!',
+    mix: 'Sekarang lagi mencabar! Dengar baik-baik: warna atau haiwan?',
+    'cue-warna': 'Warna!', 'cue-haiwan': 'Haiwan!',
+    'remind-warna': 'Ingat, ikut warna topi.', 'remind-haiwan': 'Ingat, ikut haiwan.',
+    right1: 'Bagus!', right2: 'Pandainya!', right3: 'Betul, itu rumah dia!',
+    'wrong-warna': 'Hmm, tengok warna topi dia.', 'wrong-haiwan': 'Hmm, tengok haiwan apa ni.',
+    end: 'Syabas! Semua haiwan dah sampai rumah.',
+    'breath-in': 'Tarik nafas dalam-dalam…',
+    'breath-out': 'Hembus perlahan-lahan…',
+  };
+  // Baris yang rakaman suaranya sepadan dengan teks semasa. Buang kunci di sini jika teks diubah sebelum dirakam semula.
+  const RECORDED = new Set([
+    'intro', 'rule-warna', 'rule-haiwan', 'switch', 'mix', 'cue-warna', 'cue-haiwan', 'remind-warna', 'remind-haiwan',
+    'right1', 'right2', 'right3', 'wrong-warna', 'wrong-haiwan', 'end', 'breath-in', 'breath-out',
+  ]);
+  const PRAISE = ['right1', 'right2', 'right3'];
+
+  // Lukisan haiwan disalin dari sorok-sorok-hutan/game.html (asal: lampu-isyarat-haiwan).
+  // Hutang teknikal: ekstrak ke modul dikongsi bila app shell untuk banyak game dibina.
+  /* ================= ART (SVG vektor: tajam pada semua skrin) ================= */
+  // Gaya: pelekat kartun, garis luar lembut, bayang gradien, mata berkilat. Gradien dikongsi dalam #art-defs.
+  const eye = (cx, cy, r, iris = '#2A1C14') => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${iris}"/><circle cx="${cx}" cy="${cy}" r="${r * .55}" fill="#120C08"/><circle cx="${cx + r * .32}" cy="${cy - r * .36}" r="${r * .36}" fill="#fff"/><circle cx="${cx - r * .38}" cy="${cy + r * .36}" r="${r * .16}" fill="#fff" opacity=".85"/>`;
+  const ringEye = (cx, cy, r, iris) => `<circle cx="${cx}" cy="${cy}" r="${r * 1.45}" fill="#FFFDF7"/>${eye(cx, cy, r, iris)}`;
+  const cheeks = (y, l, r, s = 7) => `<ellipse cx="${l}" cy="${y}" rx="${s}" ry="${s * .7}" fill="url(#ag-cheek)"/><ellipse cx="${r}" cy="${y}" rx="${s}" ry="${s * .7}" fill="url(#ag-cheek)"/>`;
+  const shadow = (rx = 34) => `<ellipse cx="70" cy="143" rx="${rx}" ry="5.5" fill="#0B2A1C" opacity=".18"/>`;
+  // Anggota berbentuk garisan tebal dengan garis luar (dua lapis).
+  const limb = (d, w, fill, line) => `<path d="${d}" stroke="${line}" stroke-width="${w + 5}" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${fill}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+  const wrap = (inner, label) => `<svg viewBox="0 0 140 150" role="img" aria-label="${label}">${inner}</svg>`;
+
+  const ART = {
+    kancil: () => wrap(`${shadow(30)}
+      ${limb('M54 112 L52 138', 6, '#9A5F33', '#5E3519')}${limb('M86 112 L88 138', 6, '#9A5F33', '#5E3519')}
+      ${limb('M62 116 L61 140', 6.5, '#B57442', '#5E3519')}${limb('M78 116 L79 140', 6.5, '#B57442', '#5E3519')}
+      <ellipse cx="61" cy="140.5" rx="4.5" ry="2.6" fill="#2A1C14"/><ellipse cx="79" cy="140.5" rx="4.5" ry="2.6" fill="#2A1C14"/>
+      <ellipse cx="70" cy="104" rx="27" ry="21" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <path d="M58 90 l12 9 l12 -9" stroke="#FFF6E8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M61 101 l9 6.5 l9 -6.5" stroke="#FFF6E8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <ellipse cx="45" cy="36" rx="9" ry="12.5" transform="rotate(-32 45 36)" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <ellipse cx="95" cy="36" rx="9" ry="12.5" transform="rotate(32 95 36)" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <ellipse cx="46" cy="37" rx="4.2" ry="7" transform="rotate(-32 46 37)" fill="#E9B98F"/><ellipse cx="94" cy="37" rx="4.2" ry="7" transform="rotate(32 94 37)" fill="#E9B98F"/>
+      <path d="M70 30 C92 30 102 46 102 62 C102 80 88 90 70 90 C52 90 38 80 38 62 C38 46 48 30 70 30 Z" fill="url(#ag-kancil)" stroke="#6B3E1F" stroke-width="3"/>
+      <path d="M60 50 q-6 10 -2 22 M80 50 q6 10 2 22" stroke="#E4B48A" stroke-width="3" stroke-linecap="round" fill="none" opacity=".9"/>
+      <ellipse cx="70" cy="78" rx="14.5" ry="10.5" fill="url(#ag-cream)"/>
+      <ellipse cx="70" cy="72" rx="5.5" ry="4" fill="#2A1C14"/><ellipse cx="68.4" cy="70.8" rx="1.6" ry="1" fill="#fff" opacity=".7"/>
+      <path d="M64 81 q6 5 12 0" stroke="#5A3420" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      ${eye(56, 60, 7)}${eye(84, 60, 7)}${cheeks(73, 47, 93, 6.5)}`, 'Kancil'),
+
+    harimau: () => wrap(`${shadow(36)}
+      <path d="M99 116 q22 -2 19 -27" stroke="#8E4211" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M99 116 q22 -2 19 -27" stroke="#F28A2C" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M114 101 l6 2 M117 93 l6 1" stroke="#2B1B12" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="70" cy="110" rx="31" ry="24" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <ellipse cx="70" cy="116" rx="17" ry="14" fill="url(#ag-white)"/>
+      <path d="M42 101 q7 2 10 8 M41 114 q7 1 9 6 M98 101 q-7 2 -10 8 M99 114 q-7 1 -9 6" stroke="#2B1B12" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <rect x="50" y="116" width="16" height="25" rx="8" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <rect x="74" y="116" width="16" height="25" rx="8" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <ellipse cx="58" cy="137" rx="8.5" ry="5" fill="url(#ag-white)" stroke="#8E4211" stroke-width="2.4"/><ellipse cx="82" cy="137" rx="8.5" ry="5" fill="url(#ag-white)" stroke="#8E4211" stroke-width="2.4"/>
+      <circle cx="42" cy="34" r="12" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/><circle cx="98" cy="34" r="12" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <circle cx="42" cy="35" r="6" fill="#FFE2CF"/><circle cx="98" cy="35" r="6" fill="#FFE2CF"/>
+      <ellipse cx="70" cy="63" rx="37" ry="33" fill="url(#ag-tiger)" stroke="#8E4211" stroke-width="3"/>
+      <g stroke="#2B1B12" stroke-linecap="round" fill="none">
+        <path d="M70 31 v11" stroke-width="5"/><path d="M58 34 q4 5 2 11" stroke-width="4"/><path d="M82 34 q-4 5 -2 11" stroke-width="4"/>
+        <path d="M34 56 q7 1 11 5" stroke-width="4"/><path d="M35 68 q7 0 10 3" stroke-width="3.5"/>
+        <path d="M106 56 q-7 1 -11 5" stroke-width="4"/><path d="M105 68 q-7 0 -10 3" stroke-width="3.5"/>
+      </g>
+      <ellipse cx="56" cy="49" rx="6.5" ry="3.6" fill="#FFF8EE"/><ellipse cx="84" cy="49" rx="6.5" ry="3.6" fill="#FFF8EE"/>
+      <ellipse cx="61" cy="79" rx="12" ry="9.5" fill="url(#ag-white)"/><ellipse cx="79" cy="79" rx="12" ry="9.5" fill="url(#ag-white)"/>
+      <ellipse cx="70" cy="89" rx="9" ry="5.5" fill="url(#ag-white)"/>
+      <path d="M62.5 72 h15 q-2 6.5 -7.5 7.5 q-5.5 -1 -7.5 -7.5 z" fill="#E87E8E" stroke="#5A2A1A" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M70 79.5 v3.5 M70 83 q-5 4.5 -9.5 1 M70 83 q5 4.5 9.5 1" stroke="#5A2A1A" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <g fill="#5A2A1A" opacity=".55"><circle cx="58" cy="80" r="1.1"/><circle cx="55" cy="83" r="1.1"/><circle cx="82" cy="80" r="1.1"/><circle cx="85" cy="83" r="1.1"/></g>
+      ${eye(57, 61, 7)}${eye(83, 61, 7)}${cheeks(74, 44, 96, 6)}`, 'Harimau Malaya'),
+
+    orangutan: () => wrap(`${shadow(40)}
+      ${limb('M47 96 C33 108 30 122 33 136', 13, '#C2532A', '#7A2D10')}${limb('M93 96 C107 108 110 122 107 136', 13, '#C2532A', '#7A2D10')}
+      <ellipse cx="33" cy="139" rx="8.5" ry="6" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.4"/><ellipse cx="107" cy="139" rx="8.5" ry="6" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.4"/>
+      ${limb('M60 126 L59 137', 11, '#B04822', '#7A2D10')}${limb('M80 126 L81 137', 11, '#B04822', '#7A2D10')}
+      <ellipse cx="58" cy="140" rx="8" ry="4.5" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.2"/><ellipse cx="82" cy="140" rx="8" ry="4.5" fill="url(#ag-face)" stroke="#7A2D10" stroke-width="2.2"/>
+      <ellipse cx="70" cy="108" rx="27" ry="25" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3"/>
+      <path d="M60 98 q4 6 2 12 M72 96 q3 7 0 14 M82 100 q-2 6 1 11" stroke="#E9824F" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".8"/>
+      <path d="M44 48 C40 26 56 20 70 20 C84 20 100 26 96 48 Z" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M62 22 l3 -10 l5 9 l5 -10 l3 11" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3" stroke-linejoin="round"/>
+      <circle cx="70" cy="58" r="31" fill="url(#ag-orang)" stroke="#7A2D10" stroke-width="3"/>
+      <path d="M70 41 C78 37 92 40 92 54 C92 62 88 68 86 72 C84 84 78 90 70 90 C62 90 56 84 54 72 C52 68 48 62 48 54 C48 40 62 37 70 41 Z" fill="url(#ag-face)" stroke="#9A4A26" stroke-width="2"/>
+      ${eye(61, 56, 5.5)}${eye(79, 56, 5.5)}
+      <circle cx="67" cy="69" r="1.9" fill="#6B3218"/><circle cx="73" cy="69" r="1.9" fill="#6B3218"/>
+      <path d="M58 77 q12 9 24 0" stroke="#7A3A1E" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+      ${cheeks(72, 54, 86, 5)}`, 'Orang utan'),
+
+    gajah: () => wrap(`${shadow(38)}
+      <path d="M50 44 C28 34 10 46 12 68 C14 88 30 96 46 88 Z" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M90 44 C112 34 130 46 128 68 C126 88 110 96 94 88 Z" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M46 52 C32 46 22 54 23 68 C24 80 34 84 44 80 Z" fill="#EFC3C8"/><path d="M94 52 C108 46 118 54 117 68 C116 80 106 84 96 80 Z" fill="#EFC3C8"/>
+      <ellipse cx="70" cy="110" rx="31" ry="23" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <rect x="47" y="114" width="19" height="27" rx="8" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <rect x="74" y="114" width="19" height="27" rx="8" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <g fill="#F4F1EA"><ellipse cx="52" cy="139" rx="2.6" ry="1.8"/><ellipse cx="57" cy="139.5" rx="2.6" ry="1.8"/><ellipse cx="62" cy="139" rx="2.6" ry="1.8"/><ellipse cx="78" cy="139" rx="2.6" ry="1.8"/><ellipse cx="83" cy="139.5" rx="2.6" ry="1.8"/><ellipse cx="88" cy="139" rx="2.6" ry="1.8"/></g>
+      <ellipse cx="70" cy="58" rx="33" ry="30" fill="url(#ag-ele)" stroke="#5B6B7D" stroke-width="3"/>
+      <path d="M64 30 q1 -6 -2 -10 M70 29 v-9 M76 30 q-1 -6 2 -10" stroke="#5B6B7D" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M70 70 C70 92 63 100 71 110 C77 116 88 112 86 103" stroke="#5B6B7D" stroke-width="17" stroke-linecap="round" fill="none"/>
+      <path d="M70 70 C70 92 63 100 71 110 C77 116 88 112 86 103" stroke="#A5B2C1" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M65 82 h9 M64.5 90 h8 M66 98 h7" stroke="#7D8C9E" stroke-width="1.8" stroke-linecap="round"/>
+      ${eye(55, 56, 6.5)}${eye(85, 56, 6.5)}${cheeks(70, 47, 93, 6.5)}`, 'Gajah'),
+
+    tapir: () => wrap(`${shadow(36)}
+      <ellipse cx="70" cy="106" rx="33" ry="22" fill="url(#ag-cream)" stroke="#15171A" stroke-width="3"/>
+      <path d="M38 108 C44 128 96 128 102 108 C98 124 86 130 70 130 C54 130 42 124 38 108 Z" fill="url(#ag-tapir)"/>
+      <path d="M40 104 C46 118 94 118 100 104" fill="none" stroke="#15171A" stroke-width="0"/>
+      <rect x="49" y="114" width="16" height="27" rx="7" fill="url(#ag-tapir)" stroke="#15171A" stroke-width="3"/>
+      <rect x="75" y="114" width="16" height="27" rx="7" fill="url(#ag-tapir)" stroke="#15171A" stroke-width="3"/>
+      <ellipse cx="47" cy="36" rx="8" ry="10.5" transform="rotate(-20 47 36)" fill="url(#ag-tapir)" stroke="#F4F1EA" stroke-width="3"/>
+      <ellipse cx="93" cy="36" rx="8" ry="10.5" transform="rotate(20 93 36)" fill="url(#ag-tapir)" stroke="#F4F1EA" stroke-width="3"/>
+      <ellipse cx="70" cy="60" rx="30" ry="28" fill="url(#ag-tapir)" stroke="#15171A" stroke-width="3"/>
+      <ellipse cx="60" cy="46" rx="12" ry="7" fill="#fff" opacity=".1" transform="rotate(-20 60 46)"/>
+      <path d="M59 72 C59 66 81 66 81 72 L80 90 C80 96 60 96 60 90 Z" fill="#4A4F58" stroke="#15171A" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M62 80 q8 3 16 0" stroke="#2C3036" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="65.5" cy="90" rx="2" ry="1.4" fill="#15171A"/><ellipse cx="74.5" cy="90" rx="2" ry="1.4" fill="#15171A"/>
+      ${ringEye(57, 57, 5)}${ringEye(83, 57, 5)}${cheeks(70, 46, 94, 5.5)}`, 'Tapir'),
+
+    enggang: () => wrap(`${shadow(30)}
+      <path d="M58 122 l-2 18 M70 122 l2 18" stroke="#F0B43A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M50 141 h10 M66 141 h10" stroke="#C98A1C" stroke-width="3" stroke-linecap="round"/>
+      <path d="M50 118 L44 140 L80 140 L74 118 Z" fill="#FBFAF4" stroke="#15151A" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M46.5 131 h31" stroke="#15151A" stroke-width="5"/>
+      <ellipse cx="62" cy="100" rx="27" ry="29" fill="url(#ag-bird)" stroke="#0A0A0D" stroke-width="3"/>
+      <ellipse cx="62" cy="114" rx="15" ry="11" fill="url(#ag-white)"/>
+      <ellipse cx="38" cy="102" rx="9" ry="20" transform="rotate(12 38 102)" fill="#2C2C33" stroke="#0A0A0D" stroke-width="2.6"/>
+      <ellipse cx="86" cy="102" rx="9" ry="20" transform="rotate(-12 86 102)" fill="#2C2C33" stroke="#0A0A0D" stroke-width="2.6"/>
+      <circle cx="60" cy="56" r="23" fill="url(#ag-bird)" stroke="#0A0A0D" stroke-width="3"/>
+      <path d="M74 46 C84 30 106 26 118 34 C108 36 96 42 84 50 Z" fill="url(#ag-casque)" stroke="#9E3A12" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M76 52 C96 50 116 60 124 80 C108 72 92 68 76 64 Z" fill="url(#ag-beak)" stroke="#A86A12" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M80 59 C96 60 110 66 118 74" stroke="#D08A1C" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      ${ringEye(58, 52, 5, '#B3261E')}${cheeks(66, 48, 48, 5)}`, 'Burung enggang'),
+  };
+  const ART_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+    <radialGradient id="ag-kancil" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#D49A62"/><stop offset="1" stop-color="#A2652F"/></radialGradient>
+    <radialGradient id="ag-cream" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFF8EC"/><stop offset="1" stop-color="#EBD6B6"/></radialGradient>
+    <radialGradient id="ag-tiger" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#FFB25C"/><stop offset="1" stop-color="#E7741A"/></radialGradient>
+    <radialGradient id="ag-white" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#ECE6DC"/></radialGradient>
+    <radialGradient id="ag-orang" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#E5773F"/><stop offset="1" stop-color="#AE4220"/></radialGradient>
+    <radialGradient id="ag-face" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#FBD6AF"/><stop offset="1" stop-color="#E0A577"/></radialGradient>
+    <radialGradient id="ag-ele" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#C3CEDA"/><stop offset="1" stop-color="#8D9CAE"/></radialGradient>
+    <radialGradient id="ag-tapir" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#4A505A"/><stop offset="1" stop-color="#1B1E22"/></radialGradient>
+    <radialGradient id="ag-bird" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#454550"/><stop offset="1" stop-color="#121216"/></radialGradient>
+    <linearGradient id="ag-beak" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset="1" stop-color="#F0A21E"/></linearGradient>
+    <linearGradient id="ag-casque" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F06A2C"/><stop offset="1" stop-color="#FF9E5A"/></linearGradient>
+    <radialGradient id="ag-cheek"><stop offset="0" stop-color="#FF8FA3" stop-opacity=".75"/><stop offset="1" stop-color="#FF8FA3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ag-car" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3FA6DA"/><stop offset="1" stop-color="#1F78AC"/></linearGradient>
+    <linearGradient id="ag-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6F7FF"/><stop offset="1" stop-color="#A9DBF3"/></linearGradient>
+    <linearGradient id="ag-housing" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2E353E"/><stop offset=".5" stop-color="#3C444F"/><stop offset="1" stop-color="#22282F"/></linearGradient>
+    <radialGradient id="ag-glow-r"><stop offset="0" stop-color="#FF5A5F" stop-opacity=".75"/><stop offset="1" stop-color="#FF5A5F" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ag-glow-g"><stop offset="0" stop-color="#3BE08A" stop-opacity=".75"/><stop offset="1" stop-color="#3BE08A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ag-lamp-r" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFB3B5"/><stop offset=".45" stop-color="#FF4A50"/><stop offset="1" stop-color="#C22026"/></radialGradient>
+    <radialGradient id="ag-lamp-g" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#B8FFD8"/><stop offset=".45" stop-color="#2FD47E"/><stop offset="1" stop-color="#11914E"/></radialGradient>
+  </defs></svg>`;
+  const ANIMALS = [
+    { id: 'kancil', name: 'Kancil' },
+    { id: 'harimau', name: 'Harimau Malaya' },
+    { id: 'orangutan', name: 'Orang utan' },
+    { id: 'gajah', name: 'Gajah' },
+    { id: 'tapir', name: 'Tapir' },
+    { id: 'enggang', name: 'Enggang' },
+  ];
+  const HAND_SVG = `<svg viewBox="0 0 64 72" aria-hidden="true">
+    <path d="M24 8 a6 6 0 0 1 12 0 v24 l3 -1 a6 6 0 0 1 7 4 l1 1 a6 6 0 0 1 9 5 v14 c0 10 -8 15 -18 15 h-6 c-8 0 -12 -4 -16 -10 l-10 -16 a5 5 0 0 1 8 -6 l10 10 z" fill="#FFFDF5" stroke="#15302A" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="30" cy="6" r="10" fill="none" stroke="#FFFDF5" stroke-width="3" opacity=".8"/></svg>`;
+  const BALLOON_SVG = `<svg viewBox="0 0 100 150" aria-hidden="true">
+    <path d="M50 98 q-4 20 4 50" stroke="#FFFDF5" stroke-width="2" fill="none" opacity=".7"/>
+    <ellipse cx="50" cy="50" rx="40" ry="46" fill="#E5484D"/>
+    <path d="M44 96 h12 l-6 6 z" fill="#C73A3F"/>
+    <ellipse cx="36" cy="32" rx="9" ry="14" fill="#fff" opacity=".35" transform="rotate(-20 36 32)"/></svg>`;
+  const HOUSE_SVG = `<svg viewBox="0 0 160 150" aria-hidden="true">
+    <ellipse cx="80" cy="146" rx="70" ry="4" fill="#0B2A1C" opacity=".18"/>
+    <g fill="#6B4A2E"><rect x="22" y="108" width="7" height="38" rx="2"/><rect x="76.5" y="108" width="7" height="38" rx="2"/><rect x="131" y="108" width="7" height="38" rx="2"/></g>
+    <g stroke="#5E3A1E" stroke-width="3" stroke-linecap="round"><path d="M68 146 L71 112 M92 146 L89 112"/><path d="M69.5 136 H90.5 M70.5 124 H89.5"/></g>
+    <rect x="10" y="104" width="140" height="8" rx="2" fill="#8A5A32"/>
+    <rect x="16" y="56" width="128" height="50" fill="#D49A5E" stroke="#8A5A32" stroke-width="3"/>
+    <g stroke="#B57A42" stroke-width="1.6" opacity=".8"><path d="M17.5 68 H142.5 M17.5 80 H142.5 M17.5 92 H142.5"/></g>
+    <rect x="68" y="70" width="24" height="36" rx="2" fill="#6B3E1F"/><circle cx="87" cy="89" r="1.6" fill="#F5B82E"/>
+    <g><rect x="30" y="68" width="24" height="22" rx="2" fill="#3B2A1C"/><rect x="24" y="68" width="6" height="22" fill="#2F7A4F"/><rect x="54" y="68" width="6" height="22" fill="#2F7A4F"/>
+      <rect x="106" y="68" width="24" height="22" rx="2" fill="#3B2A1C"/><rect x="100" y="68" width="6" height="22" fill="#2F7A4F"/><rect x="130" y="68" width="6" height="22" fill="#2F7A4F"/></g>
+    <path d="M2 60 L80 6 L158 60 Z" fill="#B5462E" stroke="#7F2C1B" stroke-width="3" stroke-linejoin="round"/>
+    <g stroke="#D9714F" stroke-width="2" opacity=".7" stroke-linecap="round"><path d="M18 52 L80 10 L142 52"/><path d="M34 52 L80 20 L126 52"/></g>
+  </svg>`;
+  const ICON = {
+    warna: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1-.8-1.4-.8-2.3 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4c0-4.6-4-8.4-9-8.4z" fill="#FFFDF5" stroke="currentColor" stroke-width="1.8"/><circle cx="7.5" cy="11" r="1.7" fill="#E5484D"/><circle cx="10" cy="7" r="1.7" fill="#2F7DE1"/><circle cx="14.5" cy="7" r="1.7" fill="#F5B82E"/><circle cx="17" cy="11" r="1.7" fill="#22B26A"/></svg>`,
+    haiwan: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6.5" r="2.2"/><circle cx="14" cy="6.5" r="2.2"/><circle cx="18" cy="10" r="2.2"/></svg>`,
+  };
+  ICON.campur = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>`;
+  const nameOf = (id) => ANIMALS.find((x) => x.id === id).name;
+  function hatSVG(color, [x, y, rot]) {
+    const k = COLORS[color];
+    return `<g transform="translate(${x} ${y}) rotate(${rot})"><path d="M-17 0 L0 -36 L17 0 Z" fill="${k.fill}" stroke="${k.dark}" stroke-width="3" stroke-linejoin="round"/><path d="M-11 -12 L11 -12 M-6 -24 L6 -24" stroke="#fff" stroke-width="3.2" stroke-linecap="round" opacity=".85"/><ellipse cx="0" cy="0" rx="19" ry="4.5" fill="${k.dark}"/><circle cx="0" cy="-37" r="5.5" fill="#FFE07A" stroke="#C98E12" stroke-width="2"/></g>`;
+  }
+  // Haiwan bertopi: viewBox dilanjutkan ke atas supaya topi tidak terpotong.
+  function cardSVG(a, color, label) {
+    const s = ART[a]().replace('viewBox="0 0 140 150"', 'viewBox="0 -28 140 178"').replace('</svg>', hatSVG(color, HAT_AT[a]) + '</svg>');
+    return label ? s.replace(/aria-label="[^"]*"/, `aria-label="${nameOf(a)} bertopi ${color}"`) : s.replace(/role="img" aria-label="[^"]*"/, 'aria-hidden="true"');
+  }
+  document.body.insertAdjacentHTML('afterbegin', ART_DEFS);
+
+  /* ================= STORAGE ================= */
+  const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true }, level: AGE_LEVEL[4], rounds: [], today: { date: todayStr(), ms: 0, extraMin: 0 } });
+  function load() {
+    const base = defaultData();
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return base;
+      const d = JSON.parse(raw) || {};
+      const out = { ...base, ...d, settings: { ...base.settings, ...(d.settings || {}) }, today: { ...base.today, ...(d.today || {}) } };
+      if (!Array.isArray(out.rounds)) out.rounds = [];
+      if (![3, 4, 5, 6].includes(out.settings.age)) out.settings.age = 4;
+      if (![5, 10, 15, 20].includes(out.settings.dailyMin)) out.settings.dailyMin = 10;
+      if (![1, 2].includes(out.level)) out.level = AGE_LEVEL[out.settings.age];
+      return out;
+    } catch (e) { return base; }
+  }
+  let data = load();
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) { /* storage unavailable: play continues without saving */ } }
+  function rollDay() { if (data.today.date !== todayStr()) { data.today = { date: todayStr(), ms: 0, extraMin: 0 }; save(); } }
+  const limitMs = () => (data.settings.dailyMin + data.today.extraMin) * 60000;
+  const timeLeft = () => { rollDay(); return limitMs() - data.today.ms; };
+
+  /* ================= AUDIO ================= */
+  let ac = null, master = null, muted = false;
+  function initAudio() {
+    if (ac) { if (ac.state === 'suspended') ac.resume().catch(() => {}); loadClips(); return; }
+    try {
+      ac = new (window.AudioContext || window.webkitAudioContext)();
+      master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination);
+    } catch (e) { ac = null; }
+    loadClips();
+  }
+  function tone(f, dur, { type = 'triangle', gain = .18, when = 0 } = {}) {
+    if (!ac || muted) return;
+    const t = ac.currentTime + when, o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + .05);
+  }
+  const sfx = {
+    good() { tone(523.25, .22); tone(659.25, .3, { when: .11 }); tone(783.99, .42, { when: .22, gain: .14 }); },
+    soft() { tone(392, .25, { type: 'sine', gain: .12 }); tone(330, .35, { type: 'sine', gain: .12, when: .18 }); },
+    pop() { tone(660, .12, { type: 'sine', gain: .1 }); },
+  };
+
+  /* ================= VOICE ================= */
+  // Utama: rakaman suara BM Malaysia (ElevenLabs, "Hafiz"). Sandaran: suara peranti Bahasa Melayu (ms) sahaja; jika tiada, kapsyen sahaja.
+  const clips = {};
+  let clipsLoading = null, voiceSrc = null;
+  function loadClips() {
+    if (clipsLoading || !ac) return clipsLoading;
+    clipsLoading = Promise.all([...RECORDED].map(async (k) => {
+      try {
+        const res = await fetch(`assets/audio/${k}.mp3`);
+        if (!res.ok) return;
+        clips[k] = await ac.decodeAudioData(await res.arrayBuffer());
+      } catch (e) { /* missing clip: fallback below */ }
+    }));
+    return clipsLoading;
+  }
+  let voice = null;
+  function pickVoice() {
+    try { const vs = window.speechSynthesis.getVoices(); voice = vs.find((v) => /^ms/i.test(v.lang)) || null; }
+    catch (e) { voice = null; }
+  }
+  if ('speechSynthesis' in window) { pickVoice(); try { window.speechSynthesis.addEventListener('voiceschanged', pickVoice); } catch (e) { /* older browsers */ } }
+  function stopSpeech() {
+    if (voiceSrc) { try { voiceSrc.stop(); } catch (e) { /* already stopped */ } voiceSrc = null; }
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+  }
+  const hasRecordedVoice = () => Object.keys(clips).length > 0;
+  // Papar kapsyen (dengan ikon pilihan) dan mainkan baris. Pulangkan tempoh (ms) supaya urutan boleh tunggu suara habis.
+  function say(key, icon) {
+    const text = LINES[key] || '';
+    const cap = $('#caption');
+    cap.textContent = text;
+    if (icon) cap.insertAdjacentHTML('afterbegin', `<span class="cap-ico" aria-hidden="true">${icon}</span>`);
+    const estimate = 600 + text.length * 55;
+    if (muted || !data.settings.voice) return estimate;
+    stopSpeech();
+    const buf = clips[key];
+    if (buf && ac && master) {
+      try {
+        const src = ac.createBufferSource(); src.buffer = buf; src.connect(master); src.start();
+        voiceSrc = src;
+        return Math.round(buf.duration * 1000);
+      } catch (e) { /* fall through */ }
+    }
+    if (voice) {
+      try {
+        const u = new SpeechSynthesisUtterance(text);
+        u.voice = voice; u.lang = voice.lang; u.rate = .95; u.pitch = 1.1;
+        window.speechSynthesis.speak(u);
+      } catch (e) { /* captions still shown */ }
+    }
+    return estimate;
+  }
+
+  /* ================= HELPERS ================= */
+  const CANCEL = Symbol('cancel');
+  let run = 0;
+  const alive = (id) => { if (id !== run) throw CANCEL; };
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+  const anim = (el, frames, opts) => el.animate(frames, { fill: 'forwards', easing: 'ease-in-out', ...opts }).finished.catch(() => {});
+  const pct = (n, d) => (d ? Math.round((n / d) * 100) : null);
+  const iconOf = (id) => ART[id]().replace(/role="img" aria-label="[^"]*"/, 'aria-hidden="true"');
+
+  /* ================= STAGE ================= */
+  const stage = $('#stage'), housesEl = $('#houses'), cardEl = $('#card'), hand = $('#hand'), ruleEl = $('#rule');
+  hand.innerHTML = HAND_SVG; $('#balloon').innerHTML = BALLOON_SVG;
+
+  function fitStage() {
+    const r = $('#stage-wrap').getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const w = Math.floor(Math.min(r.width, r.height * 2 / 3));
+    stage.style.width = w + 'px'; stage.style.height = Math.floor(w * 1.5) + 'px';
+    stage.style.setProperty('--u', (w / 100) + 'px');
+  }
+  window.addEventListener('resize', fitStage);
+
+  let houses = [], houseEls = [];
+  function renderHouses() {
+    housesEl.innerHTML = houses.map((h, i) => `<button class="house" type="button" data-i="${i}" style="left:${i ? 52 : 4}%" aria-label="Rumah ${nameOf(h.a)} bertopi ${h.color}" disabled><div class="hs">${HOUSE_SVG}<div class="sign">${cardSVG(h.a, h.color, false)}</div></div></button>`).join('');
+    houseEls = [...housesEl.querySelectorAll('.house')];
+  }
+  function arm(on) { houseEls.forEach((b) => { b.disabled = !on; }); }
+  function setRule(r) { ruleEl.innerHTML = r ? `${ICON[r]}<span>${RULE_TEXT[r]}</span>` : ''; }
+  const toPct = (r) => { const s = stage.getBoundingClientRect(); return { left: (r.left - s.left) / s.width * 100, top: (r.top - s.top) / s.height * 100, width: r.width / s.width * 100 }; };
+  const SPOT = { left: '33%', top: '13%', width: '34%' };
+  // Peraturan → rumah yang betul. Setiap kad sengaja bercanggah: warna padan satu rumah, haiwan padan rumah yang lain.
+  const sideFor = (rule, c) => houses.findIndex((h) => (rule === 'warna' ? h.color === c.color : h.a === c.a));
+  function showHandAt(i) {
+    if (i < 0) { hand.hidden = true; return; }
+    const r = toPct(houseEls[i].getBoundingClientRect());
+    Object.assign(hand.style, { left: (r.left + r.width * .42) + '%', top: '74%' });
+    hand.hidden = false;
+  }
+  async function showCard(c, id) {
+    cardEl.innerHTML = cardSVG(c.a, c.color, true);
+    cardEl.getAnimations().forEach((x) => x.cancel());
+    Object.assign(cardEl.style, SPOT);
+    cardEl.hidden = false; sfx.pop();
+    await anim(cardEl, [{ opacity: 0, transform: 'scale(.5)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 360, easing: 'cubic-bezier(.3,1.5,.5,1)' }); alive(id);
+  }
+  // Haiwan berjalan masuk ke pintu rumah, kemudian rumah "melambung" sedikit.
+  async function goHouse(i, id) {
+    const r = houseEls[i].getBoundingClientRect();
+    const to = toPct({ left: r.left + r.width * .4, top: r.top + r.height * .3, width: r.width * .2 });
+    await anim(cardEl, [{ ...SPOT, opacity: 1 }, { left: to.left + '%', top: to.top + '%', width: to.width + '%', opacity: 1, offset: .85 }, { left: to.left + '%', top: to.top + '%', width: to.width + '%', opacity: 0 }], { duration: 850 }); alive(id);
+    cardEl.hidden = true; cardEl.getAnimations().forEach((x) => x.cancel());
+    sfx.pop();
+    await anim(houseEls[i].querySelector('.hs'), [{ transform: 'scale(1)' }, { transform: 'scale(1.06, .94)' }, { transform: 'scale(1)' }], { duration: 300, fill: 'none' }); alive(id);
+  }
+
+  /* ---- house input ---- */
+  let houseResolver = null;
+  function waitHouse(ms) {
+    return new Promise((res) => {
+      let done = false;
+      const timer = setTimeout(() => { if (done) return; done = true; houseResolver = null; res(-1); }, ms);
+      houseResolver = (i) => { if (done) return; done = true; clearTimeout(timer); houseResolver = null; res(i); };
+    });
+  }
+  housesEl.addEventListener('click', (e) => { const b = e.target.closest('.house'); if (b && !b.disabled && houseResolver) houseResolver(Number(b.dataset.i)); });
+
+  /* ================= GAME LOOP ================= */
+  let sessionRounds = 0;
+  let roundStart = 0;
+  let progressIdx = 0;
+
+  // n percubaan seimbang (separuh 0, separuh 1), tidak lebih 2 sama berturut-turut.
+  function balanced(n) {
+    let s;
+    do { s = shuffle([...Array(n)].map((_, i) => i % 2)); } while (s.some((v, i) => i > 1 && v === s[i - 1] && v === s[i - 2]));
+    return s;
+  }
+
+  // opts: remind (ulang peraturan setiap percubaan), cue (sebut peraturan setiap percubaan: blok campur), demo (tangan tunjuk).
+  async function runTrial(rule, c, block, id, opts) {
+    if (opts.cue) await sleep(Math.max(900, say('cue-' + rule, ICON[rule]) + 150));
+    alive(id);
+    if (!opts.cue) $('#caption').textContent = ''; // buang pujian percubaan lepas
+    await showCard(c, id);
+    if (opts.remind) say('remind-' + rule, ICON[rule]);
+    const ok = sideFor(rule, c);
+    arm(true);
+    if (opts.demo) showHandAt(ok);
+    const t0 = performance.now();
+    let tap = -1;
+    for (let r = 0; r <= REMINDERS && tap < 0; r++) {
+      tap = await waitHouse(REMIND_MS); alive(id);
+      if (tap < 0 && r < REMINDERS) say((opts.cue ? 'cue-' : 'remind-') + rule, ICON[rule]);
+    }
+    arm(false); hand.hidden = true;
+    const rec = { block, rule, correct: tap === ok, rt: tap >= 0 ? Math.round(performance.now() - t0) : null, a: c.a, color: c.color };
+    if (rec.correct) {
+      sfx.good();
+      const d = say(pick(PRAISE));
+      await goHouse(ok, id);
+      await sleep(Math.max(250, d - 850)); alive(id);
+    } else {
+      sfx.soft();
+      if (tap >= 0) await anim(cardEl, [{ transform: 'translateX(0)' }, { transform: 'translateX(-6%) rotate(-4deg)' }, { transform: 'translateX(6%) rotate(4deg)' }, { transform: 'translateX(0)' }], { duration: 420, fill: 'none' });
+      alive(id);
+      const d = say('wrong-' + rule, ICON[rule]);
+      showHandAt(ok);
+      await sleep(Math.max(1200, d)); alive(id);
+      hand.hidden = true;
+      await goHouse(ok, id); // tunjuk rumah yang betul: belajar, bukan kalah
+    }
+    markProgress(progressIdx++);
+    await sleep(250); alive(id);
+    return rec;
+  }
+
+  function buildProgress(total, gaps) {
+    $('#progress').innerHTML = Array.from({ length: total }, (_, i) => `<i${gaps.includes(i) ? ' class="gap"' : ''}></i>`).join('');
+    progressIdx = 0;
+  }
+  function markProgress(i) { const el = $('#progress').children[i]; if (el) el.classList.add('done'); }
+  function addPlayTime() {
+    if (!roundStart) return;
+    rollDay();
+    data.today.ms += Math.max(0, performance.now() - roundStart);
+    roundStart = 0; save();
+  }
+
+  async function playRound() {
+    initAudio();
+    if (timeLeft() <= 0) { renderHome(); return; }
+    const id = ++run;
+    const level = data.level;
+    const [A, B] = shuffle(ANIMALS).slice(0, 2).map((x) => x.id);
+    const [X, Y] = shuffle(['merah', 'biru']);
+    houses = [{ a: A, color: X }, { a: B, color: Y }];
+    const tests = [{ a: A, color: Y }, { a: B, color: X }];
+    // Peraturan pertama berselang-seli setiap pusingan supaya pertukaran sentiasa segar.
+    const first = data.rounds.length % 2 ? 'haiwan' : 'warna', second = first === 'warna' ? 'haiwan' : 'warna';
+    const total = TRIALS_PER_BLOCK * 2 + (level >= 2 ? MIX_TRIALS : 0);
+    show('game'); renderHouses(); setRule(null); cardEl.hidden = true; hand.hidden = true;
+    buildProgress(total, [TRIALS_PER_BLOCK, TRIALS_PER_BLOCK * 2]);
+    $('#caption').textContent = '';
+    roundStart = performance.now();
+    const recs = [];
+    const block = async (rule, name, demoFirst) => {
+      const seq = balanced(TRIALS_PER_BLOCK);
+      for (let i = 0; i < seq.length; i++) recs.push(await runTrial(rule, tests[seq[i]], name, id, { remind: level === 1, demo: demoFirst && i === 0 }));
+    };
+    try {
+      if (sessionRounds === 0) {
+        await Promise.race([loadClips(), sleep(4000)]); alive(id);
+        await sleep(Math.max(1700, say('intro') + 200)); alive(id);
+      }
+      setRule(first);
+      await sleep(Math.max(2500, say('rule-' + first, ICON[first]) + 300)); alive(id);
+      await block(first, 'pre', sessionRounds === 0);
+      setRule(null);
+      await sleep(Math.max(1500, say('switch') + 200)); alive(id);
+      setRule(second);
+      await sleep(Math.max(2500, say('rule-' + second, ICON[second]) + 300)); alive(id);
+      await block(second, 'post', false);
+      if (level >= 2) {
+        setRule('campur');
+        await sleep(Math.max(2200, say('mix', ICON.campur) + 300)); alive(id);
+        const rules = balanced(MIX_TRIALS), cards = balanced(MIX_TRIALS);
+        for (let i = 0; i < MIX_TRIALS; i++) recs.push(await runTrial(rules[i] ? 'haiwan' : 'warna', tests[cards[i]], 'mix', id, { cue: true }));
+      }
+      addPlayTime();
+      finishRound(recs, level, first);
+    } catch (e) {
+      if (e !== CANCEL) throw e;
+    } finally {
+      addPlayTime();
+    }
+  }
+
+  function finishRound(recs, level, first) {
+    const tally = (b) => { const r = recs.filter((x) => x.block === b); return r.length ? [r.filter((x) => x.correct).length, r.length] : null; };
+    const pre = tally('pre'), post = tally('post'), mix = tally('mix');
+    if (level === 1 && post[0] >= PASS_POST) data.level = 2;
+    else if (level === 2 && post[0] <= FAIL_POST) data.level = 1;
+    data.rounds.push({ t: Date.now(), level, first, pre, post, mix });
+    if (data.rounds.length > 200) data.rounds = data.rounds.slice(-200);
+    save();
+    sessionRounds++;
+
+    $('#found').innerHTML = houses.map((h) => cardSVG(h.a, h.color, false)).join('');
+    // Nada positif: skor rendah selepas tukar ialah perkembangan biasa, bukan kegagalan.
+    $('#result-text').innerHTML = `Adik bawa <span class="big-num">${recs.length}</span> haiwan balik rumah. `
+      + (post[0] >= 4 ? `Lepas peraturan bertukar, adik betul <span class="big-num">${post[0]}</span> daripada ${post[1]}!` : 'Tukar peraturan memang mencabar. Main lagi untuk berlatih, ya!');
+    const canPlay = sessionRounds < MAX_ROUNDS_PER_SESSION && timeLeft() > 0;
+    $('#btn-again').hidden = !canPlay;
+    show('result');
+    say('end');
+  }
+
+  async function breathe() {
+    const id = ++run;
+    show('breathe');
+    const b = $('#balloon'), txt = $('#breath-text');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try {
+      for (let i = 0; i < 3; i++) {
+        txt.textContent = LINES['breath-in']; say('breath-in');
+        if (!reduce) anim(b, [{ transform: 'scale(1)' }, { transform: 'scale(1.9)' }], { duration: 4000 });
+        await sleep(4000); alive(id);
+        txt.textContent = LINES['breath-out']; say('breath-out');
+        if (!reduce) anim(b, [{ transform: 'scale(1.9)' }, { transform: 'scale(1)' }], { duration: 4000 });
+        await sleep(4000); alive(id);
+      }
+      txt.textContent = '';
+      show('mission');
+    } catch (e) { if (e !== CANCEL) throw e; }
+  }
+
+  /* ================= SCREENS ================= */
+  const SCREENS = ['home', 'game', 'result', 'breathe', 'mission'];
+  function show(name) {
+    SCREENS.forEach((s) => { $('#scr-' + s).hidden = s !== name; });
+    if (name === 'game') fitStage();
+  }
+  function goHome() {
+    run++;
+    if (houseResolver) houseResolver(-2);
+    stopSpeech(); hand.hidden = true; cardEl.hidden = true;
+    sessionRounds = 0;
+    renderHome(); show('home');
+  }
+
+  function renderHome() {
+    $('#hero-pair').innerHTML = `<div class="hp">${cardSVG('kancil', 'merah', false)}</div><div class="hp">${cardSVG('gajah', 'biru', false)}</div>`;
+    $('#age-chips').innerHTML = [3, 4, 5, 6].map((n) => `<button class="chip" type="button" data-age="${n}" aria-pressed="${data.settings.age === n}" aria-label="Umur ${n} tahun">${n}</button>`).join('');
+    const over = timeLeft() <= 0;
+    $('#limit-msg').hidden = !over;
+    $('#btn-play').disabled = over;
+    $('#play-label').hidden = over;
+  }
+  function setAge(n) {
+    if (data.settings.age === n) return;
+    data.settings.age = n; data.level = AGE_LEVEL[n]; save(); renderHome();
+  }
+
+  /* ================= PARENTAL GATE ================= */
+  let gateAnswer = 0;
+  function newGateQ() {
+    const a = 6 + Math.floor(Math.random() * 4), b = 3 + Math.floor(Math.random() * 7);
+    gateAnswer = a * b;
+    const opts = shuffle([gateAnswer, gateAnswer + a, gateAnswer - b]);
+    $('#gate-q').textContent = `${a} × ${b} = ?`;
+    $('#gate-answers').innerHTML = opts.map((o) => `<button type="button" data-v="${o}">${o}</button>`).join('');
+  }
+  function openGate() { $('#gate-msg').textContent = ''; newGateQ(); $('#gate').hidden = false; $('#gate-answers button')?.focus(); }
+  $('#gate-answers').addEventListener('click', (e) => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    if (Number(btn.dataset.v) === gateAnswer) { $('#gate').hidden = true; openParent(); }
+    else { $('#gate-msg').textContent = 'Belum betul. Cuba soalan lain.'; newGateQ(); }
+  });
+  $('#gate-close').addEventListener('click', () => { $('#gate').hidden = true; });
+
+  /* ================= PARENT AREA ================= */
+  function fmtDate(t) { const d = new Date(t); return d.toLocaleDateString('ms-MY', { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' }); }
+  function meter(p) { return p === null ? '–' : `<span class="meter"><i style="width:${p}%"></i></span>${p}%`; }
+  const pctOf = (t) => (t ? pct(t[0], t[1]) : null);
+  const sumOf = (rows, k) => { const r = rows.filter((x) => Array.isArray(x[k])); return r.length ? [r.reduce((a, x) => a + x[k][0], 0), r.reduce((a, x) => a + x[k][1], 0)] : null; };
+  function renderParent() {
+    rollDay();
+    const last = data.rounds.slice(-7);
+    const postP = pctOf(sumOf(last, 'post')), mixP = pctOf(sumOf(last, 'mix'));
+    $('#stats').innerHTML = `
+      <div class="stat"><b>${postP === null ? '–' : postP + '%'}</b><span>Tukar peraturan</span></div>
+      <div class="stat"><b>${mixP === null ? '–' : mixP + '%'}</b><span>Campur</span></div>
+      <div class="stat"><b>${data.level}<small style="font-size:.55em;color:var(--muted)">/2</small></b><span>Tahap</span></div>`;
+    const rows = data.rounds.slice(-10).reverse();
+    $('#history').innerHTML = rows.length
+      ? `<table><thead><tr><th>Masa</th><th>Sebelum tukar</th><th>Selepas tukar</th><th>Campur</th></tr></thead><tbody>${
+        rows.map((r) => `<tr><td>${fmtDate(r.t)}</td><td>${meter(pctOf(r.pre))}</td><td>${meter(pctOf(r.post))}</td><td>${meter(pctOf(r.mix))}</td></tr>`).join('')
+      }</tbody></table>`
+      : '<p class="empty">Belum ada rekod. Rekod muncul selepas anak tamat satu pusingan.</p>';
+    $('#set-age').value = String(data.settings.age);
+    $('#set-limit').value = String(data.settings.dailyMin);
+    $('#set-voice').checked = !!data.settings.voice;
+    $('#voice-note').textContent = hasRecordedVoice()
+      ? 'Suara: rakaman Bahasa Melayu.'
+      : (voice ? `Rakaman suara belum dimuat. Guna suara peranti: ${voice.name}.` : 'Rakaman suara dimuat bila anak mula bermain. Arahan juga dipaparkan sebagai teks.');
+    const usedMin = Math.floor(data.today.ms / 60000), totalMin = data.settings.dailyMin + data.today.extraMin;
+    $('#today-info').textContent = `Hari ini: ${usedMin} daripada ${totalMin} minit digunakan.`;
+    $('#reset-confirm').hidden = true; $('#btn-reset').hidden = false;
+  }
+  function openParent() { renderParent(); $('#parent').hidden = false; $('#parent-close').focus(); }
+  $('#parent-close').addEventListener('click', () => { $('#parent').hidden = true; renderHome(); });
+  $('#set-age').addEventListener('change', (e) => { setAge(Number(e.target.value)); renderParent(); });
+  $('#set-limit').addEventListener('change', (e) => { data.settings.dailyMin = Number(e.target.value); save(); renderParent(); });
+  $('#set-voice').addEventListener('change', (e) => { data.settings.voice = e.target.checked; save(); });
+  $('#btn-extend').addEventListener('click', () => { rollDay(); data.today.extraMin += 5; save(); renderParent(); });
+  $('#btn-reset').addEventListener('click', () => { $('#btn-reset').hidden = true; $('#reset-confirm').hidden = false; });
+  $('#btn-reset-no').addEventListener('click', () => { $('#reset-confirm').hidden = true; $('#btn-reset').hidden = false; });
+  $('#btn-reset-yes').addEventListener('click', () => { data = defaultData(); save(); renderParent(); });
+
+  /* ================= WIRING ================= */
+  $('#btn-play').addEventListener('click', () => { sessionRounds = 0; playRound(); });
+  $('#btn-again').addEventListener('click', () => playRound());
+  $('#btn-rest').addEventListener('click', () => breathe());
+  $('#btn-done').addEventListener('click', goHome);
+  $('#btn-home').addEventListener('click', goHome);
+  $('#btn-parent').addEventListener('click', openGate);
+  $('#age-chips').addEventListener('click', (e) => { const b = e.target.closest('[data-age]'); if (b) setAge(Number(b.dataset.age)); });
+  $('#btn-mute').addEventListener('click', () => {
+    muted = !muted;
+    const btn = $('#btn-mute');
+    btn.setAttribute('aria-pressed', String(muted));
+    btn.setAttribute('aria-label', muted ? 'Hidupkan bunyi' : 'Senyapkan bunyi');
+    btn.style.opacity = muted ? '.5' : '1';
+    if (muted) stopSpeech();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (!$('#gate').hidden) $('#gate').hidden = true;
+    else if (!$('#parent').hidden) { $('#parent').hidden = true; renderHome(); }
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && !$('#scr-game').hidden) goHome(); });
+
+  renderHome();
+  show('home');
+})();
+</script>
