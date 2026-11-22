@@ -1,0 +1,339 @@
+<title>Rangsang Minda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: one-screen app. Laman utama (grid game) → Pentas 2:3 → Keputusan → Tarik nafas → Misi dunia sebenar.
+   Zon ibu bapa di belakang "parental gate". CSS khusus game disuntik ke #game-css oleh setiap modul game. */
+:root {
+  --hutan-gelap: #173F30;
+  --daun: #5DB36A;
+  --rumput: #79C27A;
+  --kertas: #FFFDF5;
+  --ink: #15302A;
+  --muted: #557466;
+  --merah: #E5484D;
+  --hijau: #22B26A;
+  --hijau-tekan: #178A50;
+  --hijau-malap: #1F4433;
+  --kuning: #F5B82E;
+  --kuning-tekan: #C98E12;
+  --garis: rgba(21, 48, 42, .14);
+  --overlay: rgba(8, 26, 19, .62);
+  --font-display: 'Fredoka', 'Baloo 2', ui-rounded, 'Arial Rounded MT Bold', system-ui, sans-serif;
+  --font-body: 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: light;
+}
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  background: var(--hutan-gelap); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px;
+  -webkit-tap-highlight-color: transparent; overscroll-behavior: none;
+}
+#app {
+  height: 100%; box-sizing: border-box; display: flex; flex-direction: column;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px;
+}
+.screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+button:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--kuning); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+
+/* ---------- HOME ---------- */
+#scr-home { overflow-y: auto; align-items: center; color: var(--kertas); gap: 18px; padding-block: 4px; }
+.home-top { width: 100%; max-width: 720px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: .01em; }
+.brand b { color: var(--kuning); font-weight: 700; }
+.parent-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+  background: rgba(255, 253, 245, .1); color: var(--kertas); font-weight: 700; font-size: 14px; letter-spacing: .02em;
+}
+.parent-btn svg { width: 18px; height: 18px; }
+.hero { text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.hero h1 { font-size: clamp(32px, 8vw, 48px); font-weight: 700; }
+.hero p { margin: 0; font-size: 17px; color: rgba(255, 253, 245, .82); }
+.games { width: 100%; max-width: 720px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gcard {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 10px 12px; border-radius: 22px;
+  background: var(--kertas); color: var(--ink); box-shadow: 0 6px 0 rgba(0, 0, 0, .22); text-align: center;
+  transition: transform .12s, box-shadow .12s; min-width: 0;
+}
+.gcard:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0, 0, 0, .22); }
+.gcard[disabled] { opacity: .45; cursor: not-allowed; }
+.gthumb { width: 70%; max-width: 110px; aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: var(--c, var(--daun)); }
+.gthumb svg { width: 82%; height: auto; display: block; }
+.gname { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.15; }
+.gskill { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.gskill::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 6px; vertical-align: 1px; }
+.age-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.age-row span { font-weight: 700; font-size: 14px; color: rgba(255, 253, 245, .8); letter-spacing: .02em; }
+.chip { min-width: 48px; height: 48px; border-radius: 14px; padding: 0 12px; background: rgba(255, 253, 245, .1); color: var(--kertas); font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+.chip[aria-pressed="true"] { background: var(--kuning); color: var(--ink); }
+.limit-msg { max-width: 420px; text-align: center; background: rgba(255, 253, 245, .1); border-radius: 18px; padding: 14px 18px; font-weight: 700; line-height: 1.4; }
+.home-note { font-size: 13px; color: rgba(255, 253, 245, .6); text-align: center; max-width: 48ch; margin: 0; }
+
+/* ---------- GAME (dikongsi) ---------- */
+#scr-game { gap: 10px; }
+.bar { display: flex; align-items: center; gap: 10px; }
+.icon-btn { width: 48px; height: 48px; border-radius: 14px; flex: none; background: rgba(255, 253, 245, .12); color: var(--kertas); display: grid; place-items: center; }
+.icon-btn svg { width: 26px; height: 26px; }
+.progress { flex: 1; display: flex; gap: 4px; justify-content: center; min-width: 0; }
+.progress i { width: 18px; height: 18px; flex: 0 1 18px; min-width: 5px; border-radius: 50% 0 50% 0; background: rgba(255, 253, 245, .16); transition: background .3s, transform .3s; }
+.progress i.done { background: var(--daun); transform: rotate(-8deg) scale(1.08); }
+.progress i.gap { margin-left: 8px; }
+.stage-wrap { flex: 1; min-height: 0; display: grid; place-items: center; }
+.stage {
+  position: relative; overflow: hidden; border-radius: 22px; --u: 4px;
+  touch-action: manipulation; user-select: none; -webkit-user-select: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35); background: var(--rumput);
+}
+.stage > * { position: absolute; }
+.stage .bg { inset: 0; width: 100%; height: 100%; }
+.caption {
+  left: 50%; top: 2.2%; transform: translateX(-50%); max-width: 88%; width: max-content;
+  display: flex; align-items: center; gap: calc(var(--u) * 1.6);
+  background: var(--kertas); color: var(--ink); font-family: var(--font-display); font-weight: 600;
+  font-size: calc(var(--u) * 5.2); line-height: 1.2; text-align: center;
+  padding: calc(var(--u) * 2) calc(var(--u) * 4.2); border-radius: calc(var(--u) * 6);
+  box-shadow: 0 calc(var(--u) * .8) 0 rgba(0, 0, 0, .12); z-index: 7; transition: opacity .2s;
+}
+.caption:empty { opacity: 0; }
+.cap-ico { width: calc(var(--u) * 9); flex: none; margin-block: calc(var(--u) * -1.5); color: var(--ink); }
+.cap-ico svg { width: 100%; height: auto; display: block; }
+.stage .hand { width: 15%; z-index: 6; pointer-events: none; animation: tap 1s ease-in-out infinite; }
+.stage .hand svg { width: 100%; height: auto; display: block; }
+@keyframes tap { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-8%, -10%) scale(.9); } }
+@keyframes wiggle { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.04, .965); } }
+
+/* ---------- RESULT / BREATHE / MISSION ---------- */
+.center-col {
+  flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; text-align: center; color: var(--kertas); padding-block: 8px;
+}
+.center-col h2 { font-size: clamp(34px, 9vw, 48px); font-weight: 700; }
+.center-col p { margin: 0; font-size: 18px; line-height: 1.45; max-width: 32ch; color: rgba(255, 253, 245, .88); }
+.big-num { font-family: var(--font-display); font-weight: 700; font-size: 1.25em; color: var(--kuning); font-variant-numeric: tabular-nums; }
+.found { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: 380px; }
+.found svg { width: 48px; height: auto; }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.btn { min-height: 60px; padding: 0 28px; border-radius: 20px; font-family: var(--font-display); font-size: 22px; font-weight: 600; transition: transform .1s, box-shadow .1s; }
+.btn-primary { background: var(--hijau); color: var(--kertas); box-shadow: 0 6px 0 var(--hijau-tekan); }
+.btn-warm { background: var(--kuning); color: var(--ink); box-shadow: 0 6px 0 var(--kuning-tekan); }
+.btn:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0, 0, 0, .2); }
+.balloon-wrap { width: min(62vw, 260px); aspect-ratio: 1; max-width: 100%; display: grid; place-items: center; }
+.balloon { width: 46%; transform-origin: 50% 70%; }
+.balloon svg { width: 100%; height: auto; display: block; }
+.breath-text { font-family: var(--font-display); font-size: 28px; font-weight: 600; min-height: 1.3em; }
+.mission-card {
+  background: var(--kertas); color: var(--ink); border-radius: 24px; padding: 22px 22px 24px; max-width: 440px; width: 100%;
+  box-sizing: border-box; text-align: left; display: flex; flex-direction: column; gap: 12px;
+}
+.mission-card .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.mission-card h3 { font-size: 26px; }
+.mission-card ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; line-height: 1.45; }
+.mission-card .why { margin: 0; font-size: 14px; line-height: 1.5; color: var(--muted); border-top: 1px solid var(--garis); padding-top: 10px; max-width: none; }
+
+/* ---------- OVERLAYS (gate + parent) ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 20; background: var(--overlay); display: grid; place-items: center;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-bottom, 0px));
+}
+.panel {
+  background: var(--kertas); color: var(--ink); border-radius: 22px; width: 100%; max-width: 600px; max-height: 100%;
+  overflow-y: auto; box-sizing: border-box; padding: 22px; display: flex; flex-direction: column; gap: 18px;
+}
+.panel h2 { font-size: 26px; }
+.panel h3 { font-size: 18px; }
+.panel p { margin: 0; line-height: 1.5; }
+.panel .sub { color: var(--muted); font-size: 14px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.close-btn { width: 44px; height: 44px; border-radius: 12px; background: rgba(21, 48, 42, .07); display: grid; place-items: center; flex: none; }
+.close-btn svg { width: 22px; height: 22px; }
+.gate-q { font-family: var(--font-display); font-size: 40px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+.gate-answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.gate-answers button { height: 64px; border-radius: 16px; background: rgba(21, 48, 42, .07); font-family: var(--font-display); font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.gate-msg { text-align: center; min-height: 1.4em; color: var(--merah); font-weight: 700; }
+.gsec { border: 1px solid var(--garis); border-radius: 16px; padding: 0 14px; }
+.gsec summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 12px 0; cursor: pointer; }
+.gsec summary::-webkit-details-marker { display: none; }
+.gsec summary .sthumb { width: 40px; height: 40px; border-radius: 50%; background: var(--c); display: grid; place-items: center; flex: none; }
+.gsec summary .sthumb svg { width: 82%; height: auto; }
+.gsec summary b { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
+.gsec summary .stitle { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.gsec summary .sub { font-size: 13px; }
+.gsec[open] summary { border-bottom: 1px solid var(--garis); }
+.gsec-body { display: flex; flex-direction: column; gap: 14px; padding: 14px 0; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { background: rgba(21, 48, 42, .05); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat b { font-family: var(--font-display); font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat b small { font-size: .55em; color: var(--muted); }
+.stat span { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--garis); white-space: nowrap; }
+th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.meter { display: inline-block; width: 46px; height: 6px; border-radius: 3px; background: var(--garis); vertical-align: middle; margin-right: 6px; overflow: hidden; }
+.meter > i { display: block; height: 100%; background: var(--hijau); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 14px; min-width: 0; }
+.field select { height: 44px; border-radius: 12px; border: 1px solid var(--garis); background: var(--kertas); color: var(--ink); font: inherit; font-weight: 600; padding: 0 10px; }
+.toggle-row { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+.toggle-row input { width: 22px; height: 22px; accent-color: var(--hijau); }
+.btn-sm { min-height: 44px; padding: 0 16px; border-radius: 12px; font-weight: 800; font-size: 14px; background: rgba(21, 48, 42, .08); }
+.btn-sm.danger { color: var(--merah); }
+.btn-sm.go { background: var(--hijau); color: var(--kertas); }
+.explain { background: rgba(245, 184, 46, .14); border-radius: 14px; padding: 14px; font-size: 14px; line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+.empty { color: var(--muted); font-size: 14px; }
+@media (max-width: 420px) {
+  .games { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .stats { gap: 6px; }
+  .stat b { font-size: 22px; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage .hand { animation: none; }
+  .gcard, .btn { transition: none; }
+}
+</style>
+<style id="game-css"></style>
+
+<div id="app">
+  <!-- HOME -->
+  <section id="scr-home" class="screen" aria-label="Laman utama">
+    <div class="home-top">
+      <span class="brand">Rangsang <b>Minda</b></span>
+      <button class="parent-btn" id="btn-parent" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Untuk ibu bapa
+      </button>
+    </div>
+    <div class="hero">
+      <h1>Jom main!</h1>
+      <p>Pilih satu permainan.</p>
+    </div>
+    <div class="limit-msg" id="limit-msg" hidden>Masa main hari ini dah cukup. Haiwan hutan sedang tidur. Jumpa esok!</div>
+    <div class="games" id="games" role="list"></div>
+    <div class="age-row" role="group" aria-label="Umur anak">
+      <span>UMUR ANAK</span>
+      <div id="age-chips" style="display:flex;gap:8px"></div>
+    </div>
+    <p class="home-note" id="home-note"></p>
+  </section>
+
+  <!-- GAME -->
+  <section id="scr-game" class="screen" aria-label="Permainan" hidden>
+    <div class="bar">
+      <button class="icon-btn" id="btn-home" type="button" aria-label="Kembali ke laman utama">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>
+      </button>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <button class="icon-btn" id="btn-mute" type="button" aria-label="Senyapkan bunyi" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+      </button>
+    </div>
+    <div class="stage-wrap" id="stage-wrap">
+      <div class="stage" id="stage" role="application"></div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="scr-result" class="screen" aria-label="Keputusan" hidden>
+    <div class="center-col">
+      <h2>Syabas!</h2>
+      <div id="res-extra"></div>
+      <div class="found" id="found" aria-hidden="true"></div>
+      <p id="result-text"></p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-again" type="button">Main lagi</button>
+        <button class="btn btn-warm" id="btn-rest" type="button">Rehat</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREATHE -->
+  <section id="scr-breathe" class="screen" aria-label="Tarik nafas" hidden>
+    <div class="center-col">
+      <h2>Tarik Nafas Belon</h2>
+      <div class="balloon-wrap"><div class="balloon" id="balloon"></div></div>
+      <div class="breath-text" id="breath-text" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section id="scr-mission" class="screen" aria-label="Misi dunia sebenar" hidden>
+    <div class="center-col">
+      <div class="mission-card">
+        <span class="eyebrow">Misi dunia sebenar · untuk ibu bapa &amp; anak</span>
+        <h3 id="mission-title"></h3>
+        <ol id="mission-steps"></ol>
+        <p class="why" id="mission-why"></p>
+      </div>
+      <button class="btn btn-primary" id="btn-done" type="button">Selesai</button>
+    </div>
+  </section>
+</div>
+
+<!-- PARENTAL GATE -->
+<div class="overlay" id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="panel" style="max-width:380px">
+    <div class="panel-head">
+      <h2 id="gate-title">Untuk ibu bapa</h2>
+      <button class="close-btn" id="gate-close" type="button" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <p class="sub">Jawab soalan ini untuk masuk ke tetapan.</p>
+    <div class="gate-q" id="gate-q"></div>
+    <div class="gate-answers" id="gate-answers"></div>
+    <div class="gate-msg" id="gate-msg" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- PARENT AREA -->
+<div class="overlay" id="parent" hidden role="dialog" aria-modal="true" aria-labelledby="parent-title">
+  <div class="panel">
+    <div class="panel-head">
+      <h2 id="parent-title">Perkembangan anak</h2>
+      <button class="close-btn" id="parent-close" type="button" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="explain">
+      <b>Apa yang dilatih?</b>
+      <span>Setiap permainan melatih satu kemahiran yang penting untuk kanak-kanak prasekolah. Tahap kesukaran menyesuaikan diri dengan anak secara automatik. Angka di bawah membantu ibu bapa nampak perkembangan, tetapi bukan alat diagnosis.</span>
+    </div>
+    <div id="parent-games" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div>
+      <h3 style="margin-bottom:10px">Tetapan</h3>
+      <div class="form-grid">
+        <label class="field" for="set-age">Umur anak
+          <select id="set-age"><option value="3">3 tahun</option><option value="4">4 tahun</option><option value="5">5 tahun</option><option value="6">6 tahun</option></select>
+        </label>
+        <label class="field" for="set-limit">Had masa sehari (semua permainan)
+          <select id="set-limit"><option value="5">5 minit</option><option value="10">10 minit</option><option value="15">15 minit</option><option value="20">20 minit</option></select>
+        </label>
+      </div>
+      <label class="toggle-row" for="set-voice" style="margin-top:12px"><input type="checkbox" id="set-voice"> Suara arahan</label>
+      <p class="sub" id="voice-note" style="margin-top:6px"></p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="sub" id="today-info" style="flex:1 1 200px"></span>
+      <button class="btn-sm go" id="btn-extend" type="button">Tambah 5 minit hari ini</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--garis);padding-top:14px">
+      <button class="btn-sm danger" id="btn-reset" type="button">Padam semua data</button>
+      <span id="reset-confirm" hidden style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="sub">Pasti? Semua rekod akan hilang.</span>
+        <button class="btn-sm danger" id="btn-reset-yes" type="button">Ya, padam</button>
+        <button class="btn-sm" id="btn-reset-no" type="button">Batal</button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="main.js"></script>
