@@ -14,7 +14,6 @@ export const SKILLS = {
   emosi: { name: 'Emosi', color: '#F7BD98' },
   sains: { name: 'Sains & alam', color: '#B4DE98' },
   visual: { name: 'Visual', color: '#F2B0D6' },
-  dengar: { name: 'Pendengaran', color: '#9FD3E8' },
   motor: { name: 'Motor halus', color: '#F5C7A0' },
 };
 
@@ -25,7 +24,7 @@ export const GAMES = [
   { id: 'kira-rambutan', title: 'Kira Rambutan', skill: 'nombor', ages: [3, 6], thumb: () => RAMBUTAN_SVG, load: () => import('./kira-rambutan/index.js') },
   { id: 'banyak-mana', title: 'Banyak Mana?', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 40" aria-hidden="true"><g transform="translate(2 8) scale(.6)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g><g transform="translate(30 2) scale(.5)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g><g transform="translate(38 18) scale(.5)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g><g transform="translate(24 20) scale(.45)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g></svg>`, load: () => import('./banyak-mana/index.js') },
   { id: 'bunyi-mula', title: 'Bunyi Mula', skill: 'bahasa', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 60" aria-hidden="true"><text x="30" y="42" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="34" fill="#15302A">ga</text><path d="M8 18 q-5 12 0 24 M52 18 q5 12 0 24" stroke="#15302A" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`, load: () => import('./bunyi-mula/index.js') },
-  { id: 'bunyi-kenderaan', title: 'Bunyi Apa Ni?', skill: 'dengar', ages: [3, 6], thumb: () => vehicleIcon('bomba'), load: () => import('./bunyi-kenderaan/index.js') },
   { id: 'muat-lori', title: 'Muat Lori', skill: 'nombor', ages: [3, 6], thumb: () => vehicleIcon('lori'), load: () => import('./muat-lori/index.js') },
   { id: 'pandu-jengkaut', title: 'Pandu Jengkaut', skill: 'motor', ages: [3, 6], thumb: () => vehicleIcon('jengkaut'), load: () => import('./pandu-jengkaut/index.js') },
+  { id: 'pasangan-kenderaan', title: 'Pasangan Kenderaan', skill: 'ingatan', ages: [3, 6], thumb: () => vehicleIcon('bas'), load: () => import('./pasangan-kenderaan/index.js') },
 ];

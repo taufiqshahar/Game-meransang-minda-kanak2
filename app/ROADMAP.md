@@ -43,11 +43,12 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 
 | # | Game | Kemahiran | Interaksi | Status |
 |---|---|---|---|---|
-| 7 | Bunyi Apa Ni? | Diskriminasi & ingatan pendengaran | Dengar bunyi kenderaan (disintesis), ulang dengan butang pembesar suara; tahap 4 ikut urutan | ✅ v0.1 |
+| 7 | ~~Bunyi Apa Ni?~~ | Pendengaran | Dibuang: bunyi kenderaan sintetik kurang meyakinkan (maklum balas pemilik) | ❌ |
+| 7b | Pasangan Kenderaan | Ingatan visual-ruang | Kad memori: buka dua, cari pasangan; pratonton di tahap rendah | ✅ v0.1 |
 | 8 | Muat Lori | Menghasilkan kuantiti ikut nombor | Seret / tekan bata ke lori, tekan "Jalan!" untuk semak sendiri | ✅ v0.1 |
 | 9 | Pandu Jengkaut | Motor halus, pra-menulis | Surih jalan dengan jari (lurus → lengkung → zig-zag → huruf) | ✅ v0.1 |
 
-Idea seterusnya dengan interaksi berbeza: **Pasangan Kenderaan** (kad memori terbalik), **Susun Ikut Saiz** (seret kenderaan kecil → besar), **Pasang Kenderaan** (puzzle bahagian), **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet).
+Idea seterusnya dengan interaksi berbeza: **Susun Ikut Saiz** (seret kenderaan kecil → besar), **Pasang Kenderaan** (puzzle bahagian), **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet).
 
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.

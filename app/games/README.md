@@ -34,7 +34,6 @@ export default {
 | `stage`, `state`, `age`, `first` | Elemen pentas; keadaan game (simpan tahap di sini); umur; `true` pada pusingan pertama sesi (untuk latihan) |
 | `say(key, iconSvg?)` → ms | Kapsyen + suara; pulangkan tempoh supaya boleh tunggu |
 | `sfx.good/soft/pop/light/rustle()`, `sfx.car(sec)` | Bunyi |
-| `synth(fn)` → ms | Mainkan bunyi disintesis, cth. `ctx.synth(VEHICLE_SOUND.bomba)` (`kit/vehicles.js`) |
 | `wait(ms)` | Tidur yang membatalkan diri bila pusingan dihentikan |
 | `tap({ selector, ms, event, keys })` → `{ el, t }` / `null` | Tunggu tekanan dalam pentas (null = tamat masa) |
 | `alive()` | Lempar `CANCEL` jika pusingan dihentikan (panggil selepas `await` panjang) |
@@ -45,7 +44,7 @@ export default {
 
 Baris kongsi (tanpa rakaman baharu): `start`, `bagus`, `pandainya`, `betul`, `hebat`, `cuba-lagi`, `tengok`, `end`, `breath-in`, `breath-out`, `n1`–`n10`, `v-<kenderaan>` (8 nama kenderaan). Senarai penuh: `kit/audio/SKRIP-SUARA.md`.
 
-Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan + bunyi sintesis), `kit/objects.js` (rambutan).
+Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan), `kit/objects.js` (rambutan).
 
 ## Senarai semak game baharu
 1. **Kawalan aktif hanya semasa mendengar**: butang/kad dibuat `disabled` semasa Hafiz bercakap atau semasa maklum balas, dan aktif hanya bila `ctx.tap()` sedang menunggu. Jika tidak, tekanan awal hilang tanpa disedari (pepijat yang ditemui dalam Kira Rambutan dan Bunyi Mula).

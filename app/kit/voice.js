@@ -121,14 +121,8 @@ export function createVoice({ captionEl, voiceEnabled }) {
     return estimate;
   }
 
-  // Bunyi disintesis (cth. siren kenderaan): fn(ac, out) → tempoh (s). Pulangkan ms; 0 jika senyap / tiada audio.
-  function synth(fn) {
-    if (!ac || muted) return 0;
-    try { return Math.round(fn(ac, master) * 1000); } catch (e) { return 0; }
-  }
-
   return {
-    init, use, say, stop, sfx, tone, synth,
+    init, use, say, stop, sfx, tone,
     setMuted(m) { muted = m; if (m) stop(); },
     isMuted: () => muted,
     hasRecorded: () => buffers.size > 0,
