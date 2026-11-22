@@ -3,6 +3,10 @@
 import { iconOf, hattedSVG } from '../kit/art.js';
 import { RAMBUTAN_SVG } from '../kit/objects.js';
 import { vehicleIcon } from '../kit/vehicles.js';
+import { kuihIcon } from '../kit/kuih.js';
+import { faceSVG } from '../kit/faces.js';
+
+const inner = (svg) => svg.replace(/<\/?svg[^>]*>/g, '');
 
 // Kemahiran yang dilatih. Warna = latar lakaran kecil game dan titik pada kad.
 export const SKILLS = {
@@ -27,4 +31,7 @@ export const GAMES = [
   { id: 'muat-lori', title: 'Muat Lori', skill: 'nombor', ages: [3, 6], thumb: () => vehicleIcon('lori'), load: () => import('./muat-lori/index.js') },
   { id: 'pandu-jengkaut', title: 'Pandu Jengkaut', skill: 'motor', ages: [3, 6], thumb: () => vehicleIcon('jengkaut'), load: () => import('./pandu-jengkaut/index.js') },
   { id: 'pasangan-kenderaan', title: 'Pasangan Kenderaan', skill: 'ingatan', ages: [3, 6], thumb: () => vehicleIcon('bas'), load: () => import('./pasangan-kenderaan/index.js') },
+  { id: 'susun-saiz', title: 'Susun Ikut Saiz', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 160 70" aria-hidden="true"><g transform="translate(0 44) scale(.2)">${inner(vehicleIcon('lori'))}</g><g transform="translate(36 32) scale(.32)">${inner(vehicleIcon('lori'))}</g><g transform="translate(86 14) scale(.46)">${inner(vehicleIcon('lori'))}</g></svg>`, load: () => import('./susun-saiz/index.js') },
+  { id: 'corak-kuih', title: 'Corak Kuih', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 120 44" aria-hidden="true">${['lapis', 'onde', 'lapis', 'onde'].map((k, i) => `<g transform="translate(${i * 30} 6) scale(.5)">${inner(kuihIcon(k))}</g>`).join('')}</svg>`, load: () => import('./corak-kuih/index.js') },
+  { id: 'muka-perasaan', title: 'Muka Perasaan', skill: 'emosi', ages: [3, 6], thumb: () => faceSVG(0, 'gembira'), load: () => import('./muka-perasaan/index.js') },
 ];

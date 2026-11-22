@@ -14,8 +14,8 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 5 | Bunyi Mula | Kesedaran fonologi: suku kata awal | Bahasa | "Ga… ga… Mana mula dengan ga?" → gajah; tahap 3 suku kata ditulis | ✅ v0.1 |
 | 6 | Banyak Mana? | Bandingan kuantiti (rasa nombor) | Nombor | Dua dulang: lebih banyak / sedikit; tahap 3–4 ditutup kain (anggar) | ✅ v0.1 |
 | 7 | Suku Kata Kapal | Suku kata | Bahasa | Tepuk suku kata (ba-ju, ku-cing), muatkan ke kapal | |
-| 8 | Corak Kuih | Corak AB / ABC | Nombor | Sambung corak kuih lapis / tepung pelita | |
-| 9 | Muka Perasaan | Kenal emosi | Emosi | Padankan muka haiwan dengan perasaan (gembira, sedih, marah, takut) | |
+| 8 | Corak Kuih | Corak AB / AAB / ABC | Nombor | Sambung corak kuih atas dulang; kuih melompat ikut ritma; tahap 4 kosong di tengah | ✅ v0.1 |
+| 9 | Muka Perasaan | Kenal emosi | Emosi | "Mana muka sedih?" 5 perasaan, 5 kanak-kanak berbeza; salah = Hafiz namakan muka yang dipilih | ✅ v0.1 |
 | 10 | Pasar Malam Ingat | Ingatan kerja (verbal) | Eksekutif | Dengar senarai beli 2–5 barang, ambil di gerai | |
 | 11 | Bentuk Wau | Bentuk 2D | Nombor | Pasang bulatan, segi tiga, segi empat jadi wau | |
 | 12 | Rima Lucu | Kesedaran fonologi: rima | Bahasa | Mana yang berima: "batu… ratu / meja?" | |
@@ -47,8 +47,11 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 | 7b | Pasangan Kenderaan | Ingatan visual-ruang | Kad memori: buka dua, cari pasangan; pratonton di tahap rendah | ✅ v0.1 |
 | 8 | Muat Lori | Menghasilkan kuantiti ikut nombor | Seret / tekan bata ke lori, tekan "Jalan!" untuk semak sendiri | ✅ v0.1 |
 | 9 | Pandu Jengkaut | Motor halus, pra-menulis | Surih jalan dengan jari (lurus → lengkung → zig-zag → huruf) | ✅ v0.1 |
+| 10 | Susun Ikut Saiz | Seriasi (ukuran) | Seret / tekan kenderaan ke jalan ikut saiz; tahap 4 selang-seli besar → kecil | ✅ v0.1 |
 
-Idea seterusnya dengan interaksi berbeza: **Susun Ikut Saiz** (seret kenderaan kecil → besar), **Pasang Kenderaan** (puzzle bahagian), **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet).
+Idea seterusnya dengan interaksi berbeza: **Pasang Kenderaan** (puzzle bahagian), **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet), **Pasar Malam Ingat** (senarai beli).
+
+**Kiraan semasa: 12 game.**
 
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
