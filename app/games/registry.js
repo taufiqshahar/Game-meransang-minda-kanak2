@@ -20,4 +20,5 @@ export const GAMES = [
   { id: 'sorok-sorok', title: 'Sorok-Sorok Hutan', skill: 'ingatan', ages: [3, 6], thumb: () => iconOf('tapir'), load: () => import('./sorok-sorok/index.js') },
   { id: 'rumah-haiwan', title: 'Rumah Haiwan', skill: 'fleksibiliti', ages: [3, 6], thumb: () => hattedSVG('gajah', 'merah', false), load: () => import('./rumah-haiwan/index.js') },
   { id: 'kira-rambutan', title: 'Kira Rambutan', skill: 'nombor', ages: [3, 6], thumb: () => RAMBUTAN_SVG, load: () => import('./kira-rambutan/index.js') },
+  { id: 'banyak-mana', title: 'Banyak Mana?', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 40" aria-hidden="true"><g transform="translate(2 8) scale(.6)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g><g transform="translate(30 2) scale(.5)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g><g transform="translate(38 18) scale(.5)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g><g transform="translate(24 20) scale(.45)">${RAMBUTAN_SVG.replace(/<\/?svg[^>]*>/g, '')}</g></svg>`, load: () => import('./banyak-mana/index.js') },
 ];

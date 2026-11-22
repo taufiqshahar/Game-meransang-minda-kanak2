@@ -12,7 +12,7 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 3 | Rumah Haiwan | Fleksibiliti kognitif | Eksekutif | DCCS | ✅ v0.1 |
 | 4 | Kira Rambutan | Membilang 1–10 | Nombor | Tekan buah satu-satu sambil Hafiz kira; jawab "berapa semua?" (kardinaliti) | ✅ v0.1 |
 | 5 | Bunyi Huruf | Fonik: bunyi awal | Bahasa | "B… buaya!" pilih gambar yang bermula dengan bunyi itu | ⏭ |
-| 6 | Banyak Mana? | Bandingan kuantiti, subitisasi | Nombor | Dua bakul: pilih yang lebih banyak / sedikit; 1–5 dilihat sekilas | |
+| 6 | Banyak Mana? | Bandingan kuantiti (rasa nombor) | Nombor | Dua dulang: lebih banyak / sedikit; tahap 3–4 ditutup kain (anggar) | ✅ v0.1 |
 | 7 | Suku Kata Kapal | Suku kata | Bahasa | Tepuk suku kata (ba-ju, ku-cing), muatkan ke kapal | |
 | 8 | Corak Kuih | Corak AB / ABC | Nombor | Sambung corak kuih lapis / tepung pelita | |
 | 9 | Muka Perasaan | Kenal emosi | Emosi | Padankan muka haiwan dengan perasaan (gembira, sedih, marah, takut) | |
