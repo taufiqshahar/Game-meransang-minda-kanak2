@@ -13,6 +13,8 @@ export const SHARED_LINES = {
   'cuba-lagi': 'Cuba lagi, ya.',
   tengok: 'Tengok baik-baik…',
   end: 'Syabas! Pandai adik main hari ni.', // penutup umum; game boleh ganti dengan 'end' sendiri
+  'v-jengkaut': 'Jengkaut!', 'v-lori': 'Lori!', 'v-bomba': 'Kereta bomba!', 'v-ambulans': 'Ambulans!',
+  'v-bas': 'Bas sekolah!', 'v-keretaapi': 'Kereta api!', 'v-helikopter': 'Helikopter!', 'v-basikal': 'Basikal!',
   n1: 'Satu!', n2: 'Dua!', n3: 'Tiga!', n4: 'Empat!', n5: 'Lima!', n6: 'Enam!', n7: 'Tujuh!', n8: 'Lapan!', n9: 'Sembilan!', n10: 'Sepuluh!',
 };
 
@@ -119,8 +121,14 @@ export function createVoice({ captionEl, voiceEnabled }) {
     return estimate;
   }
 
+  // Bunyi disintesis (cth. siren kenderaan): fn(ac, out) → tempoh (s). Pulangkan ms; 0 jika senyap / tiada audio.
+  function synth(fn) {
+    if (!ac || muted) return 0;
+    try { return Math.round(fn(ac, master) * 1000); } catch (e) { return 0; }
+  }
+
   return {
-    init, use, say, stop, sfx, tone,
+    init, use, say, stop, sfx, tone, synth,
     setMuted(m) { muted = m; if (m) stop(); },
     isMuted: () => muted,
     hasRecorded: () => buffers.size > 0,

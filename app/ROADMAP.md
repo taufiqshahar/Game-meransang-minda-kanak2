@@ -38,6 +38,17 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 29 | Tarik Nafas Naga | Strategi menenangkan diri | Emosi | Latihan nafas berpandu (lanjutan Tarik Nafas Belon) | |
 | 30 | Jejak Titik | Motor halus pra-menulis | Fizikal | Surih garis dan huruf dengan jari | |
 
+## Tambahan v0.8: kepelbagaian (tema kenderaan, interaksi baharu)
+Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap game baharu mesti berbeza pada **tema** dan/atau **cara main**.
+
+| # | Game | Kemahiran | Interaksi | Status |
+|---|---|---|---|---|
+| 7 | Bunyi Apa Ni? | Diskriminasi & ingatan pendengaran | Dengar bunyi kenderaan (disintesis), ulang dengan butang pembesar suara; tahap 4 ikut urutan | ✅ v0.1 |
+| 8 | Muat Lori | Menghasilkan kuantiti ikut nombor | Seret / tekan bata ke lori, tekan "Jalan!" untuk semak sendiri | ✅ v0.1 |
+| 9 | Pandu Jengkaut | Motor halus, pra-menulis | Surih jalan dengan jari (lurus → lengkung → zig-zag → huruf) | ✅ v0.1 |
+
+Idea seterusnya dengan interaksi berbeza: **Pasangan Kenderaan** (kad memori terbalik), **Susun Ikut Saiz** (seret kenderaan kecil → besar), **Pasang Kenderaan** (puzzle bahagian), **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet).
+
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
 - **Seni**: 6 haiwan + topi dalam `kit/art.js`. Game nombor dan bahasa memerlukan set objek baharu (buah, kuih, objek harian). Rancang satu "kit objek" kongsi bersama game 4 dan 5.

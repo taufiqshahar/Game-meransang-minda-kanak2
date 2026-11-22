@@ -15,3 +15,4 @@ Kos: kredit ≈ bilangan aksara termasuk tag. Baris pendek tanpa tag (nombor) ha
 | cuba-lagi | [softly] Cuba lagi, ya. | v0.5 |
 | end | [excited] Syabas! Pandai adik main hari ni. | v0.5 (penutup umum) |
 | n1–n10 | Satu! … Sepuluh! (tanpa tag) | v0.5 |
+| v-jengkaut, v-lori, v-bomba, v-ambulans, v-bas, v-keretaapi, v-helikopter, v-basikal | Jengkaut! · Lori! · Kereta bomba! · Ambulans! · Bas sekolah! · Kereta api! · Helikopter! · Basikal! (tanpa tag) | v0.8 |
