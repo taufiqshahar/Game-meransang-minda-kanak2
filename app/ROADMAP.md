@@ -10,7 +10,7 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 1 | Lampu Isyarat Haiwan | Kawalan diri | Eksekutif | Go/No-Go | ✅ v0.4 |
 | 2 | Sorok-Sorok Hutan | Ingatan kerja (lokasi) | Eksekutif | Ingatan lokasi, tangga 2-naik-1-turun | ✅ v0.2 |
 | 3 | Rumah Haiwan | Fleksibiliti kognitif | Eksekutif | DCCS | ✅ v0.1 |
-| 4 | Kira Rambutan | Membilang 1–10 | Nombor | Tekan buah satu-satu sambil Hafiz kira; padankan bilangan | ⏭ seterusnya |
+| 4 | Kira Rambutan | Membilang 1–10 | Nombor | Tekan buah satu-satu sambil Hafiz kira; jawab "berapa semua?" (kardinaliti) | ✅ v0.1 |
 | 5 | Bunyi Huruf | Fonik: bunyi awal | Bahasa | "B… buaya!" pilih gambar yang bermula dengan bunyi itu | ⏭ |
 | 6 | Banyak Mana? | Bandingan kuantiti, subitisasi | Nombor | Dua bakul: pilih yang lebih banyak / sedikit; 1–5 dilihat sekilas | |
 | 7 | Suku Kata Kapal | Suku kata | Bahasa | Tepuk suku kata (ba-ju, ku-cing), muatkan ke kapal | |

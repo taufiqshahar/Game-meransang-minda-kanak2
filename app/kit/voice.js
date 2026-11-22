@@ -8,6 +8,12 @@ export const SHARED_LINES = {
   pandainya: 'Pandainya!',
   'breath-in': 'Tarik nafas dalam-dalam…',
   'breath-out': 'Hembus perlahan-lahan…',
+  betul: 'Betul!',
+  hebat: 'Hebatnya!',
+  'cuba-lagi': 'Cuba lagi, ya.',
+  tengok: 'Tengok baik-baik…',
+  end: 'Syabas! Pandai adik main hari ni.', // penutup umum; game boleh ganti dengan 'end' sendiri
+  n1: 'Satu!', n2: 'Dua!', n3: 'Tiga!', n4: 'Empat!', n5: 'Lima!', n6: 'Enam!', n7: 'Tujuh!', n8: 'Lapan!', n9: 'Sembilan!', n10: 'Sepuluh!',
 };
 
 export function createVoice({ captionEl, voiceEnabled }) {
