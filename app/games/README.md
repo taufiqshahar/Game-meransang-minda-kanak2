@@ -44,7 +44,7 @@ export default {
 
 Baris kongsi (tanpa rakaman baharu): `start`, `bagus`, `pandainya`, `betul`, `hebat`, `cuba-lagi`, `tengok`, `end`, `breath-in`, `breath-out`, `n1`–`n10`, `v-<kenderaan>` (8 nama kenderaan). Senarai penuh: `kit/audio/SKRIP-SUARA.md`.
 
-Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan), `kit/objects.js` (rambutan), `kit/kuih.js` (5 kuih), `kit/faces.js` (5 kanak-kanak × 5 perasaan), `kit/pasar.js` (8 barang pasar).
+Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan), `kit/objects.js` (rambutan), `kit/kuih.js` (5 kuih), `kit/faces.js` (5 kanak-kanak × 5 perasaan), `kit/pasar.js` (8 barang pasar), `kit/benda.js` (11 perkataan rima + 9 bahan eksperimen).
 
 ## Senarai semak game baharu
 1. **Kawalan aktif hanya semasa mendengar**: butang/kad dibuat `disabled` semasa Hafiz bercakap atau semasa maklum balas, dan aktif hanya bila `ctx.tap()` sedang menunggu. Jika tidak, tekanan awal hilang tanpa disedari (pepijat yang ditemui dalam Kira Rambutan dan Bunyi Mula).

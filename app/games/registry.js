@@ -6,6 +6,7 @@ import { vehicleIcon } from '../kit/vehicles.js';
 import { kuihIcon } from '../kit/kuih.js';
 import { faceSVG } from '../kit/faces.js';
 import { itemIcon } from '../kit/pasar.js';
+import { bendaIcon } from '../kit/benda.js';
 
 const inner = (svg) => svg.replace(/<\/?svg[^>]*>/g, '');
 
@@ -37,4 +38,7 @@ export const GAMES = [
   { id: 'muka-perasaan', title: 'Muka Perasaan', skill: 'emosi', ages: [3, 6], thumb: () => faceSVG(0, 'gembira'), load: () => import('./muka-perasaan/index.js') },
   { id: 'pasang-kenderaan', title: 'Pasang Kenderaan', skill: 'visual', ages: [3, 6], thumb: () => `<svg viewBox="0 0 172 124" aria-hidden="true"><svg x="0" y="4" width="80" height="120" viewBox="0 0 80 120">${inner(vehicleIcon('bomba'))}</svg><svg x="92" y="0" width="80" height="120" viewBox="80 0 80 120">${inner(vehicleIcon('bomba'))}</svg></svg>`, load: () => import('./pasang-kenderaan/index.js') },
   { id: 'pasar-malam', title: 'Pasar Malam', skill: 'ingatan', ages: [3, 6], thumb: () => `<svg viewBox="0 0 100 60" aria-hidden="true"><g transform="translate(0 4) scale(.85)">${inner(itemIcon('tembikai'))}</g><g transform="translate(46 4) scale(.85)">${inner(itemIcon('nanas'))}</g></svg>`, load: () => import('./pasar-malam/index.js') },
+  { id: 'rima-lucu', title: 'Rima Lucu', skill: 'bahasa', ages: [3, 6], thumb: () => `<svg viewBox="0 0 100 52" aria-hidden="true"><g transform="translate(0 0) scale(.85)">${inner(bendaIcon('topi'))}</g><g transform="translate(48 0) scale(.85)">${inner(bendaIcon('kopi'))}</g></svg>`, load: () => import('./rima-lucu/index.js') },
+  { id: 'tenggelam-timbul', title: 'Tenggelam atau Timbul', skill: 'sains', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 60" aria-hidden="true"><rect x="4" y="22" width="52" height="34" rx="4" fill="#40A0DC" opacity=".55"/><g transform="translate(14 8) scale(.55)">${inner(bendaIcon('itik'))}</g><g transform="translate(20 34) scale(.38)">${inner(bendaIcon('batu'))}</g></svg>`, load: () => import('./tenggelam-timbul/index.js') },
+  { id: 'hafiz-kata', title: 'Hafiz Kata', skill: 'kawalan-diri', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 5 L37 22 L55 23 L41 35 L46 53 L30 43 L14 53 L19 35 L5 23 L23 22 Z" fill="#F5B82E" stroke="#B7860F" stroke-width="3" stroke-linejoin="round"/></svg>`, load: () => import('./hafiz-kata/index.js') },
 ];

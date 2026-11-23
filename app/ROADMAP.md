@@ -18,9 +18,9 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 9 | Muka Perasaan | Kenal emosi | Emosi | "Mana muka sedih?" 5 perasaan, 5 kanak-kanak berbeza; salah = Hafiz namakan muka yang dipilih | ✅ v0.1 |
 | 10 | Pasar Malam | Ingatan kerja (verbal) | Eksekutif | Dengar senarai beli 2–4 barang, ambil di gerai; butang "dengar lagi" | ✅ v0.1 |
 | 11 | Bentuk Wau | Bentuk 2D | Nombor | Pasang bulatan, segi tiga, segi empat jadi wau | |
-| 12 | Rima Lucu | Kesedaran fonologi: rima | Bahasa | Mana yang berima: "batu… ratu / meja?" | |
+| 12 | Rima Lucu | Kesedaran fonologi: rima | Bahasa | 7 pasangan rima bergambar (ayam–jam, topi–kopi); setiap pilihan disebut | ✅ v0.1 |
 | 13 | Nombor Hilang | Turutan nombor 1–10 | Nombor | Garis nombor jambatan: isi papan yang hilang | |
-| 14 | Hafiz Kata | Inhibisi auditori | Eksekutif | Ikut arahan hanya bila "Hafiz kata…" | |
+| 14 | Hafiz Kata | Inhibisi auditori | Eksekutif | Ikut arahan hanya bila "Hafiz kata…"; bar masa, muka Hafiz bercahaya di tahap rendah | ✅ v0.1 |
 | 15 | Susun Cerita | Urutan & naratif | Bahasa | Susun 3–4 gambar cerita, Hafiz ceritakan semula | |
 | 16 | Kawan Sedih | Empati & tindakan | Emosi | Kawan jatuh / bergaduh: pilih tindakan baik | |
 | 17 | Rumah Siapa? | Habitat haiwan | Sains | Padankan haiwan dengan rumah: sarang, gua, sungai, pokok | |
@@ -34,7 +34,7 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 25 | Cuaca Hari Ini | Cuaca & pakaian | Sains | Hujan / panas / berangin: pilih payung, topi, baju | |
 | 26 | Puzzle Batik | Spatial | Visual | Puzzle 4–9 keping corak batik | |
 | 27 | Perkataan Pertama | Kenal perkataan (sight words BM) | Bahasa | "saya", "ibu", "ayah", "makan": padan perkataan dengan gambar | |
-| 28 | Tenggelam atau Timbul | Ramalan & eksperimen | Sains | Ramal, kemudian lihat objek dalam besen | |
+| 28 | Tenggelam atau Timbul | Ramalan & eksperimen | Sains | Teka, jatuhkan ke akuarium; benda kekal dan membentuk dua kumpulan | ✅ v0.1 |
 | 29 | Tarik Nafas Naga | Strategi menenangkan diri | Emosi | Latihan nafas berpandu (lanjutan Tarik Nafas Belon) | |
 | 30 | Jejak Titik | Motor halus pra-menulis | Fizikal | Surih garis dan huruf dengan jari | |
 
@@ -52,7 +52,7 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 
 Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet).
 
-**Kiraan semasa: 14 game.**
+**Kiraan semasa: 17 game.**
 
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
