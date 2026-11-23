@@ -5,6 +5,7 @@ import { RAMBUTAN_SVG } from '../kit/objects.js';
 import { vehicleIcon } from '../kit/vehicles.js';
 import { kuihIcon } from '../kit/kuih.js';
 import { faceSVG } from '../kit/faces.js';
+import { itemIcon } from '../kit/pasar.js';
 
 const inner = (svg) => svg.replace(/<\/?svg[^>]*>/g, '');
 
@@ -34,4 +35,6 @@ export const GAMES = [
   { id: 'susun-saiz', title: 'Susun Ikut Saiz', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 160 70" aria-hidden="true"><g transform="translate(0 44) scale(.2)">${inner(vehicleIcon('lori'))}</g><g transform="translate(36 32) scale(.32)">${inner(vehicleIcon('lori'))}</g><g transform="translate(86 14) scale(.46)">${inner(vehicleIcon('lori'))}</g></svg>`, load: () => import('./susun-saiz/index.js') },
   { id: 'corak-kuih', title: 'Corak Kuih', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 120 44" aria-hidden="true">${['lapis', 'onde', 'lapis', 'onde'].map((k, i) => `<g transform="translate(${i * 30} 6) scale(.5)">${inner(kuihIcon(k))}</g>`).join('')}</svg>`, load: () => import('./corak-kuih/index.js') },
   { id: 'muka-perasaan', title: 'Muka Perasaan', skill: 'emosi', ages: [3, 6], thumb: () => faceSVG(0, 'gembira'), load: () => import('./muka-perasaan/index.js') },
+  { id: 'pasang-kenderaan', title: 'Pasang Kenderaan', skill: 'visual', ages: [3, 6], thumb: () => `<svg viewBox="0 0 172 124" aria-hidden="true"><svg x="0" y="4" width="80" height="120" viewBox="0 0 80 120">${inner(vehicleIcon('bomba'))}</svg><svg x="92" y="0" width="80" height="120" viewBox="80 0 80 120">${inner(vehicleIcon('bomba'))}</svg></svg>`, load: () => import('./pasang-kenderaan/index.js') },
+  { id: 'pasar-malam', title: 'Pasar Malam', skill: 'ingatan', ages: [3, 6], thumb: () => `<svg viewBox="0 0 100 60" aria-hidden="true"><g transform="translate(0 4) scale(.85)">${inner(itemIcon('tembikai'))}</g><g transform="translate(46 4) scale(.85)">${inner(itemIcon('nanas'))}</g></svg>`, load: () => import('./pasar-malam/index.js') },
 ];

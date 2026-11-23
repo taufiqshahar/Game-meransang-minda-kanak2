@@ -16,7 +16,7 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 7 | Suku Kata Kapal | Suku kata | Bahasa | Tepuk suku kata (ba-ju, ku-cing), muatkan ke kapal | |
 | 8 | Corak Kuih | Corak AB / AAB / ABC | Nombor | Sambung corak kuih atas dulang; kuih melompat ikut ritma; tahap 4 kosong di tengah | ✅ v0.1 |
 | 9 | Muka Perasaan | Kenal emosi | Emosi | "Mana muka sedih?" 5 perasaan, 5 kanak-kanak berbeza; salah = Hafiz namakan muka yang dipilih | ✅ v0.1 |
-| 10 | Pasar Malam Ingat | Ingatan kerja (verbal) | Eksekutif | Dengar senarai beli 2–5 barang, ambil di gerai | |
+| 10 | Pasar Malam | Ingatan kerja (verbal) | Eksekutif | Dengar senarai beli 2–4 barang, ambil di gerai; butang "dengar lagi" | ✅ v0.1 |
 | 11 | Bentuk Wau | Bentuk 2D | Nombor | Pasang bulatan, segi tiga, segi empat jadi wau | |
 | 12 | Rima Lucu | Kesedaran fonologi: rima | Bahasa | Mana yang berima: "batu… ratu / meja?" | |
 | 13 | Nombor Hilang | Turutan nombor 1–10 | Nombor | Garis nombor jambatan: isi papan yang hilang | |
@@ -48,10 +48,11 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 | 8 | Muat Lori | Menghasilkan kuantiti ikut nombor | Seret / tekan bata ke lori, tekan "Jalan!" untuk semak sendiri | ✅ v0.1 |
 | 9 | Pandu Jengkaut | Motor halus, pra-menulis | Surih jalan dengan jari (lurus → lengkung → zig-zag → huruf) | ✅ v0.1 |
 | 10 | Susun Ikut Saiz | Seriasi (ukuran) | Seret / tekan kenderaan ke jalan ikut saiz; tahap 4 selang-seli besar → kecil | ✅ v0.1 |
+| 11 | Pasang Kenderaan | Visual-ruang (bahagian-keseluruhan) | Puzzle 2–6 keping: seret, atau tekan kepingan kemudian tekan tempatnya | ✅ v0.1 |
 
-Idea seterusnya dengan interaksi berbeza: **Pasang Kenderaan** (puzzle bahagian), **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet), **Pasar Malam Ingat** (senarai beli).
+Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu), **Bayang Siapa?** (padan siluet).
 
-**Kiraan semasa: 12 game.**
+**Kiraan semasa: 14 game.**
 
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
