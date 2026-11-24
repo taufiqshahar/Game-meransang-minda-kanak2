@@ -44,7 +44,7 @@ export default {
 
 Baris kongsi (tanpa rakaman baharu): `start`, `bagus`, `pandainya`, `betul`, `hebat`, `cuba-lagi`, `tengok`, `end`, `breath-in`, `breath-out`, `n1`–`n10`, `v-<kenderaan>` (8 nama kenderaan). Senarai penuh: `kit/audio/SKRIP-SUARA.md`.
 
-Rakaman nama yang boleh disalin ke game baharu (tanpa kos kredit): `i-<barang>` (Pasar Malam), `w-<perkataan>` (Rima Lucu), `a-<haiwan>` (Bayang Siapa?), `ini-<perasaan>` (Muka Perasaan), `s-<peringkat>` (Kitar Hidup: ulat, berudu, anak ayam, tunas…), `b-<barang>` (Cuaca Hari Ini: baju hujan, jaket, wau…).
+Rakaman nama yang boleh disalin ke game baharu (tanpa kos kredit): `i-<barang>` (Pasar Malam), `w-<perkataan>` (Rima Lucu), `a-<haiwan>` (Bayang Siapa?), `ini-<perasaan>` (Muka Perasaan), `s-<peringkat>` (Kitar Hidup: ulat, berudu, anak ayam, tunas…), `b-<barang>` (Cuaca Hari Ini: baju hujan, jaket, wau…), `w-bola/daun/kunci/sudu` (Perkataan Pertama), `n-rumah/bintang` (Sambung Titik).
 
 Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan), `kit/objects.js` (rambutan), `kit/kuih.js` (5 kuih), `kit/faces.js` (5 kanak-kanak × 5 perasaan), `kit/pasar.js` (8 barang pasar), `kit/benda.js` (11 perkataan rima + 9 bahan eksperimen).
 
