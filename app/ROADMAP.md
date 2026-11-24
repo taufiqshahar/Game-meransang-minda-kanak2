@@ -57,6 +57,7 @@ Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak war
 
 ## v0.6: laman utama untuk 30 game
 - **Cabaran hari ini**: 3 game dari 3 bidang berbeza, dipilih dari sejarah main anak: (1) bidang paling kurang dilatih minggu ini, (2) game baharu atau lama tak dimain, (3) kegemaran. Pilihan disimpan untuk hari itu (tidak bertukar selepas bermain), tanda ✓ dan "1/3 selesai" membina tabiat harian.
+- **Laporan minggu ini** (zon ibu bapa): hari aktif, rentetan hari, pusingan & minit; bar penguasaan 9 bidang (kedudukan tahap semasa dalam julat setiap game, `lv` dalam registry); cerapan automatik (kekuatan ≥ 3 pusingan, naik tahap, perlu perhatian + misi rumah); butang **Kongsi** (Web Share / salin teks untuk WhatsApp). Nama anak pilihan dalam tetapan. Calon ciri premium.
 - **Penapis bidang**: chip "Semua · Kawalan diri · Ingatan · … " di atas senarai penuh.
 
 ## Perkongsian aset untuk mengurangkan kos

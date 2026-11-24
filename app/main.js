@@ -12,7 +12,7 @@ const ROUNDS_KEPT = 200;
 
 /* ================= STORAGE ================= */
 // Satu stor untuk semua game: tetapan, masa hari ini (dikongsi), dan keadaan setiap game di bawah games[id].
-const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true }, today: { date: todayStr(), ms: 0, extraMin: 0 }, games: {} });
+const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true, name: '' }, today: { date: todayStr(), ms: 0, extraMin: 0 }, days: {}, games: {} });
 function load() {
   const base = defaultData();
   try {
@@ -23,6 +23,9 @@ function load() {
     if (![3, 4, 5, 6].includes(out.settings.age)) out.settings.age = 4;
     if (![5, 10, 15, 20].includes(out.settings.dailyMin)) out.settings.dailyMin = 10;
     if (!out.games || typeof out.games !== 'object' || Array.isArray(out.games)) out.games = {};
+    if (!out.days || typeof out.days !== 'object' || Array.isArray(out.days)) out.days = {};
+    if (typeof out.settings.name !== 'string') out.settings.name = '';
+    out.settings.name = out.settings.name.slice(0, 20);
     return out;
   } catch (e) { return base; }
 }
@@ -82,7 +85,12 @@ function cancelActive() { if (active) { active.abort.abort(); active = null; } }
 function addPlayTime() {
   if (!roundStart) return;
   rollDay();
-  data.today.ms += Math.max(0, performance.now() - roundStart);
+  const ms = Math.max(0, performance.now() - roundStart);
+  data.today.ms += ms;
+  // Sejarah minit harian untuk laporan mingguan (simpan 60 hari).
+  const d = todayStr();
+  data.days[d] = (data.days[d] || 0) + ms;
+  Object.keys(data.days).sort().slice(0, -60).forEach((k) => delete data.days[k]);
   roundStart = 0; save();
 }
 
@@ -309,10 +317,109 @@ $('#gate-answers').addEventListener('click', (e) => {
 });
 $('#gate-close').addEventListener('click', () => { $('#gate').hidden = true; });
 
+
+/* ================= LAPORAN MINGGUAN ================= */
+const esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const lvOf = (meta) => meta.lv || ['level', 1, 4];
+// Penguasaan game: kedudukan tahap semasa dalam julat game itu (0–1). null jika belum dimain.
+function mastery(meta) {
+  const s = data.games[meta.id];
+  if (!s || !Array.isArray(s.rounds) || !s.rounds.length) return null;
+  const [key, lo, hi] = lvOf(meta), v = Number(s[key]);
+  if (!Number.isFinite(v) || hi <= lo) return null;
+  return Math.min(1, Math.max(0, (v - lo + 1) / (hi - lo + 1)));
+}
+function weekReport(mods) {
+  const DAYMS = 86400000, now = Date.now();
+  const week = Array.from({ length: 7 }, (_, i) => todayStr(new Date(now - i * DAYMS)));
+  const inWeek = (t) => week.includes(todayStr(new Date(t)));
+  const games = GAMES.map((meta, i) => {
+    const rounds = Array.isArray(data.games[meta.id]?.rounds) ? data.games[meta.id].rounds : [];
+    const wk = rounds.filter((r) => inWeek(r.t));
+    const [key] = lvOf(meta);
+    const firstLv = wk.length && Number.isFinite(Number(wk[0][key])) ? Number(wk[0][key]) : null;
+    const nowLv = Number(data.games[meta.id]?.[key]);
+    return { meta, mod: mods[i], wk: wk.length, total: rounds.length, m: mastery(meta), up: firstLv !== null && Number.isFinite(nowLv) && nowLv > firstLv ? { from: firstLv, to: nowLv } : null };
+  });
+  const activeDays = week.filter((d) => GAMES.some((g) => (data.games[g.id]?.rounds || []).some((r) => todayStr(new Date(r.t)) === d)));
+  let streak = 0;
+  for (let i = 0; i < 60; i++) {
+    const d = todayStr(new Date(now - i * DAYMS));
+    const played = GAMES.some((g) => (data.games[g.id]?.rounds || []).some((r) => todayStr(new Date(r.t)) === d));
+    if (played) streak++; else if (i > 0) break; // hari ini belum main tidak memutuskan rentetan
+  }
+  const minutes = Math.round(week.reduce((a, d) => a + (data.days[d] || 0), 0) / 60000);
+  const skills = Object.keys(SKILLS).map((k) => {
+    const gs = games.filter((g) => g.meta.skill === k);
+    const ms = gs.map((g) => g.m).filter((m) => m !== null);
+    return { k, name: SKILLS[k].name, color: SKILLS[k].color, wk: gs.reduce((a, g) => a + g.wk, 0), m: ms.length ? ms.reduce((a, b) => a + b, 0) / ms.length : null, games: gs };
+  });
+  const rounds = games.reduce((a, g) => a + g.wk, 0);
+  // Cerapan: kekuatan, naik tahap, perlu perhatian (dengan cadangan game + misi rumah).
+  // Kekuatan hanya dituntut bila ada bukti cukup (≥ 3 pusingan dalam bidang itu).
+  const tried = skills.filter((x) => x.m !== null && x.games.reduce((t, g) => t + g.total, 0) >= 3);
+  const strong = tried.length ? [...tried].sort((a, b) => b.m - a.m || b.wk - a.wk)[0] : null;
+  const ups = games.filter((g) => g.up).sort((a, b) => (b.up.to - b.up.from) - (a.up.to - a.up.from));
+  const weak = [...skills].sort((a, b) => (a.wk - b.wk) || ((a.m ?? -1) - (b.m ?? -1)))[0];
+  const weakGame = [...weak.games].sort((a, b) => a.total - b.total)[0];
+  return { week, activeDays: activeDays.length, streak, minutes, rounds, skills, strong, ups, weak, weakGame };
+}
+function renderReport(mods) {
+  const R = weekReport(mods), name = data.settings.name.trim();
+  const who = name ? esc(name) : 'Anak';
+  const lines = [];
+  if (R.strong && R.strong.m >= .5) lines.push(`<li><b>Kekuatan:</b> ${esc(R.strong.name)}. ${who} sudah di ${Math.round(R.strong.m * 100)}% laluan tahap dalam bidang ini.</li>`);
+  if (R.ups.length) lines.push(`<li><b>Naik tahap:</b> ${R.ups.slice(0, 3).map((g) => `${esc(g.meta.title)} (${g.up.from} → ${g.up.to})`).join(', ')}.</li>`);
+  if (R.weakGame) {
+    const mis = R.weakGame.mod?.mission;
+    lines.push(`<li><b>Perlu perhatian:</b> ${esc(R.weak.name)}${R.weak.wk ? ` (hanya ${R.weak.wk} pusingan)` : ' (belum dimain minggu ini)'}. Cuba <b>${esc(R.weakGame.meta.title)}</b>${mis ? `, dan di rumah: <i>${esc(mis.title)}</i>` : ''}.</li>`);
+  }
+  const head = R.rounds
+    ? `Minggu ini ${who} bermain <b>${R.activeDays} hari</b>, <b>${R.rounds} pusingan</b>${R.minutes ? ` (± ${R.minutes} minit)` : ''}.`
+    : `${who} belum bermain minggu ini. Cabaran hari ini di laman utama ialah tempat yang baik untuk mula.`;
+  $('#report').innerHTML = `
+    <div class="rep-head"><h3>Laporan minggu ini</h3><span class="rep-badge">7 hari terakhir</span></div>
+    <p class="rep-sum">${head}</p>
+    <div class="rep-kpis">
+      <div class="stat"><b>${R.activeDays}<small>/7</small></b><span>Hari aktif</span></div>
+      <div class="stat"><b>${R.streak}</b><span>Hari berturut-turut</span></div>
+      <div class="stat"><b>${R.rounds}</b><span>Pusingan</span></div>
+    </div>
+    <div class="rep-days" aria-label="Hari aktif minggu ini">${[...R.week].reverse().map((d) => {
+      const on = GAMES.some((g) => (data.games[g.id]?.rounds || []).some((r) => todayStr(new Date(r.t)) === d));
+      const dt = new Date(d + 'T12:00:00');
+      return `<span class="rep-day${on ? ' on' : ''}" title="${d}"><i></i>${dt.toLocaleDateString('ms-MY', { weekday: 'short' }).slice(0, 3)}</span>`;
+    }).join('')}</div>
+    <div class="rep-skills">${R.skills.map((x) => `<div class="rep-skill" style="--c:${x.color}">
+      <span class="rep-name">${esc(x.name)}</span>
+      <span class="rep-bar" role="img" aria-label="${esc(x.name)}: ${x.m === null ? 'belum dicuba' : Math.round(x.m * 100) + '% laluan tahap'}"><i style="width:${x.m === null ? 0 : Math.max(4, Math.round(x.m * 100))}%"></i></span>
+      <span class="rep-val">${x.m === null ? 'Belum' : Math.round(x.m * 100) + '%'}<small>${x.wk ? ` · ${x.wk}×` : ''}</small></span></div>`).join('')}</div>
+    <p class="sub rep-note">Bar = kedudukan tahap kesukaran semasa dalam setiap bidang (purata game yang pernah dimain). "3×" = pusingan minggu ini.</p>
+    ${lines.length ? `<ul class="rep-insights">${lines.join('')}</ul>` : ''}
+    <div class="rep-actions"><button class="btn-sm go" id="btn-share" type="button">Kongsi laporan</button><span class="sub" id="share-msg" role="status"></span></div>`;
+  $('#btn-share').addEventListener('click', () => shareReport(R, name));
+}
+async function shareReport(R, name) {
+  const who = name || 'Anak saya';
+  const bars = R.skills.filter((x) => x.m !== null).sort((a, b) => b.m - a.m).map((x) => `• ${x.name}: ${Math.round(x.m * 100)}%`).join('\n');
+  const text = `Laporan Rangsang Minda minggu ini\n${who} bermain ${R.activeDays} hari, ${R.rounds} pusingan${R.minutes ? ` (± ${R.minutes} minit)` : ''}.\n${bars ? `\nTahap ikut bidang:\n${bars}\n` : ''}${R.weakGame ? `\nFokus minggu depan: ${R.weak.name} (${R.weakGame.meta.title}).` : ''}`;
+  const msg = $('#share-msg');
+  try {
+    if (navigator.share) { await navigator.share({ title: 'Laporan Rangsang Minda', text }); msg.textContent = ''; return; }
+    await navigator.clipboard.writeText(text);
+    msg.textContent = 'Laporan disalin. Tampal dalam WhatsApp atau e-mel.';
+  } catch (e) {
+    if (e && e.name === 'AbortError') return; // pengguna batal kongsi
+    msg.textContent = 'Tidak dapat berkongsi pada peranti ini.';
+  }
+}
+
 /* ================= PARENT AREA ================= */
 async function renderParent() {
   rollDay();
   const mods = await Promise.all(GAMES.map((g) => loadGame(g.id)));
+  mods.forEach((m) => stateOf(m)); // pastikan keadaan setiap game sah sebelum laporan
+  renderReport(mods);
   $('#parent-games').innerHTML = mods.map((game, i) => {
     const meta = GAMES[i], sk = SKILLS[meta.skill];
     const s = stateOf(game), p = game.parent;
@@ -322,11 +429,12 @@ async function renderParent() {
       ? `<div class="table-wrap"><table><thead><tr><th>Masa</th>${p.cols.map((c) => `<th>${c}</th>`).join('')}</tr></thead><tbody>${
         rows.map((r) => `<tr><td>${fmtDate(r.t)}</td>${p.row(r).map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
       : '<p class="empty">Belum dimain. Rekod muncul selepas anak tamat satu pusingan.</p>';
-    return `<details class="gsec" style="--c:${sk.color}"${i === 0 ? ' open' : ''}><summary><span class="sthumb">${meta.thumb()}</span><span class="stitle"><b>${meta.title}</b><span class="sub">${sk.name} · ${s.rounds.length} pusingan</span></span></summary>
+    return `<details class="gsec" style="--c:${sk.color}"><summary><span class="sthumb">${meta.thumb()}</span><span class="stitle"><b>${meta.title}</b><span class="sub">${sk.name} · ${s.rounds.length} pusingan</span></span></summary>
       <div class="gsec-body"><div class="stats">${stats}</div><div class="explain">${p.explain}</div>${table}</div></details>`;
   }).join('');
   save();
   $('#set-age').value = String(data.settings.age);
+  $('#set-name').value = data.settings.name;
   $('#set-limit').value = String(data.settings.dailyMin);
   $('#set-voice').checked = !!data.settings.voice;
   const dv = voice.deviceVoiceName();
@@ -341,6 +449,7 @@ async function openParent() { await renderParent(); $('#parent').hidden = false;
 $('#parent-close').addEventListener('click', () => { $('#parent').hidden = true; renderHome(); });
 $('#set-age').addEventListener('change', (e) => { setAge(Number(e.target.value)); renderParent(); });
 $('#set-limit').addEventListener('change', (e) => { data.settings.dailyMin = Number(e.target.value); save(); renderParent(); });
+$('#set-name').addEventListener('change', (e) => { data.settings.name = e.target.value.trim().slice(0, 20); save(); renderParent(); });
 $('#set-voice').addEventListener('change', (e) => { data.settings.voice = e.target.checked; save(); });
 $('#btn-extend').addEventListener('click', () => { rollDay(); data.today.extraMin += 5; save(); renderParent(); });
 $('#btn-reset').addEventListener('click', () => { $('#btn-reset').hidden = true; $('#reset-confirm').hidden = false; });
