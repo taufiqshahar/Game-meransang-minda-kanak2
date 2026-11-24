@@ -21,17 +21,17 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 12 | Rima Lucu | Kesedaran fonologi: rima | Bahasa | 7 pasangan rima bergambar (ayam–jam, topi–kopi); setiap pilihan disebut | ✅ v0.1 |
 | 13 | Nombor Hilang | Turutan nombor 1–10 | Nombor | Garis nombor jambatan: isi papan yang hilang | |
 | 14 | Hafiz Kata | Inhibisi auditori | Eksekutif | Ikut arahan hanya bila "Hafiz kata…"; bar masa, muka Hafiz bercahaya di tahap rendah | ✅ v0.1 |
-| 15 | Susun Cerita | Urutan & naratif | Bahasa | Susun 3–4 gambar cerita, Hafiz ceritakan semula | |
+| 15 | Susun Cerita | Urutan & naratif | Bahasa | 8 cerita (pisang, aiskrim, belon, hujan, bomba, bina rumah, kek, masak telur): tekan gambar ikut turutan, Hafiz ceritakan setiap gambar; tahap 3–4 empat gambar | ✅ v0.1 |
 | 16 | Kawan Baik | Empati & tindakan prososial | Emosi | 7 cerita: teka perasaan kawan, kemudian pilih tindakan baik (muka kawan bertukar gembira); tahap 3–4 muka disorok | ✅ v0.1 |
 | 17 | Rumah Siapa? | Habitat haiwan | Sains | Padankan haiwan dengan rumah: sarang, gua, sungai, pokok | |
 | 18 | Cari Beza | Perhatian visual | Visual | Dua gambar kampung, cari 3–5 beza | |
 | 19 | Arahan Dua Langkah | Kefahaman mendengar | Bahasa | "Ambil bola merah, kemudian letak dalam kotak" | |
 | 20 | Timbang-Timbang | Ukuran: panjang, berat | Nombor | Mana lebih panjang / berat; neraca pasar | |
 | 21 | Bayang Siapa? | Padanan bentuk | Visual | Bayang 34 benda (kenderaan, haiwan, makanan, barang); tahap tinggi kategori sama dan bayang terbalik | ✅ v0.1 |
-| 22 | Kitar Rama-Rama | Kitar hidup | Sains | Susun telur → ulat → kepompong → rama-rama | |
+| 22 | Kitar Hidup | Kitar hidup | Sains | 4 kitar (rama-rama, katak, ayam, pokok) dalam bulatan: "lepas ni jadi apa?"; tahap 3 pengganggu dari kitar sama, tahap 4 mula di tengah kitar | ✅ v0.1 |
 | 23 | Tunggu Giliran | Kawalan diri sosial | Emosi | Permainan bergilir dengan haiwan; tunggu isyarat | |
 | 24 | Tambah Buah | Tambah dalam 10 | Nombor | Tekan buah untuk gabung ke bakul besar (bingkai sepuluh); tahap 4 bakul ditutup, kira terus | ✅ v0.1 |
-| 25 | Cuaca Hari Ini | Cuaca & pakaian | Sains | Hujan / panas / berangin: pilih payung, topi, baju | |
+| 25 | Cuaca Hari Ini | Cuaca & pakaian | Sains | 4 cuaca (hujan, panas, berangin, sejuk): pakaikan kawan; barang terus dipakai; tahap 3 pilih dua, tahap 4 pilih semua | ✅ v0.1 |
 | 26 | Puzzle Batik | Spatial | Visual | Puzzle 4–9 keping corak batik | |
 | 27 | Perkataan Pertama | Kenal perkataan (sight words BM) | Bahasa | "saya", "ibu", "ayah", "makan": padan perkataan dengan gambar | |
 | 28 | Tenggelam atau Timbul | Ramalan & eksperimen | Sains | Teka, jatuhkan ke akuarium; benda kekal dan membentuk dua kumpulan | ✅ v0.1 |
@@ -52,7 +52,7 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 
 Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu).
 
-**Kiraan semasa: 20 game.**
+**Kiraan semasa: 23 game.**
 
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
