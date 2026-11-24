@@ -13,21 +13,51 @@ const ROUNDS_KEPT = 200;
 /* ================= STORAGE ================= */
 // Satu stor untuk semua game: tetapan, masa hari ini (dikongsi), dan keadaan setiap game di bawah games[id].
 const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true, name: '' }, today: { date: todayStr(), ms: 0, extraMin: 0 }, days: {}, games: {} });
-function load() {
+// Bersihkan data (dari storan atau fail sandaran): hanya bentuk yang dijangka diterima.
+const SAFE_KEY = /^[A-Za-z0-9_-]{1,40}$/;
+const SAFE_STR = /^[\p{L}\p{N} _.,:'()/+-]{0,60}$/u; // tiada < > & " supaya tiada HTML boleh menyusup ke jadual ibu bapa
+function clean(v, depth = 0) {
+  if (typeof v === 'number') return Number.isFinite(v) ? v : undefined;
+  if (typeof v === 'boolean' || v === null) return v;
+  if (typeof v === 'string') return SAFE_STR.test(v) ? v : undefined;
+  if (depth >= 4) return undefined;
+  if (Array.isArray(v)) return v.slice(0, 300).map((x) => clean(x, depth + 1)).filter((x) => x !== undefined);
+  if (typeof v === 'object') {
+    const o = {};
+    for (const [k, x] of Object.entries(v).slice(0, 80)) { if (SAFE_KEY.test(k)) { const c = clean(x, depth + 1); if (c !== undefined) o[k] = c; } }
+    return o;
+  }
+  return undefined;
+}
+function normalizeData(d, { strict = false } = {}) {
   const base = defaultData();
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return base;
-    const d = JSON.parse(raw) || {};
-    const out = { ...base, ...d, settings: { ...base.settings, ...(d.settings || {}) }, today: { ...base.today, ...(d.today || {}) } };
-    if (![3, 4, 5, 6].includes(out.settings.age)) out.settings.age = 4;
-    if (![5, 10, 15, 20].includes(out.settings.dailyMin)) out.settings.dailyMin = 10;
-    if (!out.games || typeof out.games !== 'object' || Array.isArray(out.games)) out.games = {};
-    if (!out.days || typeof out.days !== 'object' || Array.isArray(out.days)) out.days = {};
-    if (typeof out.settings.name !== 'string') out.settings.name = '';
-    out.settings.name = out.settings.name.slice(0, 20);
-    return out;
-  } catch (e) { return base; }
+  if (!d || typeof d !== 'object') return base;
+  const out = { ...base, ...d, settings: { ...base.settings, ...(d.settings || {}) }, today: { ...base.today, ...(d.today || {}) } };
+  if (![3, 4, 5, 6].includes(out.settings.age)) out.settings.age = 4;
+  if (![5, 10, 15, 20].includes(out.settings.dailyMin)) out.settings.dailyMin = 10;
+  out.settings.voice = out.settings.voice !== false;
+  if (typeof out.settings.name !== 'string') out.settings.name = '';
+  out.settings.name = out.settings.name.slice(0, 20);
+  if (!out.games || typeof out.games !== 'object' || Array.isArray(out.games)) out.games = {};
+  if (!out.days || typeof out.days !== 'object' || Array.isArray(out.days)) out.days = {};
+  if (strict) {
+    // Fail luar: simpan hanya game yang wujud, nilai primitif selamat, dan hari bertarikh sah.
+    const games = {};
+    for (const g of GAMES) if (out.games[g.id] && typeof out.games[g.id] === 'object') games[g.id] = clean(out.games[g.id]);
+    out.games = games;
+    out.days = Object.fromEntries(Object.entries(out.days).filter(([k, v]) => /^\d{4}-\d{2}-\d{2}$/.test(k) && Number.isFinite(v) && v >= 0));
+    const st = out.settings;
+    // Hanya kunci yang dikenali; had masa hari ini kekal milik peranti ini.
+    return {
+      settings: { age: st.age, dailyMin: st.dailyMin, voice: st.voice, name: SAFE_STR.test(st.name) ? st.name : '' },
+      today: { date: todayStr(), ms: 0, extraMin: 0 }, days: out.days, games: out.games,
+    };
+  }
+  return out;
+}
+function load() {
+  try { const raw = localStorage.getItem(STORE_KEY); return raw ? normalizeData(JSON.parse(raw)) : defaultData(); }
+  catch (e) { return defaultData(); }
 }
 let data = load();
 function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) { /* storan tiada: main tetap berjalan */ } }
@@ -444,6 +474,8 @@ async function renderParent() {
   const usedMin = Math.floor(data.today.ms / 60000), totalMin = data.settings.dailyMin + data.today.extraMin;
   $('#today-info').textContent = `Hari ini: ${usedMin} daripada ${totalMin} minit digunakan (semua permainan).`;
   $('#reset-confirm').hidden = true; $('#btn-reset').hidden = false;
+  $('#restore-confirm').hidden = true; pendingRestore = null;
+  renderBackupInfo();
 }
 async function openParent() { await renderParent(); $('#parent').hidden = false; $('#parent-close').focus(); }
 $('#parent-close').addEventListener('click', () => { $('#parent').hidden = true; renderHome(); });
@@ -455,6 +487,82 @@ $('#btn-extend').addEventListener('click', () => { rollDay(); data.today.extraMi
 $('#btn-reset').addEventListener('click', () => { $('#btn-reset').hidden = true; $('#reset-confirm').hidden = false; });
 $('#btn-reset-no').addEventListener('click', () => { $('#reset-confirm').hidden = true; $('#btn-reset').hidden = false; });
 $('#btn-reset-yes').addEventListener('click', () => { data = defaultData(); save(); renderParent(); });
+
+
+/* ================= SANDARAN & PULIH ================= */
+// Data hanya dalam peranti ini; sandaran ialah satu fail JSON yang ibu bapa simpan sendiri (cth. hantar ke WhatsApp sendiri).
+const BACKUP_APP = 'rangsang-minda', BACKUP_V = 1, BACKUP_MAX_BYTES = 5 * 1024 * 1024;
+// Dalam paparan claude.ai, fail disimpan melalui keupayaan "downloads"; di luar (laman sendiri) guna muat turun biasa.
+let dlCap = null;
+if (window.claude?.use) window.claude.use('downloads').then((d) => { dlCap = d; }).catch(() => {});
+const roundCount = (d) => Object.values(d.games || {}).reduce((a, g) => a + (Array.isArray(g?.rounds) ? g.rounds.length : 0), 0);
+function backupBlob() {
+  const json = JSON.stringify({ app: BACKUP_APP, v: BACKUP_V, at: new Date().toISOString(), data });
+  const name = `rangsang-minda-sandaran-${todayStr()}.json`;
+  return { json, name };
+}
+function markBackedUp(msg) { data.lastBackup = Date.now(); save(); $('#backup-msg').textContent = msg; renderBackupInfo(); }
+async function doBackup() {
+  const { json, name } = backupBlob(), msg = $('#backup-msg');
+  if (dlCap) {
+    try { await dlCap.save({ filename: name, data: json }); markBackedUp(`Sandaran disimpan: ${name}`); }
+    catch (e) { msg.textContent = e?.code === 'declined' ? 'Sandaran dibatalkan.' : 'Tidak dapat menyimpan fail di sini. Buka aplikasi dalam pelayar untuk menyimpan sandaran.'; }
+    return;
+  }
+  const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+  const a = Object.assign(document.createElement('a'), { href: url, download: name });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  markBackedUp(`Sandaran dimuat turun: ${name}. Simpan di tempat selamat (cth. hantar ke WhatsApp sendiri).`);
+}
+async function doShareBackup() {
+  const { json, name } = backupBlob(), msg = $('#backup-msg');
+  try {
+    await navigator.share({ files: [new File([json], name, { type: 'application/json' })], title: 'Sandaran Rangsang Minda' });
+    markBackedUp('Sandaran dikongsi. Simpan fail itu, contohnya dalam WhatsApp atau e-mel sendiri.');
+  } catch (e) { if (e?.name !== 'AbortError') msg.textContent = 'Tidak dapat berkongsi fail pada peranti ini. Guna "Simpan sandaran".'; }
+}
+let pendingRestore = null;
+async function onRestoreFile(file) {
+  const msg = $('#backup-msg');
+  $('#restore-confirm').hidden = true; pendingRestore = null;
+  if (!file) return;
+  if (file.size > BACKUP_MAX_BYTES) { msg.textContent = 'Fail terlalu besar untuk sandaran Rangsang Minda.'; return; }
+  let env;
+  try { env = JSON.parse(await file.text()); } catch (e) { msg.textContent = 'Fail ini bukan sandaran Rangsang Minda (format tidak dikenali).'; return; }
+  if (!env || env.app !== BACKUP_APP || typeof env.v !== 'number' || !env.data || typeof env.data !== 'object') { msg.textContent = 'Fail ini bukan sandaran Rangsang Minda.'; return; }
+  if (env.v > BACKUP_V) { msg.textContent = 'Sandaran ini dari versi aplikasi yang lebih baharu. Kemas kini aplikasi dahulu.'; return; }
+  const incoming = normalizeData(env.data, { strict: true });
+  const when = Date.parse(env.at);
+  pendingRestore = incoming;
+  const nGames = Object.values(incoming.games).filter((g) => Array.isArray(g?.rounds) && g.rounds.length).length;
+  $('#restore-summary').textContent = `Sandaran ${Number.isFinite(when) ? fmtDate(when) : ''}: ${roundCount(incoming)} pusingan dalam ${nGames} permainan, umur ${incoming.settings.age}${incoming.settings.name ? `, nama ${incoming.settings.name}` : ''}. Data dalam peranti ini (${roundCount(data)} pusingan) akan diganti.`;
+  $('#restore-confirm').hidden = false;
+  msg.textContent = '';
+}
+function applyRestore() {
+  if (!pendingRestore) return;
+  data = { ...pendingRestore, lastBackup: Date.now() };
+  pendingRestore = null;
+  save();
+  renderParent();
+  $('#backup-msg').textContent = 'Data berjaya dipulihkan.';
+}
+function renderBackupInfo() {
+  const t = data.lastBackup, rounds = roundCount(data);
+  const old = !t || Date.now() - t > 14 * 86400000;
+  const el = $('#backup-info');
+  el.textContent = t ? `Sandaran terakhir: ${fmtDate(t)}.` : 'Belum pernah disimpan.';
+  el.classList.toggle('warn', old && rounds >= 10);
+  if (old && rounds >= 10) el.textContent += ` Ada ${rounds} pusingan yang belum disandarkan; simpan sandaran sekarang.`;
+  $('#btn-share-backup').hidden = !(navigator.canShare && !dlCap && navigator.canShare({ files: [new File(['{}'], 'x.json', { type: 'application/json' })] }));
+}
+$('#btn-backup').addEventListener('click', doBackup);
+$('#btn-share-backup').addEventListener('click', doShareBackup);
+$('#btn-restore').addEventListener('click', () => { $('#restore-file').value = ''; $('#restore-file').click(); });
+$('#restore-file').addEventListener('change', (e) => onRestoreFile(e.target.files?.[0]));
+$('#btn-restore-yes').addEventListener('click', applyRestore);
+$('#btn-restore-no').addEventListener('click', () => { pendingRestore = null; $('#restore-confirm').hidden = true; $('#backup-msg').textContent = 'Pemulihan dibatalkan.'; });
 
 /* ================= WIRING ================= */
 $('#skill-chips').addEventListener('click', (e) => {

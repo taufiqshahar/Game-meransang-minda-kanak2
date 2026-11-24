@@ -58,6 +58,7 @@ Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak war
 ## v0.6: laman utama untuk 30 game
 - **Cabaran hari ini**: 3 game dari 3 bidang berbeza, dipilih dari sejarah main anak: (1) bidang paling kurang dilatih minggu ini, (2) game baharu atau lama tak dimain, (3) kegemaran. Pilihan disimpan untuk hari itu (tidak bertukar selepas bermain), tanda ✓ dan "1/3 selesai" membina tabiat harian.
 - **Laporan minggu ini** (zon ibu bapa): hari aktif, rentetan hari, pusingan & minit; bar penguasaan 9 bidang (kedudukan tahap semasa dalam julat setiap game, `lv` dalam registry); cerapan automatik (kekuatan ≥ 3 pusingan, naik tahap, perlu perhatian + misi rumah); butang **Kongsi** (Web Share / salin teks untuk WhatsApp). Nama anak pilihan dalam tetapan. Calon ciri premium.
+- **Sandaran & pulih** (zon ibu bapa): simpan semua data sebagai satu fail JSON (muat turun, kongsi fail di telefon, atau keupayaan `downloads` dalam paparan claude.ai); pulihkan dengan ringkasan + pengesahan sebelum ganti. Fail luar dibersihkan (hanya game dikenali, nilai primitif selamat, tiada HTML). Peringatan bila ≥ 10 pusingan belum disandarkan > 14 hari. Tiada server diperlukan.
 - **Penapis bidang**: chip "Semua · Kawalan diri · Ingatan · … " di atas senarai penuh.
 
 ## Perkongsian aset untuk mengurangkan kos

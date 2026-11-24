@@ -198,6 +198,10 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
 .rep-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .field input[type="text"] { font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--garis); background: #fff; color: var(--ink); }
 @media (max-width: 380px) { .rep-skill { grid-template-columns: 88px 1fr 64px; font-size: 13px; } }
+.backup { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--garis); padding-top: 14px; }
+.backup-row { display: flex; gap: 10px; flex-wrap: wrap; }
+#backup-info.warn { color: var(--merah); font-weight: 700; }
+.restore-confirm { border: 1px solid var(--merah); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; background: rgba(229, 72, 77, .05); }
 .gsec { border: 1px solid var(--garis); border-radius: 16px; padding: 0 14px; }
 .gsec summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 12px 0; cursor: pointer; }
 .gsec summary::-webkit-details-marker { display: none; }
@@ -378,6 +382,22 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <span class="sub" id="today-info" style="flex:1 1 200px"></span>
       <button class="btn-sm go" id="btn-extend" type="button">Tambah 5 minit hari ini</button>
     </div>
+    <section class="backup" aria-labelledby="backup-title">
+      <h3 id="backup-title">Sandaran data</h3>
+      <p class="sub">Semua rekod disimpan dalam peranti ini sahaja. Simpan sandaran sebelum menukar telefon atau memadam data pelayar, kemudian pulihkan di peranti baharu.</p>
+      <p class="sub" id="backup-info"></p>
+      <div class="backup-row">
+        <button class="btn-sm go" id="btn-backup" type="button">Simpan sandaran</button>
+        <button class="btn-sm" id="btn-share-backup" type="button" hidden>Kongsi fail sandaran</button>
+        <button class="btn-sm" id="btn-restore" type="button">Pulihkan dari fail</button>
+        <input type="file" id="restore-file" accept="application/json,.json" hidden>
+      </div>
+      <div class="restore-confirm" id="restore-confirm" hidden>
+        <p id="restore-summary"></p>
+        <div class="backup-row"><button class="btn-sm danger" id="btn-restore-yes" type="button">Ya, ganti data</button><button class="btn-sm" id="btn-restore-no" type="button">Batal</button></div>
+      </div>
+      <p class="sub" id="backup-msg" role="status" aria-live="polite"></p>
+    </section>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--garis);padding-top:14px">
       <button class="btn-sm danger" id="btn-reset" type="button">Padam semua data</button>
       <span id="reset-confirm" hidden style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap">
