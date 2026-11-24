@@ -25,8 +25,8 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 16 | Kawan Baik | Empati & tindakan prososial | Emosi | 7 cerita: teka perasaan kawan, kemudian pilih tindakan baik (muka kawan bertukar gembira); tahap 3–4 muka disorok | ✅ v0.1 |
 | 17 | Rumah Siapa? | Habitat haiwan | Sains | Padankan haiwan dengan rumah: sarang, gua, sungai, pokok | |
 | 18 | Cari Beza | Perhatian visual | Visual | 3 pemandangan (kampung, tapak binaan, pantai) atas–bawah; beza dijana rawak; tahap 3 tukar warna, tahap 4 beza kecil | ✅ v0.1 |
-| 19 | Arahan Dua Langkah | Kefahaman mendengar | Bahasa | "Ambil bola merah, kemudian letak dalam kotak" | |
-| 20 | Timbang-Timbang | Ukuran: panjang, berat | Nombor | Mana lebih panjang / berat; neraca pasar | |
+| 19 | Arahan Dua Langkah | Kefahaman mendengar | Bahasa | "Letak bola merah dalam bakul": tekan barang, kemudian bekas; butang dengar semula; tahap 4 dua arahan sekali gus | ✅ v0.1 |
+| 20 | Timbang-Timbang | Ukuran: berat + ramalan | Nombor | Neraca pasar: teka mana lebih berat/ringan, neraca dilepaskan; tahap 3–4 kecil-tapi-berat (batu lwn bantal) | ✅ v0.1 |
 | 21 | Bayang Siapa? | Padanan bentuk | Visual | Bayang 34 benda (kenderaan, haiwan, makanan, barang); tahap tinggi kategori sama dan bayang terbalik | ✅ v0.1 |
 | 22 | Kitar Hidup | Kitar hidup | Sains | 4 kitar (rama-rama, katak, ayam, pokok) dalam bulatan: "lepas ni jadi apa?"; tahap 3 pengganggu dari kitar sama, tahap 4 mula di tengah kitar | ✅ v0.1 |
 | 23 | Tunggu Giliran | Kawalan diri sosial | Emosi | Permainan bergilir dengan haiwan; tunggu isyarat | |
@@ -35,7 +35,7 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 26 | Puzzle Batik | Spatial | Visual | Puzzle 4–9 keping corak batik | |
 | 27 | Perkataan Pertama | Kenal perkataan (pra-membaca) | Bahasa | 22 perkataan bergambar; tahap 1 padan bentuk, tahap 3 huruf pertama sama (kopi/kotak/kunci), tahap 4 dengar sahaja; suku kata menyala semasa disebut | ✅ v0.1 |
 | 28 | Tenggelam atau Timbul | Ramalan & eksperimen | Sains | Teka, jatuhkan ke akuarium; benda kekal dan membentuk dua kumpulan | ✅ v0.1 |
-| 29 | Tarik Nafas Naga | Strategi menenangkan diri | Emosi | Latihan nafas berpandu (lanjutan Tarik Nafas Belon) | |
+| 29 | Tarik Nafas Naga | Strategi menenangkan diri | Emosi | Tekan & tahan sambil tarik nafas (perut naga kembang, Hafiz kira), lepas dan hembus; naga marah/sedih/takut jadi tenang; tahan 3→6 saat | ✅ v0.1 |
 | 30 | Sambung Titik | Motor halus + turutan 1–10 | Fizikal | Tekan titik ikut nombor; gambar (rumah, bas, kapal, bintang, kereta api) muncul bila tertutup; tahap 4 titik kecil tanpa bantuan | ✅ v0.1 |
 
 ## Tambahan v0.8: kepelbagaian (tema kenderaan, interaksi baharu)
@@ -48,11 +48,12 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 | 8 | Muat Lori | Menghasilkan kuantiti ikut nombor | Seret / tekan bata ke lori, tekan "Jalan!" untuk semak sendiri | ✅ v0.1 |
 | 9 | Pandu Jengkaut | Motor halus, pra-menulis | Surih jalan dengan jari (lurus → lengkung → zig-zag → huruf) | ✅ v0.1 |
 | 10 | Susun Ikut Saiz | Seriasi (ukuran) | Seret / tekan kenderaan ke jalan ikut saiz; tahap 4 selang-seli besar → kecil | ✅ v0.1 |
+| 12 | Hari Terbalik | Fleksibiliti + kawalan diri | Matahari: tekan apa yang disebut; bulan: tekan lawannya (besar–kecil, atas–bawah, penuh–kosong); tahap 4 rawak + had masa | ✅ v0.1 |
 | 11 | Pasang Kenderaan | Visual-ruang (bahagian-keseluruhan) | Puzzle 2–6 keping: seret, atau tekan kepingan kemudian tekan tempatnya | ✅ v0.1 |
 
 Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu).
 
-**Kiraan semasa: 26 game.**
+**Kiraan semasa: 30 game. Sasaran 30 tercapai.**
 
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
