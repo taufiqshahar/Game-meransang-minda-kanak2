@@ -55,6 +55,10 @@ Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak war
 
 **Kiraan semasa: 30 game. Sasaran 30 tercapai.**
 
+## v0.6: laman utama untuk 30 game
+- **Cabaran hari ini**: 3 game dari 3 bidang berbeza, dipilih dari sejarah main anak: (1) bidang paling kurang dilatih minggu ini, (2) game baharu atau lama tak dimain, (3) kegemaran. Pilihan disimpan untuk hari itu (tidak bertukar selepas bermain), tanda ✓ dan "1/3 selesai" membina tabiat harian.
+- **Penapis bidang**: chip "Semua · Kawalan diri · Ingatan · … " di atas senarai penuh.
+
 ## Perkongsian aset untuk mengurangkan kos
 - **Suara**: baris kongsi (`bagus`, `pandainya`, `start`, tarik nafas) diguna semula. Anggaran 10–15 baris baharu setiap game, kira-kira 450 kredit ElevenLabs (~USD 9). Untuk 27 game: ~USD 250.
 - **Seni**: 6 haiwan + topi dalam `kit/art.js`. Game nombor dan bahasa memerlukan set objek baharu (buah, kuih, objek harian). Rancang satu "kit objek" kongsi bersama game 4 dan 5.

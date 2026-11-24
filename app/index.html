@@ -69,6 +69,24 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
 .gname { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.15; }
 .gskill { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .gskill::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 6px; vertical-align: 1px; }
+.today, .all { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 10px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.sec-head h2 { font-size: 20px; font-weight: 600; }
+.today-progress, .all-count { font-size: 13px; font-weight: 700; color: rgba(255, 253, 245, .75); }
+.today-progress.done { color: var(--kuning); }
+.today-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.today-cards .gcard { position: relative; padding: 12px 6px 10px; box-shadow: 0 6px 0 rgba(0, 0, 0, .22), inset 0 0 0 3px var(--c); }
+.today-cards .gthumb { width: 78%; }
+.today-cards .gname { font-size: 15px; }
+.why { font-size: 11px; font-weight: 800; letter-spacing: .02em; padding: 3px 8px; border-radius: 999px; background: var(--c); color: var(--ink); }
+.tick { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--daun); color: #fff; font-weight: 800; font-size: 16px; box-shadow: 0 2px 0 rgba(0, 0, 0, .2); }
+.today-cards .gcard.played .gthumb { opacity: .55; }
+.skill-chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.skill-chips::-webkit-scrollbar { display: none; }
+.schip { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 999px; background: rgba(255, 253, 245, .1); color: var(--kertas); font-weight: 700; font-size: 14px; white-space: nowrap; }
+.schip i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+.schip[aria-pressed="true"] { background: var(--kertas); color: var(--ink); }
+@media (max-width: 360px) { .today-cards .gname { font-size: 13px; } .why { font-size: 10px; padding: 2px 6px; } }
 .age-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .age-row span { font-weight: 700; font-size: 14px; color: rgba(255, 253, 245, .8); letter-spacing: .02em; }
 .chip { min-width: 48px; height: 48px; border-radius: 14px; padding: 0 12px; background: rgba(255, 253, 245, .1); color: var(--kertas); font-family: var(--font-display); font-size: 20px; font-weight: 600; }
@@ -217,7 +235,15 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
       <p>Pilih satu permainan.</p>
     </div>
     <div class="limit-msg" id="limit-msg" hidden>Masa main hari ini dah cukup. Haiwan hutan sedang tidur. Jumpa esok!</div>
-    <div class="games" id="games" role="list"></div>
+    <section class="today" id="today" aria-labelledby="today-title">
+      <div class="sec-head"><h2 id="today-title">Cabaran hari ini</h2><span class="today-progress" id="today-progress"></span></div>
+      <div class="today-cards" id="today-cards" role="list"></div>
+    </section>
+    <section class="all" aria-labelledby="all-title">
+      <div class="sec-head"><h2 id="all-title">Semua permainan</h2><span class="all-count" id="all-count"></span></div>
+      <div class="skill-chips" id="skill-chips" role="group" aria-label="Tapis ikut bidang"></div>
+      <div class="games" id="games" role="list"></div>
+    </section>
     <div class="age-row" role="group" aria-label="Umur anak">
       <span>UMUR ANAK</span>
       <div id="age-chips" style="display:flex;gap:8px"></div>

@@ -10,7 +10,7 @@ export const shuffle = (a) => {
 };
 export const anim = (el, frames, opts) => el.animate(frames, { fill: 'forwards', easing: 'ease-in-out', ...opts }).finished.catch(() => {});
 export const pct = (n, d) => (d ? Math.round((n / d) * 100) : null);
-export const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+export const todayStr = (d = new Date()) => { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 
 // n percubaan seimbang (separuh 0, separuh 1), tidak lebih 2 sama berturut-turut.
 export function balanced(n) {

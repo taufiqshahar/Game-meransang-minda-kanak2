@@ -224,17 +224,69 @@ function goHome() {
 }
 
 /* ================= HOME ================= */
+const DAY = 86400000;
+let skillFilter = 'semua'; // penapis bidang (sesi semasa sahaja)
+const roundsOf = (id) => (Array.isArray(data.games[id]?.rounds) ? data.games[id].rounds : []);
+const playedToday = (id) => roundsOf(id).some((r) => todayStr(new Date(r.t)) === todayStr());
+// Rawak berbiji: pilihan hari ini kekal sama sepanjang hari (dan bertukar esok).
+function seeded(seed) {
+  let h = 2166136261;
+  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+}
+// Cabaran hari ini: 3 game dari 3 bidang berbeza.
+// 1) bidang yang paling kurang dilatih minggu ini · 2) game baharu (belum pernah dimain) atau lama tak dimain · 3) kegemaran (paling kerap 14 hari).
+function pickToday(games) {
+  const now = Date.now(), rnd = seeded(`${todayStr()}:${data.settings.age}`);
+  const info = games.map((g) => { const r = roundsOf(g.id); return { g, n: r.length, last: r.length ? r[r.length - 1].t : 0, wk: r.filter((x) => now - x.t < 7 * DAY).length, fort: r.filter((x) => now - x.t < 14 * DAY).length, jitter: rnd() }; });
+  const picks = [], used = new Set();
+  const take = (cands, why) => { const c = cands.find((x) => !used.has(x.g.skill) && !picks.some((p) => p.id === x.g.id)); if (c) { picks.push({ id: c.g.id, why }); used.add(c.g.skill); } return !!c; };
+  // 1) bidang paling kurang dilatih
+  const bySkill = {};
+  info.forEach((x) => { (bySkill[x.g.skill] ||= { wk: 0, jitter: rnd() }).wk += x.wk; });
+  const weakSkill = Object.entries(bySkill).sort((a, b) => a[1].wk - b[1].wk || a[1].jitter - b[1].jitter)[0][0];
+  take(info.filter((x) => x.g.skill === weakSkill).sort((a, b) => a.last - b.last || a.jitter - b.jitter), 'latih');
+  // 2) baharu, atau paling lama tak dimain
+  const fresh = info.filter((x) => x.n === 0).sort((a, b) => a.jitter - b.jitter);
+  if (!take(fresh, 'baharu')) take([...info].sort((a, b) => a.last - b.last || a.jitter - b.jitter), 'lama');
+  // 3) kegemaran (≥ 2 pusingan dalam 14 hari), jika tiada: pilihan rawak
+  if (!take(info.filter((x) => x.fort >= 2).sort((a, b) => b.fort - a.fort || a.jitter - b.jitter), 'suka')) take([...info].sort((a, b) => a.jitter - b.jitter), 'cuba');
+  return picks;
+}
+const WHY = { latih: (g) => `Latih ${SKILLS[g.skill].name.toLowerCase()}`, baharu: () => 'Baharu!', lama: () => 'Lama tak main', suka: () => 'Kegemaran', cuba: () => 'Cuba ini' };
+function gameCard(g, over, extra = '') {
+  const sk = SKILLS[g.skill], done = playedToday(g.id);
+  return `<button class="gcard${done ? ' played' : ''}" type="button" role="listitem" data-id="${g.id}" style="--c:${sk.color}"${over ? ' disabled' : ''} aria-label="${g.title}${done ? ', dah dimain hari ini' : ''}">
+      ${extra}<span class="gthumb">${g.thumb()}</span><span class="gname">${g.title}</span><span class="gskill">${sk.name}</span></button>`;
+}
 function renderHome() {
+  rollDay();
   const age = data.settings.age;
   const over = timeLeft() <= 0;
-  $('#games').innerHTML = GAMES.filter((g) => age >= g.ages[0] && age <= g.ages[1]).map((g) => {
-    const sk = SKILLS[g.skill];
-    return `<button class="gcard" type="button" role="listitem" data-id="${g.id}" style="--c:${sk.color}"${over ? ' disabled' : ''}>
-      <span class="gthumb">${g.thumb()}</span><span class="gname">${g.title}</span><span class="gskill">${sk.name}</span></button>`;
-  }).join('');
+  const games = GAMES.filter((g) => age >= g.ages[0] && age <= g.ages[1]);
+  // Cabaran hari ini: disimpan untuk hari dan umur ini supaya tidak bertukar selepas anak bermain.
+  if (!Array.isArray(data.today.picks) || data.today.picksAge !== age || data.today.picks.some((p) => !p || !WHY[p.why] || !games.some((g) => g.id === p.id))) {
+    data.today.picks = pickToday(games); data.today.picksAge = age; save();
+  }
+  const picks = data.today.picks.map((p) => ({ ...p, g: metaOf(p.id) }));
+  const doneN = picks.filter((p) => playedToday(p.id)).length;
+  $('#today-cards').innerHTML = picks.map((p) => gameCard(p.g, over, `${playedToday(p.id) ? '<span class="tick" aria-hidden="true">✓</span>' : ''}`).replace('<span class="gskill">', `<span class="why">${WHY[p.why](p.g)}</span><span class="gskill" hidden>`)).join('');
+  const prog = $('#today-progress');
+  prog.textContent = doneN === picks.length ? 'Semua selesai! Hebat!' : `${doneN}/${picks.length} selesai`;
+  prog.classList.toggle('done', doneN === picks.length);
+  // Semua permainan, ikut penapis bidang.
+  const skills = Object.keys(SKILLS).filter((k) => games.some((g) => g.skill === k));
+  if (skillFilter !== 'semua' && !skills.includes(skillFilter)) skillFilter = 'semua';
+  const chipRow = $('#skill-chips'), keepX = chipRow.scrollLeft;
+  chipRow.innerHTML = [`<button class="schip" type="button" data-skill="semua" aria-pressed="${skillFilter === 'semua'}">Semua</button>`,
+    ...skills.map((k) => `<button class="schip" type="button" data-skill="${k}" style="--c:${SKILLS[k].color}" aria-pressed="${skillFilter === k}"><i aria-hidden="true"></i>${SKILLS[k].name}</button>`)].join('');
+  chipRow.scrollLeft = keepX;
+  const shown = games.filter((g) => skillFilter === 'semua' || g.skill === skillFilter);
+  $('#games').innerHTML = shown.map((g) => gameCard(g, over)).join('');
+  $('#all-count').textContent = `${shown.length} permainan`;
   $('#limit-msg').hidden = !over;
   $('#age-chips').innerHTML = [3, 4, 5, 6].map((n) => `<button class="chip" type="button" data-age="${n}" aria-pressed="${age === n}" aria-label="Umur ${n} tahun">${n}</button>`).join('');
-  $('#home-note').textContent = `Prototaip v0.5 · ${GAMES.length} permainan · Tiada iklan · Data disimpan dalam peranti ini sahaja`;
+  $('#home-note').textContent = `Prototaip v0.6 · ${GAMES.length} permainan · Tiada iklan · Data disimpan dalam peranti ini sahaja`;
 }
 function setAge(n) {
   if (data.settings.age === n) return;
@@ -296,12 +348,18 @@ $('#btn-reset-no').addEventListener('click', () => { $('#reset-confirm').hidden 
 $('#btn-reset-yes').addEventListener('click', () => { data = defaultData(); save(); renderParent(); });
 
 /* ================= WIRING ================= */
-$('#games').addEventListener('click', async (e) => {
+$('#skill-chips').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-skill]'); if (!b) return;
+  skillFilter = b.dataset.skill; renderHome();
+});
+async function onCardClick(e) {
   const b = e.target.closest('.gcard'); if (!b || b.disabled) return;
   voice.init(); // mesti dalam gerak isyarat pengguna supaya audio dibenarkan
   sessionRounds = 0;
   playRound(await loadGame(b.dataset.id));
-});
+}
+$('#games').addEventListener('click', onCardClick);
+$('#today-cards').addEventListener('click', onCardClick);
 $('#btn-again').addEventListener('click', () => { if (active === null && lastGame) playRound(lastGame); });
 $('#btn-rest').addEventListener('click', () => { if (lastGame) breathe(lastGame); });
 $('#btn-done').addEventListener('click', goHome);
