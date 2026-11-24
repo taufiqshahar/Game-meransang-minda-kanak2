@@ -7,6 +7,7 @@ import { kuihIcon } from '../kit/kuih.js';
 import { faceSVG } from '../kit/faces.js';
 import { itemIcon } from '../kit/pasar.js';
 import { bendaIcon } from '../kit/benda.js';
+import { RAMBUTAN_SVG as RB } from '../kit/objects.js';
 
 const inner = (svg) => svg.replace(/<\/?svg[^>]*>/g, '');
 
@@ -41,4 +42,7 @@ export const GAMES = [
   { id: 'rima-lucu', title: 'Rima Lucu', skill: 'bahasa', ages: [3, 6], thumb: () => `<svg viewBox="0 0 100 52" aria-hidden="true"><g transform="translate(0 0) scale(.85)">${inner(bendaIcon('topi'))}</g><g transform="translate(48 0) scale(.85)">${inner(bendaIcon('kopi'))}</g></svg>`, load: () => import('./rima-lucu/index.js') },
   { id: 'tenggelam-timbul', title: 'Tenggelam atau Timbul', skill: 'sains', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 60" aria-hidden="true"><rect x="4" y="22" width="52" height="34" rx="4" fill="#40A0DC" opacity=".55"/><g transform="translate(14 8) scale(.55)">${inner(bendaIcon('itik'))}</g><g transform="translate(20 34) scale(.38)">${inner(bendaIcon('batu'))}</g></svg>`, load: () => import('./tenggelam-timbul/index.js') },
   { id: 'hafiz-kata', title: 'Hafiz Kata', skill: 'kawalan-diri', ages: [3, 6], thumb: () => `<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 5 L37 22 L55 23 L41 35 L46 53 L30 43 L14 53 L19 35 L5 23 L23 22 Z" fill="#F5B82E" stroke="#B7860F" stroke-width="3" stroke-linejoin="round"/></svg>`, load: () => import('./hafiz-kata/index.js') },
+  { id: 'kawan-baik', title: 'Kawan Baik', skill: 'emosi', ages: [3, 6], thumb: () => `<svg viewBox="0 0 120 60" aria-hidden="true"><g transform="translate(0 0) scale(.6)">${inner(faceSVG(1, 'sedih'))}</g><path d="M60 22 c-4 -6 -12 -2 -8 4 l8 8 8 -8 c4 -6 -4 -10 -8 -4z" fill="#E5484D"/><g transform="translate(60 0) scale(.6)">${inner(faceSVG(3, 'gembira'))}</g></svg>`, load: () => import('./kawan-baik/index.js') },
+  { id: 'bayang-siapa', title: 'Bayang Siapa?', skill: 'visual', ages: [3, 6], thumb: () => `<svg viewBox="0 0 172 124" aria-hidden="true"><g transform="translate(6 6) scale(.62)" style="filter:brightness(0)" opacity=".8">${inner(vehicleIcon('jengkaut'))}</g><g transform="translate(70 40) scale(.62)">${inner(vehicleIcon('jengkaut'))}</g></svg>`, load: () => import('./bayang-siapa/index.js') },
+  { id: 'tambah-buah', title: 'Tambah Buah', skill: 'nombor', ages: [3, 6], thumb: () => `<svg viewBox="0 0 100 44" aria-hidden="true"><g transform="translate(0 6) scale(.8)">${inner(RB)}</g><g transform="translate(24 6) scale(.8)">${inner(RB)}</g><text x="58" y="32" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="26" fill="#15302A">+</text><g transform="translate(68 6) scale(.8)">${inner(RB)}</g></svg>`, load: () => import('./tambah-buah/index.js') },
 ];
