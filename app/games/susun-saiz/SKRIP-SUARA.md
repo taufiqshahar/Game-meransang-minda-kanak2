@@ -1,6 +1,6 @@
 # Skrip Suara: Susun Ikut Saiz
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Baris kongsi (`cuba-lagi`, `hebat`, `bagus`, `pandainya`) dalam `kit/audio/`.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Baris kongsi (`cuba-lagi`, `hebat`, `bagus`, `pandainya`) dalam `kit/audio/`.
 
 | Kunci | Teks |
 |---|---|

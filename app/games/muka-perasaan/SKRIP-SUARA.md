@@ -1,6 +1,6 @@
 # Skrip Suara: Muka Perasaan
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS: `ini-sedih`, `ini-takut`).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS: `ini-sedih`, `ini-takut`).
 
 | Kunci | Teks |
 |---|---|

@@ -50,10 +50,10 @@ Rakaman nama yang boleh disalin ke game baharu (tanpa kos kredit): `i-<barang>` 
 Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan), `kit/objects.js` (rambutan), `kit/kuih.js` (5 kuih), `kit/faces.js` (5 kanak-kanak × 5 perasaan), `kit/pasar.js` (8 barang pasar), `kit/benda.js` (11 perkataan rima + 9 bahan eksperimen).
 
 ## Senarai semak game baharu
-1. **Kawalan aktif hanya semasa mendengar**: butang/kad dibuat `disabled` semasa Hafiz bercakap atau semasa maklum balas, dan aktif hanya bila `ctx.tap()` sedang menunggu. Jika tidak, tekanan awal hilang tanpa disedari (pepijat yang ditemui dalam Kira Rambutan dan Bunyi Mula).
+1. **Kawalan aktif hanya semasa mendengar**: butang/kad dibuat `disabled` semasa Sayf bercakap atau semasa maklum balas, dan aktif hanya bila `ctx.tap()` sedang menunggu. Jika tidak, tekanan awal hilang tanpa disedari (pepijat yang ditemui dalam Kira Rambutan dan Bunyi Mula).
 1. **Bekas kosong jangan menutup butang**: bekas susun atur penuh-lebar (cth. `.xx-opts`) yang bertindih dengan kawalan lain mesti `pointer-events: none` (anak-anaknya `auto`). Jika tidak, tekanan pada butang di bawahnya hilang (pepijat Pusing Gambar). Ujian bot dengan `click()` biasa (tanpa `force`) menangkap masalah ini.
 1. **Reka bentuk**: satu kemahiran, berasaskan penyelidikan, tahap menyesuaikan diri, latihan berpandu untuk pusingan pertama, tiada kalah, salah = petunjuk + tunjuk jawapan, nada positif untuk skor rendah.
-2. **Skrip suara** (`SKRIP-SUARA.md`): BM Malaysia (tekan, adik, dah, kat, tak). Jana dengan ElevenLabs Hafiz `LkSPBLr5WF7APTCqF4ZJ`, `eleven_v4`, 1 versi setiap baris.
+2. **Skrip suara** (`SKRIP-SUARA.md`): BM Malaysia (tekan, adik, dah, kat, tak). Jana dengan suara ElevenLabs `LkSPBLr5WF7APTCqF4ZJ` (watak Sayf), `eleven_v4`, 1 versi setiap baris. Dalam prompt, eja nama watak **"Saif"** supaya sebutan BM betul.
 3. **Audio**: 64 kbps mono; −18 LUFS (baris `[softly]` −20 LUFS); puncak ≤ −1.5 dBTP. Resipi: `prototype/lampu-isyarat-haiwan/SKRIP-SUARA.md`.
 4. **Kod**: `games/<id>/index.js` ikut kontrak di atas; tambah entri dalam `registry.js`.
 5. **Uji**: bot Playwright main satu pusingan penuh pada lebar 390 px (latihan, salah, betul, naik/turun tahap), semak tiada ralat konsol dan semua audio dimuat, satu tangkapan skrin pentas dan keputusan.

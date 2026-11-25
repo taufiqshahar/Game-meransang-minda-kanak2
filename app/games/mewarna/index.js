@@ -206,7 +206,7 @@ export default {
     }
 
     ctx.progress(PICS);
-    if (ctx.first) say('intro'); // gambar pertama sudah dilukis semasa Hafiz bercakap
+    if (ctx.first) say('intro'); // gambar pertama sudah dilukis semasa Sayf bercakap
     const ids = shuffle(L.shapes).slice(0, PICS), recs = [];
     for (let i = 0; i < PICS; i++) {
       recs.push(await picture(ids[i], ctx.first && i === 0));

@@ -2,7 +2,7 @@
 // Tahap 1: padankan bentuk perkataan yang SAMA (tidak perlu tahu membaca, hanya memerhati huruf) · Tahap 2: tiada contoh,
 // pilihan bermula dengan huruf berbeza (cukup kenal huruf pertama) · Tahap 3: semua pilihan bermula dengan huruf sama
 // (perlu baca huruf seterusnya) · Tahap 4: tiada gambar, dengar sahaja kemudian baca.
-// Bila betul, perkataan dibesarkan dan suku kata menyala satu demi satu semasa Hafiz menyebutnya (ba-tu).
+// Bila betul, perkataan dibesarkan dan suku kata menyala satu demi satu semasa Sayf menyebutnya (ba-tu).
 import { bendaIcon } from '../../kit/benda.js';
 import { itemIcon } from '../../kit/pasar.js';
 import { pick, shuffle, pct, meter } from '../../kit/util.js';
@@ -143,7 +143,7 @@ export default {
         if (wrong >= 2) hint();
         await ask();
       }
-      // Betul: perkataan dibesarkan, suku kata menyala semasa Hafiz menyebutnya.
+      // Betul: perkataan dibesarkan, suku kata menyala semasa Sayf menyebutnya.
       right.classList.add('ok');
       cards.forEach((c) => { if (c !== right) c.classList.add('dim'); });
       sfx.good();

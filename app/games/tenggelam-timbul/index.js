@@ -1,6 +1,6 @@
 // Tenggelam atau Timbul: sains awal (meramal, memerhati, mengelas). Anak teka dahulu, kemudian benda dijatuhkan ke dalam
 // akuarium. Benda kekal di tempatnya, jadi akhirnya akuarium menunjukkan dua kumpulan: timbul di atas, tenggelam di bawah.
-// Tekaan salah bukan "salah": Hafiz kata "Wah, tak sangka!" kerana kejutan itulah saat belajar dalam sains.
+// Tekaan salah bukan "salah": Sayf kata "Wah, tak sangka!" kerana kejutan itulah saat belajar dalam sains.
 import { bendaIcon, NAMES } from '../../kit/benda.js';
 import { shuffle, pct, meter } from '../../kit/util.js';
 

@@ -1,6 +1,6 @@
 # Skrip Suara: Kawan Baik
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS: `tak-suka`).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS: `tak-suka`).
 `ini-gembira/sedih/marah/takut` disalin dari Muka Perasaan (tiada kos kredit).
 
 | Kunci | Teks |

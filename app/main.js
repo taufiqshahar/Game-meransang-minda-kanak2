@@ -14,6 +14,7 @@ const ROUNDS_KEPT = 200;
 // Satu stor untuk semua game: tetapan, masa hari ini (dikongsi), dan keadaan setiap game di bawah games[id].
 const defaultData = () => ({ settings: { age: 4, dailyMin: 10, voice: true, name: '' }, today: { date: todayStr(), ms: 0, extraMin: 0 }, days: {}, games: {} });
 // Bersihkan data (dari storan atau fail sandaran): hanya bentuk yang dijangka diterima.
+const RENAMED = { 'hafiz-kata': 'sayf-kata' };
 const SAFE_KEY = /^[A-Za-z0-9_-]{1,40}$/;
 const SAFE_STR = /^[\p{L}\p{N} _.,:'()/+-]{0,60}$/u; // tiada < > & " supaya tiada HTML boleh menyusup ke jadual ibu bapa
 function clean(v, depth = 0) {
@@ -40,6 +41,12 @@ function normalizeData(d, { strict = false } = {}) {
   out.settings.name = out.settings.name.slice(0, 20);
   if (!out.games || typeof out.games !== 'object' || Array.isArray(out.games)) out.games = {};
   if (!out.days || typeof out.days !== 'object' || Array.isArray(out.days)) out.days = {};
+  // Game yang ditukar nama: bawa kemajuan lama ke id baharu (termasuk fail sandaran lama).
+  out.games = { ...out.games };
+  for (const [from, to] of Object.entries(RENAMED)) {
+    if (out.games[from] && !out.games[to]) out.games[to] = out.games[from];
+    delete out.games[from];
+  }
   if (strict) {
     // Fail luar: simpan hanya game yang wujud, nilai primitif selamat, dan hari bertarikh sah.
     const games = {};

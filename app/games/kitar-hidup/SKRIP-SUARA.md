@@ -1,6 +1,6 @@
 # Skrip Suara: Kitar Hidup
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 Disalin tanpa kos: `s-telur` (dari Pasar Malam `i-telur`), `s-katak` dan `s-ayam` (dari Rima Lucu `w-katak`, `w-ayam`).
 Telur rama-rama dan telur ayam berkongsi `s-telur` (gambarnya berbeza: atas daun lwn dalam sarang).
 

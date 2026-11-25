@@ -1,6 +1,7 @@
 # Suara kongsi (semua game)
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Kunci = nama fail = kunci dalam `SHARED_LINES` (`kit/voice.js`).
+Watak **Sayf**, disuarakan oleh suara ElevenLabs "Hafiz – Energetic Cartoon Character" (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`.
+Sebutan: dalam prompt tulis **"Saif"** (bukan "Sayf") supaya disebut betul dalam BM; teks di skrin kekal "Sayf". 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Kunci = nama fail = kunci dalam `SHARED_LINES` (`kit/voice.js`).
 Kos: kredit ≈ bilangan aksara termasuk tag. Baris pendek tanpa tag (nombor) hanya 4–9 kredit.
 
 | Kunci | Teks | Asal |

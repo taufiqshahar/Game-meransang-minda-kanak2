@@ -1,6 +1,6 @@
 # Skrip Suara: Dengar Perasaan
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 Tag emosi eleven_v4 (`[happy]`, `[sad]`, `[angry]`, `[nervously]`) membawa nada. Ayat `a-*` dan `b-*` sengaja
 **sama perkataannya** supaya Tahap 3–4 menguji nada sahaja. `ini-*` disalin dari Muka Perasaan (percuma).
 
@@ -9,8 +9,8 @@ sedih vs takut), jana semula klip itu sahaja.
 
 | Kunci | Teks |
 |---|---|
-| intro | Dengar suara Hafiz. Dia rasa apa? |
-| tanya | Hafiz rasa apa? |
+| intro | Dengar suara Saif. Dia rasa apa? |
+| tanya | Saif rasa apa? |
 | k-gembira / k-sedih | [happy] Yay! Saya dapat hadiah! · [sad] Aiskrim saya jatuh... |
 | k-marah / k-takut | [angry] Hei! Jangan ambil mainan saya! · [nervously] Eh... bunyi apa tu? Gelapnya... |
 | a-gembira / a-sedih | [happy] Kucing saya duduk atas kerusi! · [sad] Kucing saya duduk atas kerusi... |

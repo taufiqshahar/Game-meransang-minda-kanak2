@@ -10,7 +10,7 @@ app/
 ├── main.js             shell: skrin, sesi, storan, had masa harian, keputusan, zon ibu bapa
 ├── kit/
 │   ├── art.js          6 haiwan (SVG), topi, tangan, belon
-│   ├── voice.js        Web Audio, sfx, suara Hafiz (dimuat per game), sandaran suara peranti ms-*
+│   ├── voice.js        Web Audio, sfx, suara Sayf (dimuat per game), sandaran suara peranti ms-*
 │   ├── util.js         shuffle, anim, balanced, toPct, fmtDate, meter …
 │   └── audio/          suara dikongsi: start, bagus, pandainya, breath-in, breath-out
 ├── games/

@@ -1,4 +1,4 @@
-// Arahan Dua Langkah: kefahaman mendengar + ingatan kerja verbal. Hafiz beri arahan ("Letak bola merah dalam bakul");
+// Arahan Dua Langkah: kefahaman mendengar + ingatan kerja verbal. Sayf beri arahan ("Letak bola merah dalam bakul");
 // anak tekan barang, kemudian bekas. Arahan disebut SEKALI; butang telinga untuk dengar semula (dikira sebagai bantuan).
 // Tahap 1: 2 barang, 1 bekas · Tahap 2: 3 barang, 2 bekas · Tahap 3: 4 barang termasuk bola merah & biru (perlu dengar warna),
 // 3 bekas · Tahap 4: dua arahan sekali gus ("Letak itik dalam baldi, dan sudu dalam kotak").
@@ -37,7 +37,7 @@ export default {
   title: 'Arahan Dua Langkah',
   stageLabel: 'Bilik mainan: barang di atas rak dan bekas di lantai. Dengar arahan, tekan barang, kemudian tekan bekas.',
   lines: {
-    intro: 'Dengar arahan Hafiz baik-baik, kemudian buat.',
+    intro: 'Dengar arahan Sayf baik-baik, kemudian buat.',
     letak: 'Letak...', dalam: 'dalam...', dan: 'dan...',
     'o-bolamerah': 'bola merah', 'o-bolabiru': 'bola biru', 'o-itik': 'itik', 'o-sudu': 'sudu',
     'c-kotak': 'kotak.', 'c-bakul': 'bakul.', 'c-baldi': 'baldi.',

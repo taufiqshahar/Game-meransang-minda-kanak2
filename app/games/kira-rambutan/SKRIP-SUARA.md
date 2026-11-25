@@ -1,6 +1,6 @@
 # Skrip Suara: Kira Rambutan
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. Nombor `n1`–`n10`, `betul`, `hebat`, `bagus`, `pandainya` dan `end` dikongsi (`kit/audio/`, lihat `kit/audio/SKRIP-SUARA.md`).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. Nombor `n1`–`n10`, `betul`, `hebat`, `bagus`, `pandainya` dan `end` dikongsi (`kit/audio/`, lihat `kit/audio/SKRIP-SUARA.md`).
 
 | Kunci | Teks | Status |
 |---|---|---|

@@ -1,5 +1,5 @@
-// Pasar Malam: ingatan kerja verbal (span senarai). Hafiz sebut senarai beli 2–4 barang; anak ambil dari gerai.
-// Tahap rendah: gambar senarai ditunjuk semasa Hafiz bercakap, kemudian disorok. Tahap tinggi: dengar sahaja.
+// Pasar Malam: ingatan kerja verbal (span senarai). Sayf sebut senarai beli 2–4 barang; anak ambil dari gerai.
+// Tahap rendah: gambar senarai ditunjuk semasa Sayf bercakap, kemudian disorok. Tahap tinggi: dengar sahaja.
 // Butang "dengar lagi" sentiasa ada; penggunaannya direkod (sokongan, bukan hukuman).
 import { ITEMS, itemIcon } from '../../kit/pasar.js';
 import { shuffle, pct, meter } from '../../kit/util.js';

@@ -1,4 +1,4 @@
-// Hari Terbalik: fleksibiliti kognitif (tukar peraturan) + kawalan diri. Hafiz sebut satu perkataan ("Besar!").
+// Hari Terbalik: fleksibiliti kognitif (tukar peraturan) + kawalan diri. Sayf sebut satu perkataan ("Besar!").
 // Matahari = tekan apa yang disebut. Bulan = tekan LAWANNYA. Anak mesti menahan jawapan automatik dan menukar peraturan.
 // Tahap 1: satu tukaran (4 matahari, kemudian 4 bulan) · Tahap 2: tukar setiap 3 · Tahap 3: bertukar rawak
 // · Tahap 4: rawak dengan had masa. Juga mengajar kosa kata berlawanan (besar–kecil, atas–bawah, penuh–kosong).
@@ -42,10 +42,10 @@ const IDLE_MS = 9000;
 export default {
   id: 'hari-terbalik',
   title: 'Hari Terbalik',
-  stageLabel: 'Matahari atau bulan di langit. Matahari: tekan gambar yang Hafiz sebut. Bulan: tekan gambar yang berlawanan.',
+  stageLabel: 'Matahari atau bulan di langit. Matahari: tekan gambar yang Sayf sebut. Bulan: tekan gambar yang berlawanan.',
   lines: {
     intro: 'Jom main Hari Terbalik!',
-    biasa: 'Matahari! Tekan apa yang Hafiz sebut.',
+    biasa: 'Matahari! Tekan apa yang Sayf sebut.',
     terbalik: 'Bulan! Sekarang tekan yang terbalik.',
     'w-besar': 'Besar!', 'w-kecil': 'Kecil!', 'w-atas': 'Atas!', 'w-bawah': 'Bawah!', 'w-penuh': 'Penuh!', 'w-kosong': 'Kosong!',
   },

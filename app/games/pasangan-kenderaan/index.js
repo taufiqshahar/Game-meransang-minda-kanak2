@@ -1,4 +1,4 @@
-// Pasangan Kenderaan: ingatan visual-ruang (kad memori). Buka dua kad; kalau sama, kekal terbuka dan Hafiz sebut namanya.
+// Pasangan Kenderaan: ingatan visual-ruang (kad memori). Buka dua kad; kalau sama, kekal terbuka dan Sayf sebut namanya.
 // Tahap rendah ada pratonton semua kad sebelum ditutup.
 import { VEHICLES, vehicleIcon } from '../../kit/vehicles.js';
 import { pick, shuffle, pct, meter } from '../../kit/util.js';

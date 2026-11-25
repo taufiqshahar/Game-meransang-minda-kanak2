@@ -1,6 +1,6 @@
 # Skrip Suara: Cari Beza
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 Kiraan beza yang dijumpai guna nombor dikongsi (`n1`–`n5`); bantuan guna `tengok` dikongsi.
 
 | Kunci | Teks |

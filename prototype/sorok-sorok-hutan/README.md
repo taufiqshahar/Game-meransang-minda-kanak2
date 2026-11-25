@@ -1,7 +1,7 @@
 # Sorok-Sorok Hutan (Prototaip v0.2)
 
 Permainan **ingatan kerja** untuk kanak-kanak 3–6 tahun. Game kedua dalam siri ini, selepas *Lampu Isyarat Haiwan* (kawalan diri).
-Haiwan hutan Malaysia menyorok dalam semak seekor demi seekor. Hafiz tanya "Mana kancil?" dan anak tekan semak yang betul.
+Haiwan hutan Malaysia menyorok dalam semak seekor demi seekor. Sayf tanya "Mana kancil?" dan anak tekan semak yang betul.
 
 ## Kenapa game ini
 Ingatan kerja dan kawalan diri ialah dua daripada tiga kemahiran teras *executive function* untuk umur prasekolah. Dua game yang melatih kemahiran berbeza menjadikan produk ini satu kurikulum kepada ibu bapa, bukan koleksi game rawak.
@@ -23,7 +23,7 @@ Ujian v0.1: sebahagian budak 3 tahun faham, sebahagian tidak. Punca yang dikenal
 
 | Punca | Pembaikan |
 |---|---|
-| Tak kenal nama haiwan (tapir, enggang) dan belum boleh baca kapsyen | Hafiz sebut nama setiap haiwan semasa ia menyorok ("Kancil menyorok!"); semasa soalan, haiwan yang dicari muncul besar di tengah |
+| Tak kenal nama haiwan (tapir, enggang) dan belum boleh baca kapsyen | Sayf sebut nama setiap haiwan semasa ia menyorok ("Kancil menyorok!"); semasa soalan, haiwan yang dicari muncul besar di tengah |
 | Tak tahu bila giliran sendiri | Semak bergoyang perlahan bila boleh ditekan |
 | Latihan sekali sahaja, tangan terus tunjuk jawapan | Latihan demo (tangan) + latihan sendiri sehingga betul tanpa bantuan (maks 3); tangan hanya muncul selepas salah semasa latihan |
 | Mula terlalu sukar, rentak sama untuk semua umur | Umur 3 mula dengan 1 haiwan; rentak 40% lebih perlahan |
@@ -32,7 +32,7 @@ Zon ibu bapa kini ada nasihat: main bersama anak 3 tahun untuk 1–2 pusingan pe
 
 ## Fail
 - `game.html`: sumber artifact (skeleton `<!doctype>` ditambah semasa diterbitkan).
-- `assets/audio/*.mp3`: suara Hafiz (ElevenLabs `eleven_v4`), 64 kbps mono, −18 LUFS (baris `[softly]` −20 LUFS). `start`, `breath-in`, `breath-out` disalin dari Lampu Isyarat Haiwan.
+- `assets/audio/*.mp3`: suara Sayf (ElevenLabs `eleven_v4`), 64 kbps mono, −18 LUFS (baris `[softly]` −20 LUFS). `start`, `breath-in`, `breath-out` disalin dari Lampu Isyarat Haiwan.
 - `SKRIP-SUARA.md`: skrip semua baris + resipi kelantangan.
 
 ## Hutang teknikal

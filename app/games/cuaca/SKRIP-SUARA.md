@@ -1,6 +1,6 @@
 # Skrip Suara: Cuaca Hari Ini
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 Disalin tanpa kos: `b-payung` dan `b-topi` (dari Rima Lucu `w-payung`, `w-topi`).
 
 | Kunci | Teks |

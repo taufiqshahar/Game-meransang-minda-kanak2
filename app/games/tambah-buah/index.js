@@ -1,7 +1,7 @@
 // Tambah Buah: tambah sebagai "menggabungkan" (asas operasi tambah). Bakul besar ada A buah, bakul kecil ada B buah.
 // Anak tekan setiap buah di bakul kecil untuk memindahkannya ke bakul besar, kemudian pilih jumlah.
 // Bakul besar ialah bingkai sepuluh (2 baris × 5) supaya anak nampak struktur 5 dan 10.
-// Perkembangan strategi: kira semua (T1) → Hafiz kira terus dari A (T2) → anak kira sendiri (T3)
+// Perkembangan strategi: kira semua (T1) → Sayf kira terus dari A (T2) → anak kira sendiri (T3)
 // → bakul besar ditutup, hanya nombor A kelihatan: anak mesti "kira terus" dari A (T4).
 import { RAMBUTAN_SVG } from '../../kit/objects.js';
 import { itemIcon } from '../../kit/pasar.js';
@@ -12,8 +12,8 @@ const FRUITS = { rambutan: () => RAMBUTAN_SVG, pisang: () => itemIcon('pisang'),
 const FRUIT_IDS = Object.keys(FRUITS);
 
 const TRIALS = 5;
-// a/b = julat bilangan dalam bakul besar/kecil · max = jumlah maksimum · count = Hafiz kira semasa memindah
-// countAll = Hafiz kira bakul besar satu-satu dahulu · lid = bakul besar ditutup · opts = bilangan pilihan · dots = titik pada kad
+// a/b = julat bilangan dalam bakul besar/kecil · max = jumlah maksimum · count = Sayf kira semasa memindah
+// countAll = Sayf kira bakul besar satu-satu dahulu · lid = bakul besar ditutup · opts = bilangan pilihan · dots = titik pada kad
 const LEVELS = [null,
   { a: [1, 2], b: [1, 2], min: 2, max: 3, count: true, countAll: true, lid: false, opts: 2, dots: true },
   { a: [1, 4], b: [1, 3], min: 3, max: 5, count: true, countAll: false, lid: false, opts: 3, dots: true },
@@ -282,7 +282,7 @@ export default {
     cols: ['Tahap', 'Betul', 'Tersilap'],
     row: (r) => [r.level, meter(pct(r.correct, r.n)), (r.miss || []).join(', ') || '–'],
     explain: `<span><b>Tambah sebagai gabungan</b>: memahami bahawa dua kumpulan digabung menjadi satu kumpulan yang lebih besar. Umur 3–4 biasanya boleh menggabung hingga 3–5 objek dengan mengira semua; umur 5–6 mula <i>kira terus</i> (mula dari nombor pertama, bukan dari 1) untuk jumlah hingga 10.</span>
-      <span>Tahap 1: jumlah ≤3, Hafiz kira semua · Tahap 2: ≤5, Hafiz kira terus · Tahap 3: ≤7, anak kira sendiri · Tahap 4: ≤10, bakul besar ditutup supaya anak mesti kira terus dari nombornya. Bakul besar ialah <b>bingkai sepuluh</b> (2 × 5) yang digunakan di prasekolah. Bila tersilap, Hafiz kira semua buah bersama anak.</span>`,
+      <span>Tahap 1: jumlah ≤3, Sayf kira semua · Tahap 2: ≤5, Sayf kira terus · Tahap 3: ≤7, anak kira sendiri · Tahap 4: ≤10, bakul besar ditutup supaya anak mesti kira terus dari nombornya. Bakul besar ialah <b>bingkai sepuluh</b> (2 × 5) yang digunakan di prasekolah. Bila tersilap, Sayf kira semua buah bersama anak.</span>`,
   },
 
   mission: {

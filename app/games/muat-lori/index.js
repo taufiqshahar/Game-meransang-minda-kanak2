@@ -220,7 +220,7 @@ export default {
     cols: ['Tahap', 'Tepat', 'Terbesar'],
     row: (r) => [r.level, meter(pct(r.correct, r.n)), r.maxN || '–'],
     explain: `<span><b>Menghasilkan kuantiti</b>: melihat nombor, kemudian mengambil sebanyak itu. Ini lebih sukar daripada mengira benda yang sudah ada, kerana anak mesti ingat nombor sasaran sambil mengira dan tahu bila berhenti.</span>
-      <span>Tahap 1–2: nombor kecil, Hafiz kira bersama dan ada titik bantuan · Tahap 3–4: nombor sahaja, anak kira sendiri. Butang "Jalan!" melatih anak menyemak kerja sendiri sebelum selesai. Naik bila 4/5 tepat pada kali pertama.</span>`,
+      <span>Tahap 1–2: nombor kecil, Sayf kira bersama dan ada titik bantuan · Tahap 3–4: nombor sahaja, anak kira sendiri. Butang "Jalan!" melatih anak menyemak kerja sendiri sebelum selesai. Naik bila 4/5 tepat pada kali pertama.</span>`,
   },
 
   mission: {

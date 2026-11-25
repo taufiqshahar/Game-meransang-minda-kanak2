@@ -1,4 +1,4 @@
-// Rima Lucu: kesedaran fonologi (rima). Hafiz sebut satu perkataan; anak cari gambar yang bunyinya sama di hujung
+// Rima Lucu: kesedaran fonologi (rima). Sayf sebut satu perkataan; anak cari gambar yang bunyinya sama di hujung
 // (ayam–jam, topi–kopi). Setiap pilihan disebut kuat supaya anak bergantung pada bunyi, bukan meneka dari gambar.
 import { itemIcon } from '../../kit/pasar.js';
 import { bendaIcon } from '../../kit/benda.js';
@@ -168,7 +168,7 @@ export default {
     cols: ['Tahap', 'Betul', 'Pilihan'],
     row: (r) => [r.level, meter(pct(r.correct, r.n)), r.opts || '–'],
     explain: `<span><b>Kesedaran rima</b>: mendengar bahawa dua perkataan berakhir dengan bunyi yang sama (ay<b>am</b> – j<b>am</b>). Ini salah satu peramal terkuat kesediaan membaca. Kebanyakan kanak-kanak mula mengesan rima sekitar umur 4, dan menguasainya pada umur 5–6. Skor rendah pada umur 3 adalah normal.</span>
-      <span>Tahap 1: 2 pilihan, perkataan disebut dua kali · Tahap 2: 3 pilihan · Tahap 3: 3 pilihan, sekali sebut · Tahap 4: 4 pilihan. Bila salah, Hafiz sebut kedua-dua perkataan bersebelahan supaya anak dengar bezanya. Naik bila 5/6 betul.</span>`,
+      <span>Tahap 1: 2 pilihan, perkataan disebut dua kali · Tahap 2: 3 pilihan · Tahap 3: 3 pilihan, sekali sebut · Tahap 4: 4 pilihan. Bila salah, Sayf sebut kedua-dua perkataan bersebelahan supaya anak dengar bezanya. Naik bila 5/6 betul.</span>`,
   },
 
   mission: {

@@ -1,6 +1,6 @@
 # Skrip Suara: Gendang Berhenti
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`tahan` −20 LUFS).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`tahan` −20 LUFS).
 Muzik dan bunyi kompang dijana dalam game (WebAudio melalui `ctx.mixer()`), tiada fail audio.
 
 | Kunci | Teks |

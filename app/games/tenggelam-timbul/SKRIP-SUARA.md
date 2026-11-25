@@ -1,6 +1,6 @@
 # Skrip Suara: Tenggelam atau Timbul
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 
 | Kunci | Teks |
 |---|---|

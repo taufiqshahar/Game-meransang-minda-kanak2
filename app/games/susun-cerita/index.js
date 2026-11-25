@@ -1,5 +1,5 @@
 // Susun Cerita: urutan peristiwa dan naratif (asas kefahaman bacaan). 3–4 gambar cerita bercampur; anak tekan ikut turutan
-// "apa jadi dulu, lepas tu apa?". Setiap gambar yang betul masuk ke jalur bernombor dan Hafiz terus menceritakannya,
+// "apa jadi dulu, lepas tu apa?". Setiap gambar yang betul masuk ke jalur bernombor dan Sayf terus menceritakannya,
 // jadi cerita terbina sedikit demi sedikit. Cerita dipilih supaya turutannya jelas dari sebab-akibat (api → bomba → padam).
 import { vehicleIcon } from '../../kit/vehicles.js';
 import { itemIcon } from '../../kit/pasar.js';
@@ -183,7 +183,7 @@ export default {
           await ctx.wait(Math.max(800, say('belum') + 100));
           if (wrong >= 2) hint();
         }
-        // Betul: kad masuk ke jalur, Hafiz ceritakan gambar itu.
+        // Betul: kad masuk ke jalur, Sayf ceritakan gambar itu.
         right.classList.add('gone');
         put(step);
         sfx.light();
@@ -238,7 +238,7 @@ export default {
     cols: ['Tahap', 'Tanpa silap', 'Silap'],
     row: (r) => [r.level, meter(pct(r.clean, r.trials)), r.errors],
     explain: `<span><b>Urutan dan naratif</b> (Komunikasi KSPK): memahami bahawa peristiwa berlaku mengikut turutan dan ada sebab-akibat. Kemahiran ini asas kefahaman bacaan dan bercerita semula. Budak 3–4 tahun biasanya boleh 3 gambar; 5–6 tahun boleh 4 gambar.</span>
-      <span>Tahap 1: 3 gambar, gambar pertama diberi · Tahap 2: 3 gambar · Tahap 3: 4 gambar, gambar pertama diberi · Tahap 4: 4 gambar. Hafiz menceritakan setiap gambar yang betul. Naik bila 2/3 cerita tanpa silap.</span>`,
+      <span>Tahap 1: 3 gambar, gambar pertama diberi · Tahap 2: 3 gambar · Tahap 3: 4 gambar, gambar pertama diberi · Tahap 4: 4 gambar. Sayf menceritakan setiap gambar yang betul. Naik bila 2/3 cerita tanpa silap.</span>`,
   },
 
   mission: {

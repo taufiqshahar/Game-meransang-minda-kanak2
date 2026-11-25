@@ -1,5 +1,5 @@
 // Sambung Titik: motor halus (ketepatan jari) + turutan nombor 1–10. Tekan titik ikut nombor; garisan terbina,
-// Hafiz mengira bersama. Bila bentuk tertutup, gambar sebenar muncul berwarna ("Hmm... gambar apa ni?" → "Bas sekolah!").
+// Sayf mengira bersama. Bila bentuk tertutup, gambar sebenar muncul berwarna ("Hmm... gambar apa ni?" → "Bas sekolah!").
 // Tahap 1: 5 titik besar, titik seterusnya berdenyut · Tahap 2: 7–8 titik · Tahap 3: 9–10 titik, tiada denyut
 // · Tahap 4: 9–10 titik kecil, jalur nombor bantuan disorok.
 import { vehicleIcon } from '../../kit/vehicles.js';

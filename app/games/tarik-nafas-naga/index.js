@@ -1,7 +1,7 @@
 // Tarik Nafas Naga: strategi menenangkan diri (regulasi emosi). Naga sedang marah / sedih / takut; anak TEKAN DAN TAHAN
-// butang sambil tarik nafas (perut naga mengembang, Hafiz mengira), kemudian lepas dan hembus perlahan (naga meniup buih).
+// butang sambil tarik nafas (perut naga mengembang, Sayf mengira), kemudian lepas dan hembus perlahan (naga meniup buih).
 // Selepas 3 nafas, warna naga bertukar tenang. Tahap = tempoh tahan nafas: 3 → 4 → 5 → 6 saat.
-// Lepas terlalu awal bukan "salah": Hafiz dengan lembut minta cuba tahan sedikit lagi.
+// Lepas terlalu awal bukan "salah": Sayf dengan lembut minta cuba tahan sedikit lagi.
 import { pct, meter } from '../../kit/util.js';
 
 const EMOS = ['marah', 'sedih', 'takut'];
@@ -143,7 +143,7 @@ export default {
           if (v === undefined) { const r = ctx.toPct(btn.getBoundingClientRect()); ctx.hand.show(r.left + r.width * .4, r.top + r.height * .3); prompt = 'tekan'; continue; }
           ctx.hand.hide();
           if (!v) continue;
-          // Tarik nafas: perut mengembang, cincin penuh, Hafiz mengira 1..hold.
+          // Tarik nafas: perut mengembang, cincin penuh, Sayf mengira 1..hold.
           dragonEl.style.setProperty('--t', `${hold}s`);
           dragonEl.classList.add('full');
           setRing(1, hold * 1000);

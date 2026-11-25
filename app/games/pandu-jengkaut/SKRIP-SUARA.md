@@ -1,6 +1,6 @@
 # Skrip Suara: Pandu Jengkaut
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Baris kongsi dalam `kit/audio/`.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Baris kongsi dalam `kit/audio/`.
 
 | Kunci | Teks |
 |---|---|

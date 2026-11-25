@@ -1,4 +1,4 @@
-// Bunyi + suara. Utama: rakaman suara BM Malaysia (ElevenLabs "Hafiz"), dimuat per game bila dimain.
+// Bunyi + suara. Utama: rakaman suara BM Malaysia (watak Sayf; suara ElevenLabs "Hafiz – Energetic Cartoon Character"), dimuat per game bila dimain.
 // Sandaran: suara peranti Bahasa Melayu (ms-*) sahaja; jika tiada, kapsyen sahaja.
 
 // Baris yang dikongsi semua game (fail dalam kit/audio/).

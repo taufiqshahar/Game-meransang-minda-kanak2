@@ -1,4 +1,4 @@
-// Dengar Perasaan: kenal emosi dari NADA SUARA (prosodi), bukan dari muka. Hafiz menyebut satu ayat; anak pilih muka
+// Dengar Perasaan: kenal emosi dari NADA SUARA (prosodi), bukan dari muka. Sayf menyebut satu ayat; anak pilih muka
 // yang sepadan. Tahap 1–2: isi ayat juga memberi petunjuk ("Yay! Saya dapat hadiah!") · Tahap 3–4: ayat yang SAMA
 // ("Kucing saya duduk atas kerusi") disebut dengan nada gembira / sedih / marah / takut, jadi hanya nada yang membezakan.
 import { faceSVG } from '../../kit/faces.js';
@@ -28,9 +28,9 @@ const IDLE_MS = 12000;
 export default {
   id: 'dengar-perasaan',
   title: 'Dengar Perasaan',
-  stageLabel: 'Dengar suara Hafiz, kemudian pilih muka yang menunjukkan perasaan dalam suaranya. Butang telinga untuk dengar semula.',
+  stageLabel: 'Dengar suara Sayf, kemudian pilih muka yang menunjukkan perasaan dalam suaranya. Butang telinga untuk dengar semula.',
   lines: {
-    intro: 'Dengar suara Hafiz. Dia rasa apa?', tanya: 'Hafiz rasa apa?',
+    intro: 'Dengar suara Sayf. Dia rasa apa?', tanya: 'Sayf rasa apa?',
     ...TEXT,
     ...Object.fromEntries(EMOS.map((e) => [`ini-${e}`, `Ini muka ${e}${e === 'gembira' ? '!' : '.'}`])),
   },
@@ -56,7 +56,7 @@ export default {
       <rect width="200" height="300" fill="#F7BD98"/><circle cx="100" cy="64" r="58" fill="#F9CDB0"/>
       <rect y="140" width="200" height="160" fill="#F4AE84"/>
     </svg>
-    <button class="dp-speaker" type="button" aria-label="Dengar suara Hafiz lagi" disabled><svg viewBox="0 0 48 48" aria-hidden="true">
+    <button class="dp-speaker" type="button" aria-label="Dengar suara Sayf lagi" disabled><svg viewBox="0 0 48 48" aria-hidden="true">
       <path d="M8 18 H16 L26 9 V39 L16 30 H8 Z" fill="#15302A"/>
       <path class="w w1" d="M31 18 Q35 24 31 30" stroke="#15302A" stroke-width="3.4" fill="none" stroke-linecap="round"/>
       <path class="w w2" d="M35 13 Q42 24 35 35" stroke="#15302A" stroke-width="3.4" fill="none" stroke-linecap="round"/>

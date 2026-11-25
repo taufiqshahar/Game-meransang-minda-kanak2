@@ -1,6 +1,6 @@
 # Skrip Suara: Campur Warna
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 Soalan dirantai: warna + `tambah` + warna + `jadi` ("Merah. tambah... Kuning. jadi warna apa?").
 
 | Kunci | Teks |

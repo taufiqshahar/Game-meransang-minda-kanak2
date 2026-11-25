@@ -1,6 +1,6 @@
 # Skrip Suara: Muat Lori
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Baris kongsi dalam `kit/audio/`. Nombor `n1`–`n10` dikongsi.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS). Baris kongsi dalam `kit/audio/`. Nombor `n1`–`n10` dikongsi.
 
 | Kunci | Teks |
 |---|---|

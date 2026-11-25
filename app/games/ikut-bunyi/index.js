@@ -1,5 +1,5 @@
 // Ikut Bunyi: ingatan kerja urutan (audio + visual), gaya "Simon". Empat gendang berwarna, setiap satu bernada.
-// Hafiz main urutan; anak ulang. Betul → urutan bertambah satu; silap → urutan baharu yang lebih pendek. Panjang urutan
+// Sayf main urutan; anak ulang. Betul → urutan bertambah satu; silap → urutan baharu yang lebih pendek. Panjang urutan
 // diingat merentas sesi (sama seperti Sorok-Sorok).
 import { pct, meter } from '../../kit/util.js';
 
@@ -70,7 +70,7 @@ export default {
     await ctx.ready(); ctx.alive();
     if (ctx.first) await ctx.wait(Math.max(4600, say('intro') + 300));
     for (let t = 0; t < TRIALS; t++) {
-      // Hafiz main urutan (lebih perlahan untuk urutan pendek).
+      // Sayf main urutan (lebih perlahan untuk urutan pendek).
       const ms = k <= 3 ? 620 : 480, gap = k <= 3 ? 260 : 180;
       arm(false); showDots(k, 0); mode.textContent = 'Dengar…';
       await ctx.wait(500);

@@ -1,6 +1,6 @@
 # Skrip Suara: Pasang Kenderaan
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. Nama kenderaan (`v-<id>`) dan pujian dikongsi dari `kit/audio/`.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. Nama kenderaan (`v-<id>`) dan pujian dikongsi dari `kit/audio/`.
 
 | Kunci | Teks |
 |---|---|

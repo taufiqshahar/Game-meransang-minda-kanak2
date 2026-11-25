@@ -1,6 +1,6 @@
 # Skrip Suara: Banyak Mana?
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. Pujian dan `end` dikongsi (`kit/audio/`).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. Pujian dan `end` dikongsi (`kit/audio/`).
 
 | Kunci | Teks | Status |
 |---|---|---|

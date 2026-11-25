@@ -1,12 +1,12 @@
 // Gendang Berhenti: kawalan diri (inhibisi motor), versi "patung cendana". Bila muzik main, pukul kompang;
 // bila muzik berhenti, BERHENTI serta-merta. Anak mesti menahan tangan yang sedang laju memukul.
-// Tahap 1: Hafiz sebut "Berhenti!" dan kompang malap · Tahap 2: kompang malap sahaja · Tahap 3: muzik sahaja
+// Tahap 1: Sayf sebut "Berhenti!" dan kompang malap · Tahap 2: kompang malap sahaja · Tahap 3: muzik sahaja
 // · Tahap 4: muzik lebih laju, hentian lebih kerap, dan muzik kadang-kadang perlahan seketika (umpan) tanpa berhenti.
 import { pct, meter } from '../../kit/util.js';
 
 const STOPS = 6;
 const GRACE_MS = 400;           // tekanan sejurus selepas muzik berhenti masih dimaafkan
-// play = julat masa muzik (ms) · quiet = masa senyap · say = Hafiz sebut "Berhenti!" · dim = kompang malap · tempo = saat/not · lure = muzik perlahan seketika
+// play = julat masa muzik (ms) · quiet = masa senyap · say = Sayf sebut "Berhenti!" · dim = kompang malap · tempo = saat/not · lure = muzik perlahan seketika
 const LEVELS = [null,
   { play: [3000, 5000], quiet: 3200, say: true, dim: true, tempo: .26 },
   { play: [2500, 4500], quiet: 3000, say: false, dim: true, tempo: .24 },
@@ -207,7 +207,7 @@ export default {
     cols: ['Tahap', 'Berhenti tepat', 'Terlepas'],
     row: (r) => [r.level, meter(pct(r.clean, r.n)), r.slips || 0],
     explain: `<span><b>Kawalan diri (inhibisi motor)</b>: menghentikan pergerakan yang sedang laju bila isyarat berubah, sama seperti permainan "patung cendana" atau "freeze dance". Ini lebih sukar daripada tidak bermula langsung, kerana badan sudah dalam rentak.</span>
-      <span>Tahap 1: Hafiz sebut "Berhenti!" dan kompang malap · Tahap 2: kompang malap sahaja · Tahap 3: muzik sahaja · Tahap 4: muzik lebih laju dan kadang-kadang perlahan seketika tanpa berhenti. Pukulan dalam 0.4 saat pertama selepas muzik berhenti dimaafkan. Naik bila 5/6 hentian tepat.</span>`,
+      <span>Tahap 1: Sayf sebut "Berhenti!" dan kompang malap · Tahap 2: kompang malap sahaja · Tahap 3: muzik sahaja · Tahap 4: muzik lebih laju dan kadang-kadang perlahan seketika tanpa berhenti. Pukulan dalam 0.4 saat pertama selepas muzik berhenti dimaafkan. Naik bila 5/6 hentian tepat.</span>`,
   },
 
   mission: {

@@ -1,6 +1,6 @@
 # Skrip Suara: Sorok-Sorok Hutan (BM Malaysia)
 
-Suara: ElevenLabs **Hafiz – Energetic Cartoon Character** (`LkSPBLr5WF7APTCqF4ZJ`), model `eleven_v4`, 1 versi setiap baris.
+Suara: ElevenLabs **Sayf – Energetic Cartoon Character** (`LkSPBLr5WF7APTCqF4ZJ`), model `eleven_v4`, 1 versi setiap baris.
 Simpan sebagai `assets/audio/<kunci>.mp3` (64 kbps mono), kemudian tambah kunci ke `RECORDED` dalam `game.html`.
 Kelantangan: baris biasa −18 LUFS, baris `[softly]` −20 LUFS, puncak ≤ −1.5 dBTP. Resipi ffmpeg: lihat `../lampu-isyarat-haiwan/SKRIP-SUARA.md`.
 

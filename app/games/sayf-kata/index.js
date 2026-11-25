@@ -1,6 +1,6 @@
-// Hafiz Kata: kawalan diri auditori (versi "Simon Says"). Tekan bentuk hanya bila arahan bermula dengan "Hafiz kata…".
+// Sayf Kata: kawalan diri auditori (versi "Simon Says"). Tekan bentuk hanya bila arahan bermula dengan "Sayf kata…".
 // Berbeza daripada Lampu Isyarat (isyarat visual): di sini peraturan datang daripada bahasa, jadi anak mesti mendengar
-// keseluruhan ayat dan menahan diri bila awalan tiada. Tahap rendah: muka Hafiz bercahaya sebagai bantuan visual.
+// keseluruhan ayat dan menahan diri bila awalan tiada. Tahap rendah: muka Sayf bercahaya sebagai bantuan visual.
 import { faceSVG } from '../../kit/faces.js';
 import { shuffle, pct, meter } from '../../kit/util.js';
 
@@ -11,7 +11,7 @@ const SHAPES = {
   segitiga: { line: 'tekan-segitiga', name: 'Segi tiga', svg: `<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 6 L55 52 H5 Z" fill="#22B26A" stroke="#178A50" stroke-width="3" stroke-linejoin="round"/></svg>` },
 };
 const IDS = Object.keys(SHAPES);
-// shapes = bilangan bentuk, win = tetingkap jawapan (ms), cue = muka Hafiz bercahaya bila "Hafiz kata".
+// shapes = bilangan bentuk, win = tetingkap jawapan (ms), cue = muka Sayf bercahaya bila "Sayf kata".
 const LEVELS = [null,
   { shapes: 2, win: 4500, cue: true },
   { shapes: 3, win: 4000, cue: true },
@@ -23,17 +23,17 @@ const AGE_LEVEL = { 3: 1, 4: 1, 5: 2, 6: 3 };
 const GO = 6, NOGO = 4;
 
 export default {
-  id: 'hafiz-kata',
-  title: 'Hafiz Kata',
-  stageLabel: 'Bentuk berwarna. Tekan bentuk hanya bila Hafiz kata "Hafiz kata". Kalau tidak, jangan tekan.',
+  id: 'sayf-kata',
+  title: 'Sayf Kata',
+  stageLabel: 'Bentuk berwarna. Tekan bentuk hanya bila Sayf kata "Sayf kata". Kalau tidak, jangan tekan.',
   lines: {
-    intro: 'Jom main Hafiz Kata! Tekan hanya bila Hafiz kata.',
-    hk: 'Hafiz kata…',
+    intro: 'Jom main Sayf Kata! Tekan hanya bila Sayf kata.',
+    hk: 'Sayf kata…',
     'tekan-bintang': 'Tekan bintang!',
     'tekan-bulat': 'Tekan bulatan!',
     'tekan-hati': 'Tekan hati!',
     'tekan-segitiga': 'Tekan segi tiga!',
-    'tak-kata': 'Eh, Hafiz tak kata. Jangan tekan, ya.',
+    'tak-kata': 'Eh, Sayf tak kata. Jangan tekan, ya.',
     'pandai-tahan': 'Pandai tahan!',
   },
   recorded: ['intro', 'hk', 'tekan-bintang', 'tekan-bulat', 'tekan-hati', 'tekan-segitiga', 'tak-kata', 'pandai-tahan'],
@@ -79,7 +79,7 @@ export default {
     const btns = [...grid.querySelectorAll('.hk-shape')];
     const arm = (on) => btns.forEach((b) => { b.disabled = !on; });
 
-    // Turutan: latihan (2 "Hafiz kata" dahulu bila kali pertama), kemudian campuran tanpa > 2 tahan berturut-turut.
+    // Turutan: latihan (2 "Sayf kata" dahulu bila kali pertama), kemudian campuran tanpa > 2 tahan berturut-turut.
     let seq;
     do { seq = shuffle([...Array(GO).fill(true), ...Array(NOGO).fill(false)]); }
     while (seq.some((g, i) => i > 1 && !g && !seq[i - 1] && !seq[i - 2]) || (ctx.first && (!seq[0] || !seq[1])));
@@ -96,7 +96,7 @@ export default {
         await ctx.wait(say('hk') + 60);
       }
       const d = say(SHAPES[id].line);
-      ctx.caption(`${go ? 'Hafiz kata… ' : ''}Tekan ${SHAPES[id].name.toLowerCase()}!`);
+      ctx.caption(`${go ? 'Sayf kata… ' : ''}Tekan ${SHAPES[id].name.toLowerCase()}!`);
       await ctx.wait(Math.max(500, d - 150));
       if (demo) { const r = ctx.toPct(target.getBoundingClientRect()); ctx.hand.show(r.left + r.width * .45, r.top + r.width * .25); }
       // Tetingkap jawapan: bar masa mengecil.
@@ -153,14 +153,14 @@ export default {
       const hitP = pct(last.reduce((a, r) => a + (r.hits || 0), 0), last.reduce((a, r) => a + (r.go || 0), 0));
       return [
         { v: holdP === null ? '–' : holdP + '%', label: 'Berjaya menahan diri' },
-        { v: hitP === null ? '–' : hitP + '%', label: 'Ikut arahan "Hafiz kata"' },
+        { v: hitP === null ? '–' : hitP + '%', label: 'Ikut arahan "Sayf kata"' },
         { v: `${s.level}<small>/${MAX_LEVEL}</small>`, label: 'Tahap' },
       ];
     },
     cols: ['Tahap', 'Tahan', 'Ikut'],
     row: (r) => [r.level, meter(pct(r.holds, r.nogo)), meter(pct(r.hits, r.go))],
     explain: `<span><b>Kawalan diri auditori</b>: mendengar keseluruhan ayat dan menahan diri bila peraturan tidak dipenuhi. Ini kemahiran yang sama digunakan bila cikgu berkata "Tunggu sampai cikgu kata mula." Budak 3 tahun biasanya sukar menahan; kemajuan besar berlaku antara umur 4 dan 6.</span>
-      <span>Tahap 1–2: 2–3 bentuk, muka Hafiz bercahaya bila "Hafiz kata" · Tahap 3–4: 4 bentuk, dengar sahaja, masa menjawab lebih singkat. Naik bila ≥ 80% ikut dan ≥ 75% berjaya tahan.</span>`,
+      <span>Tahap 1–2: 2–3 bentuk, muka Sayf bercahaya bila "Sayf kata" · Tahap 3–4: 4 bentuk, dengar sahaja, masa menjawab lebih singkat. Naik bila ≥ 80% ikut dan ≥ 75% berjaya tahan.</span>`,
   },
 
   mission: {

@@ -1,5 +1,5 @@
 // Kira Rambutan: membilang 1–10 (prinsip padanan satu-satu dan kardinaliti).
-// Anak tekan rambutan satu-satu (Hafiz kira bersama pada tahap 1–2), kemudian jawab "Berapa rambutan semua?".
+// Anak tekan rambutan satu-satu (Sayf kira bersama pada tahap 1–2), kemudian jawab "Berapa rambutan semua?".
 import { pick, shuffle, pct, meter } from '../../kit/util.js';
 import { RAMBUTAN_SVG } from '../../kit/objects.js';
 
@@ -7,7 +7,7 @@ const TRIALS = 5;
 const LEVELS = [null, [1, 3], [2, 5], [4, 7], [6, 10]]; // julat bilangan rambutan setiap tahap
 const MAX_LEVEL = 4;
 const AGE_LEVEL = { 3: 1, 4: 2, 5: 3, 6: 3 };
-const SILENT_FROM = 3;                    // tahap 3+: anak kira sendiri (Hafiz tidak sebut nombor semasa petik)
+const SILENT_FROM = 3;                    // tahap 3+: anak kira sendiri (Sayf tidak sebut nombor semasa petik)
 const UP_AT = 4, DOWN_AT = 2;             // per pusingan 5 soalan: ≥4 betul naik, ≤2 turun
 const REMIND_MS = 9000;
 const PRAISE = ['betul', 'hebat', 'bagus', 'pandainya'];
@@ -111,7 +111,7 @@ export default {
       fruitsEl.innerHTML = shuffle(SLOTS).slice(0, n).map(([x, y], i) => `<button class="kr-fruit" type="button" data-i="${i}" style="left:${x}%;top:${y}%" aria-label="Rambutan">${RAMBUTAN_SVG}</button>`).join('');
       optsEl.innerHTML = '';
       const fruits = [...fruitsEl.querySelectorAll('.kr-fruit')];
-      // Petik: setiap tekanan pindahkan satu rambutan ke bakul dan (tahap 1–2) Hafiz sebut nombornya.
+      // Petik: setiap tekanan pindahkan satu rambutan ke bakul dan (tahap 1–2) Sayf sebut nombornya.
       for (let c = 0; c < n; c++) {
         const left = fruits.filter((f) => !f.classList.contains('picked'));
         if (demo) { const r = ctx.toPct(left[0].getBoundingClientRect()); ctx.hand.show(r.left + 2, r.top + 4); }
@@ -152,7 +152,7 @@ export default {
         await ctx.wait(Math.max(700, num(n) + 100));
         await ctx.wait(Math.max(800, say(pick(PRAISE)) + 150));
       } else {
-        // Kira semula bersama: setiap rambutan melompat sambil Hafiz kira, kemudian jawapan ditunjuk.
+        // Kira semula bersama: setiap rambutan melompat sambil Sayf kira, kemudian jawapan ditunjuk.
         sfx.soft();
         optBtns.forEach((b) => { if (b !== rightBtn) b.classList.add('dim'); });
         await ctx.wait(Math.max(1200, say('kira-sama') + 200));
@@ -176,7 +176,7 @@ export default {
     for (let i = 0; i < TRIALS; i++) {
       let n; do { n = lo + Math.floor(Math.random() * (hi - lo + 1)); } while (n === prev && hi > lo);
       prev = n;
-      recs.push(await trial(n, ctx.first && i === 0 && !silent)); // demo hanya bila Hafiz kira bersama
+      recs.push(await trial(n, ctx.first && i === 0 && !silent)); // demo hanya bila Sayf kira bersama
       ctx.mark(i);
       await ctx.wait(300);
     }
@@ -206,7 +206,7 @@ export default {
     cols: ['Tahap', 'Betul', 'Terbesar'],
     row: (r) => [r.level, meter(pct(r.correct, r.n)), r.maxN || '–'],
     explain: `<span><b>Membilang</b>: padanan satu-satu (satu rambutan, satu nombor) dan <b>kardinaliti</b> (nombor terakhir ialah jumlah semua). Ini asas nombor sebelum tambah dan tolak.</span>
-      <span>Tahap 1: 1–3 · Tahap 2: 2–5 (Hafiz kira bersama) · Tahap 3: 4–7 · Tahap 4: 6–10 (anak kira sendiri). Naik bila 4/5 betul, turun bila 2/5 atau kurang. Biasa: kanak-kanak 3 tahun boleh kira 1–3; kebanyakan 5 tahun boleh kira hingga 10.</span>`,
+      <span>Tahap 1: 1–3 · Tahap 2: 2–5 (Sayf kira bersama) · Tahap 3: 4–7 · Tahap 4: 6–10 (anak kira sendiri). Naik bila 4/5 betul, turun bila 2/5 atau kurang. Biasa: kanak-kanak 3 tahun boleh kira 1–3; kebanyakan 5 tahun boleh kira hingga 10.</span>`,
   },
 
   mission: {

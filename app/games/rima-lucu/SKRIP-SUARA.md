@@ -1,6 +1,6 @@
 # Skrip Suara: Rima Lucu
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. `w-ayam`, `w-ikan`, `w-jagung` disalin dari Pasar Malam (`i-*`), tiada kos tambahan.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS. `w-ayam`, `w-ikan`, `w-jagung` disalin dari Pasar Malam (`i-*`), tiada kos tambahan.
 Perkataan dirakam tanpa tag supaya nada neutral dan boleh disusun (sasaran → pilihan).
 
 | Kunci | Teks |

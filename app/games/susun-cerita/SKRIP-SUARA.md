@@ -1,6 +1,6 @@
 # Skrip Suara: Susun Cerita
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS.
 Setiap gambar ada satu ayat pendek (kunci `<cerita>-<nombor>`), disebut sebaik sahaja gambar diletak dengan betul.
 
 | Kunci | Teks |

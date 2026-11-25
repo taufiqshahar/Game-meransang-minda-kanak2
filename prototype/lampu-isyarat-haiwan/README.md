@@ -15,7 +15,7 @@ Bantu haiwan hutan Malaysia (kancil, harimau Malaya, orang utan, gajah, tapir, e
 
 ## Fail
 - `game.html`: sumber artifact (tanpa `<!doctype>`/`<html>`; skeleton ditambah semasa diterbitkan)
-- `assets/audio/*.mp3`: rakaman suara BM (ElevenLabs `eleven_v4`, suara "Hafiz – Energetic Cartoon Character"), dimampat 64 kbps mono. Kunci fail = kunci dalam `LINES` di `game.html`.
+- `assets/audio/*.mp3`: rakaman suara BM (ElevenLabs `eleven_v4`, suara "Sayf – Energetic Cartoon Character"), dimampat 64 kbps mono. Kunci fail = kunci dalam `LINES` di `game.html`.
 - `assets/kancil-pilihan/`: 4 pilihan gaya kancil (Recraft v4.1 Pro Vector, SVG) untuk dipilih
 
 ## Suara
@@ -29,7 +29,7 @@ Versi 3D (Three.js) telah dibina untuk perbandingan, kemudian **ditolak**: kekal
 
 ## v0.4: koleksi haiwan
 - Mula dengan 3 haiwan (kancil, harimau, gajah). Orang utan, tapir dan enggang dibuka selepas pusingan tamat ke-1, ke-3 dan ke-5; yang belum dibuka tampil sebagai bayang "?" di laman utama.
-- Kad "Kawan baharu!" + suara Hafiz bila haiwan dibuka.
+- Kad "Kawan baharu!" + suara Sayf bila haiwan dibuka.
 - Bintang ★ setiap haiwan ikut bilangan percubaan **betul** dengan haiwan itu (3 / 10 / 25): ganjaran untuk kawalan diri, bukan untuk tekan sebanyak mungkin.
 - Etika: tiada streak, tiada kehilangan, had masa harian & had 3 pusingan kekal. Status buka kunci diterbitkan daripada `data.rounds` (tiada keadaan berasingan); bintang disimpan dalam `data.helped`.
 - Pepijat dibaiki: skrin keputusan kini menunjukkan haiwan sebenar yang melintas.
@@ -40,4 +40,4 @@ Versi 3D (Three.js) telah dibina untuk perbandingan, kemudian **ditolak**: kekal
 - Kancil kini ada belang putih di leher (ciri sebenar).
 - Bahasa disemak ke bahasa Melayu Malaysia harian: "tekan" (bukan "ketik"), "adik" (bukan "kamu"), "Alamak", "Syabas".
 - Sandaran suara peranti hanya `ms-*` (Bahasa Melayu). Sandaran Bahasa Indonesia dibuang.
-- Rakaman suara: semua baris dirakam (ElevenLabs Hafiz, `eleven_v4`, 64 kbps mono) dan disenaraikan dalam `RECORDED` dalam `game.html`. Jika teks baris diubah, buang kuncinya dari `RECORDED` sehingga dirakam semula.
+- Rakaman suara: semua baris dirakam (ElevenLabs Sayf, `eleven_v4`, 64 kbps mono) dan disenaraikan dalam `RECORDED` dalam `game.html`. Jika teks baris diubah, buang kuncinya dari `RECORDED` sehingga dirakam semula.

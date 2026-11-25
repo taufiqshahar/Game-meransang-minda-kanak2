@@ -1,6 +1,6 @@
 // Cuaca Hari Ini: sains awal (cuaca) + penaakulan sebab-akibat. Langit berubah (hujan, panas terik, berangin, sejuk);
 // anak "pakaikan" kawan dengan barang yang sesuai. Barang yang betul terus dipakai (payung di tangan, topi di kepala),
-// jadi anak nampak hasilnya. Salah pilih = Hafiz namakan barang itu dan "tak sesuai untuk cuaca ni"; tiada kalah.
+// jadi anak nampak hasilnya. Salah pilih = Sayf namakan barang itu dan "tak sesuai untuk cuaca ni"; tiada kalah.
 import { bendaIcon } from '../../kit/benda.js';
 import { shuffle, pct, meter } from '../../kit/util.js';
 

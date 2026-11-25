@@ -1,5 +1,5 @@
 // Muka Perasaan: mengenal ekspresi emosi asas (literasi emosi, asas kawalan emosi dan empati).
-// Hafiz tanya "Mana muka X?"; anak tekan muka. Betul → Hafiz namakan perasaan itu. Salah → Hafiz namakan muka yang dipilih
+// Sayf tanya "Mana muka X?"; anak tekan muka. Betul → Sayf namakan perasaan itu. Salah → Sayf namakan muka yang dipilih
 // (tetap belajar), kemudian tanya semula. Turutan kesukaran ikut perkembangan: gembira/sedih → marah → terkejut → takut.
 import { EMOTIONS, EMOTION_NAME, KIDS, faceSVG } from '../../kit/faces.js';
 import { shuffle, pct, meter } from '../../kit/util.js';
@@ -19,7 +19,7 @@ const IDLE_MS = 10000;
 export default {
   id: 'muka-perasaan',
   title: 'Muka Perasaan',
-  stageLabel: 'Muka kawan-kawan dengan perasaan berbeza. Tekan muka yang Hafiz sebut.',
+  stageLabel: 'Muka kawan-kawan dengan perasaan berbeza. Tekan muka yang Sayf sebut.',
   lines: {
     intro: 'Jom kenal perasaan! Tengok muka kawan-kawan.',
     ...Object.fromEntries(EMOTIONS.map((e) => [`tanya-${e}`, `Mana muka ${e}?`])),
@@ -145,7 +145,7 @@ export default {
     cols: ['Tahap', 'Betul', 'Tersilap'],
     row: (r) => [r.level, meter(pct(r.correct, r.n)), (r.miss || []).filter((e) => EMOTION_NAME[e]).map((e) => EMOTION_NAME[e]).join(', ') || '–'],
     explain: `<span><b>Literasi emosi</b>: mengenal dan menamakan perasaan pada muka. Ini langkah pertama untuk mengawal emosi sendiri dan memahami kawan. Kanak-kanak biasanya kenal <i>gembira</i> dan <i>sedih</i> dahulu (umur 2–3), kemudian <i>marah</i>, dan <i>takut</i>/<i>terkejut</i> paling lewat (sering keliru sehingga umur 5–6).</span>
-      <span>Tahap 1: gembira, sedih · Tahap 2: + marah · Tahap 3: + terkejut · Tahap 4: + takut. Bila anak tersilap, Hafiz menamakan muka yang dipilih supaya anak tetap belajar. Naik bila 5/6 betul kali pertama.</span>`,
+      <span>Tahap 1: gembira, sedih · Tahap 2: + marah · Tahap 3: + terkejut · Tahap 4: + takut. Bila anak tersilap, Sayf menamakan muka yang dipilih supaya anak tetap belajar. Naik bila 5/6 betul kali pertama.</span>`,
   },
 
   mission: {

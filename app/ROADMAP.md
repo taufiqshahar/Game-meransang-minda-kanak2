@@ -1,7 +1,7 @@
 # Peta jalan: 40 game
 
 Sasaran: 40 game (30 asal + 10 tambahan) merangkumi 8 bidang kemahiran untuk umur 3–6 tahun, sejajar dengan tunjang **KSPK** (Kurikulum Standard Prasekolah Kebangsaan): Komunikasi, Sains & Teknologi (matematik awal, sains awal), Kemanusiaan, Fizikal & Estetika, Keterampilan Diri, Kerohanian/Sikap/Nilai.
-Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada kalah, suara Hafiz, misi dunia sebenar.
+Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada kalah, suara Sayf, misi dunia sebenar.
 
 **Keutamaan**: game **Bahasa** dan **Nombor** didahulukan. Itulah yang ibu bapa Malaysia paling cari dan sanggup bayar. Game fungsi eksekutif (3 yang sedia ada) menjadi pembeza kita.
 
@@ -10,18 +10,18 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 1 | Lampu Isyarat Haiwan | Kawalan diri | Eksekutif | Go/No-Go | ✅ v0.4 |
 | 2 | Sorok-Sorok Hutan | Ingatan kerja (lokasi) | Eksekutif | Ingatan lokasi, tangga 2-naik-1-turun | ✅ v0.2 |
 | 3 | Rumah Haiwan | Fleksibiliti kognitif | Eksekutif | DCCS | ✅ v0.1 |
-| 4 | Kira Rambutan | Membilang 1–10 | Nombor | Tekan buah satu-satu sambil Hafiz kira; jawab "berapa semua?" (kardinaliti) | ✅ v0.1 |
+| 4 | Kira Rambutan | Membilang 1–10 | Nombor | Tekan buah satu-satu sambil Sayf kira; jawab "berapa semua?" (kardinaliti) | ✅ v0.1 |
 | 5 | Bunyi Mula | Kesedaran fonologi: suku kata awal | Bahasa | "Ga… ga… Mana mula dengan ga?" → gajah; tahap 3 suku kata ditulis | ✅ v0.1 |
 | 6 | Banyak Mana? | Bandingan kuantiti (rasa nombor) | Nombor | Dua dulang: lebih banyak / sedikit; tahap 3–4 ditutup kain (anggar) | ✅ v0.1 |
 | 7 | Suku Kata Kapal | Suku kata | Bahasa | Tepuk suku kata (ba-ju, ku-cing), muatkan ke kapal | |
 | 8 | Corak Kuih | Corak AB / AAB / ABC | Nombor | Sambung corak kuih atas dulang; kuih melompat ikut ritma; tahap 4 kosong di tengah | ✅ v0.1 |
-| 9 | Muka Perasaan | Kenal emosi | Emosi | "Mana muka sedih?" 5 perasaan, 5 kanak-kanak berbeza; salah = Hafiz namakan muka yang dipilih | ✅ v0.1 |
+| 9 | Muka Perasaan | Kenal emosi | Emosi | "Mana muka sedih?" 5 perasaan, 5 kanak-kanak berbeza; salah = Sayf namakan muka yang dipilih | ✅ v0.1 |
 | 10 | Pasar Malam | Ingatan kerja (verbal) | Eksekutif | Dengar senarai beli 2–4 barang, ambil di gerai; butang "dengar lagi" | ✅ v0.1 |
 | 11 | Bentuk Wau | Bentuk 2D | Nombor | Pasang bulatan, segi tiga, segi empat jadi wau | |
 | 12 | Rima Lucu | Kesedaran fonologi: rima | Bahasa | 7 pasangan rima bergambar (ayam–jam, topi–kopi); setiap pilihan disebut | ✅ v0.1 |
 | 13 | Nombor Hilang | Turutan nombor 1–10 | Nombor | Garis nombor jambatan: isi papan yang hilang | |
-| 14 | Hafiz Kata | Inhibisi auditori | Eksekutif | Ikut arahan hanya bila "Hafiz kata…"; bar masa, muka Hafiz bercahaya di tahap rendah | ✅ v0.1 |
-| 15 | Susun Cerita | Urutan & naratif | Bahasa | 8 cerita (pisang, aiskrim, belon, hujan, bomba, bina rumah, kek, masak telur): tekan gambar ikut turutan, Hafiz ceritakan setiap gambar; tahap 3–4 empat gambar | ✅ v0.1 |
+| 14 | Sayf Kata | Inhibisi auditori | Eksekutif | Ikut arahan hanya bila "Sayf kata…"; bar masa, muka Sayf bercahaya di tahap rendah | ✅ v0.1 |
+| 15 | Susun Cerita | Urutan & naratif | Bahasa | 8 cerita (pisang, aiskrim, belon, hujan, bomba, bina rumah, kek, masak telur): tekan gambar ikut turutan, Sayf ceritakan setiap gambar; tahap 3–4 empat gambar | ✅ v0.1 |
 | 16 | Kawan Baik | Empati & tindakan prososial | Emosi | 7 cerita: teka perasaan kawan, kemudian pilih tindakan baik (muka kawan bertukar gembira); tahap 3–4 muka disorok | ✅ v0.1 |
 | 17 | Rumah Siapa? | Habitat haiwan | Sains | Padankan haiwan dengan rumah: sarang, gua, sungai, pokok | |
 | 18 | Cari Beza | Perhatian visual | Visual | 3 pemandangan (kampung, tapak binaan, pantai) atas–bawah; beza dijana rawak; tahap 3 tukar warna, tahap 4 beza kecil | ✅ v0.1 |
@@ -35,7 +35,7 @@ Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada ka
 | 26 | Puzzle Batik | Spatial | Visual | Puzzle 4–9 keping corak batik | |
 | 27 | Perkataan Pertama | Kenal perkataan (pra-membaca) | Bahasa | 22 perkataan bergambar; tahap 1 padan bentuk, tahap 3 huruf pertama sama (kopi/kotak/kunci), tahap 4 dengar sahaja; suku kata menyala semasa disebut | ✅ v0.1 |
 | 28 | Tenggelam atau Timbul | Ramalan & eksperimen | Sains | Teka, jatuhkan ke akuarium; benda kekal dan membentuk dua kumpulan | ✅ v0.1 |
-| 29 | Tarik Nafas Naga | Strategi menenangkan diri | Emosi | Tekan & tahan sambil tarik nafas (perut naga kembang, Hafiz kira), lepas dan hembus; naga marah/sedih/takut jadi tenang; tahan 3→6 saat | ✅ v0.1 |
+| 29 | Tarik Nafas Naga | Strategi menenangkan diri | Emosi | Tekan & tahan sambil tarik nafas (perut naga kembang, Sayf kira), lepas dan hembus; naga marah/sedih/takut jadi tenang; tahan 3→6 saat | ✅ v0.1 |
 | 30 | Sambung Titik | Motor halus + turutan 1–10 | Fizikal | Tekan titik ikut nombor; gambar (rumah, bas, kapal, bintang, kereta api) muncul bila tertutup; tahap 4 titik kecil tanpa bantuan | ✅ v0.1 |
 
 ## Tambahan v0.8: kepelbagaian (tema kenderaan, interaksi baharu)

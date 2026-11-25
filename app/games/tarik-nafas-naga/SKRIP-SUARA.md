@@ -1,6 +1,6 @@
 # Skrip Suara: Tarik Nafas Naga
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`awal` −20 LUFS, lembut).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`awal` −20 LUFS, lembut).
 Guna baris kongsi `breath-in`, `breath-out` dan `n1`–`n6` (mengira semasa tahan nafas).
 
 | Kunci | Teks |

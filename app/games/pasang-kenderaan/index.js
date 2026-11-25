@@ -1,6 +1,6 @@
 // Pasang Kenderaan: puzzle kepingan (hubungan bahagian-keseluruhan, visual-ruang).
 // Gambar kenderaan dipotong 2–6 keping. Seret kepingan ke bayangnya; atau tekan kepingan, kemudian tekan tempatnya.
-// Siap = kenderaan bergerak dan Hafiz sebut namanya. Tiada kalah: salah letak hanya kembali ke tempat asal.
+// Siap = kenderaan bergerak dan Sayf sebut namanya. Tiada kalah: salah letak hanya kembali ke tempat asal.
 import { VEHICLES, vehicleIcon } from '../../kit/vehicles.js';
 import { pick, shuffle, pct, meter } from '../../kit/util.js';
 

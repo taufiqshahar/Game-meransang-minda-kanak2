@@ -1,6 +1,6 @@
 # Skrip Suara: Pasar Malam
 
-Hafiz (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS: `bukan`).
+Sayf (`LkSPBLr5WF7APTCqF4ZJ`), `eleven_v4`, 1 versi. 64 kbps mono, −18 LUFS (`[softly]` −20 LUFS: `bukan`).
 Senarai disambung dari klip: `beli` → `i-<barang>` → `i-<barang>`… Nama barang dirakam tanpa tag supaya nada neutral dan boleh disusun.
 
 | Kunci | Teks |
