@@ -158,7 +158,7 @@ function makeCtx(game, state, signal, loading) {
     age: data.settings.age,
     first: sessionRounds === 0,
     ready: () => Promise.race([loading, sleep(4000)]),
-    say: voice.say, stopSpeech: voice.stop, sfx: voice.sfx,
+    say: voice.say, stopSpeech: voice.stop, sfx: voice.sfx, mixer: voice.mixer,
     wait: async (ms) => { await sleep(ms); alive(); },
     anim,
     caption(text) { const c = stage.querySelector('.caption'); if (c) c.textContent = text; },

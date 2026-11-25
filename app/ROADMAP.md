@@ -53,7 +53,21 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 
 Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu).
 
-**Kiraan semasa: 30 game. Sasaran 30 tercapai.**
+**Kiraan semasa: 34 game.** (Sasaran asal 30 tercapai; tambahan 10 sedang dibina.)
+
+## Tambahan v0.7: 10 game, cara main baharu, bidang paling nipis diutamakan
+| # | Game | Bidang | Cara main | Status |
+|---|---|---|---|---|
+| 31 | Gendang Berhenti | Kawalan diri | Pukul kompang bila muzik main, berhenti bila muzik berhenti (muzik dijana WebAudio); tahap 4 muzik perlahan seketika sebagai umpan | ✅ v0.1 |
+| 32 | Lumba Sudu Telur | Motor + kawalan diri | Seret sudu sepanjang trek; terlalu laju atau keluar trek = telur jatuh, mula dari bendera terakhir | ✅ v0.1 |
+| 33 | Apa Yang Hilang? | Ingatan | Hafal dulang, kain tutup, satu barang hilang; tahap 4 barang bertukar tempat | ✅ v0.1 |
+| 34 | Campur Warna | Sains | Teka dulu, kemudian tuang; mod songsang "nak dapat hijau, campur apa?" | ✅ v0.1 |
+| 35 | Ikut Bunyi | Ingatan | Ulang urutan gendang menyala bernada | |
+| 36 | Pusing Gambar | Visual | Putar gambar sampai sama dengan bayang; tahap tinggi pusing dalam kepala | |
+| 37 | Dengar Perasaan | Emosi | Teka perasaan dari nada suara sahaja | |
+| 38 | Tangkap Rama-rama | Motor | Sasaran bergerak; tahap tinggi jangan tangkap lebah | |
+| 39 | Mewarna | Motor | Warna dengan jari di dalam garisan | |
+| 40 | Cari Jalan | Fleksibiliti | Bina laluan; jalan tiba-tiba ditutup, cari jalan lain | |
 
 ## v0.6: laman utama untuk 30 game
 - **Cabaran hari ini**: 3 game dari 3 bidang berbeza, dipilih dari sejarah main anak: (1) bidang paling kurang dilatih minggu ini, (2) game baharu atau lama tak dimain, (3) kegemaran. Pilihan disimpan untuk hari itu (tidak bertukar selepas bermain), tanda ✓ dan "1/3 selesai" membina tabiat harian.

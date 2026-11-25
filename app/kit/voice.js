@@ -123,7 +123,9 @@ export function createVoice({ captionEl, voiceEnabled }) {
 
   return {
     init, use, say, stop, sfx, tone,
-    setMuted(m) { muted = m; if (m) stop(); },
+    setMuted(m) { muted = m; if (m) stop(); if (master) master.gain.value = m ? 0 : .9; },
+    // Untuk game yang menjana bunyi sendiri (muzik, gendang): konteks audio + nod keluaran yang patuh butang senyap.
+    mixer: () => (ac ? { ac, out: master } : null),
     isMuted: () => muted,
     hasRecorded: () => buffers.size > 0,
     deviceVoiceName: () => (deviceVoice ? deviceVoice.name : null),

@@ -34,6 +34,7 @@ export default {
 | `stage`, `state`, `age`, `first` | Elemen pentas; keadaan game (simpan tahap di sini); umur; `true` pada pusingan pertama sesi (untuk latihan) |
 | `say(key, iconSvg?)` → ms | Kapsyen + suara; pulangkan tempoh supaya boleh tunggu |
 | `sfx.good/soft/pop/light/rustle()`, `sfx.car(sec)` | Bunyi |
+| `mixer()` → `{ ac, out }` / `null` | AudioContext + nod keluaran (patuh butang senyap) untuk muzik / nada buatan game sendiri |
 | `wait(ms)` | Tidur yang membatalkan diri bila pusingan dihentikan |
 | `tap({ selector, ms, event, keys })` → `{ el, t }` / `null` | Tunggu tekanan dalam pentas (null = tamat masa) |
 | `alive()` | Lempar `CANCEL` jika pusingan dihentikan (panggil selepas `await` panjang) |
