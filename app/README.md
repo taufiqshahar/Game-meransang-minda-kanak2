@@ -17,14 +17,14 @@ app/
 │   ├── README.md       kontrak modul game + senarai semak game baharu
 │   ├── registry.js     senarai game (metadata + import dinamik)
 │   └── <id>/           index.js (mekanik), audio/*.mp3, SKRIP-SUARA.md
-└── ROADMAP.md          30 game: kemahiran, keutamaan, status
+└── ROADMAP.md          40 game: kemahiran, keutamaan, status
 ```
 
 ## Keputusan seni bina
 | Keputusan | Kenapa |
 |---|---|
 | ES modules tanpa build step dan tanpa library | Ringan, mudah diterbitkan sebagai artifact berbilang fail, tiada kebergantungan untuk diselenggara |
-| Modul game dimuat bila dimain (`import()`) | Laman utama kekal cepat walaupun ada 30 game |
+| Modul game dimuat bila dimain (`import()`) | Laman utama kekal cepat walaupun ada 40 game |
 | Suara dimuat per game | Muat turun awal kecil; cache dikongsi merentas game |
 | Satu stor `localStorage` (`rangsang-minda.v1`) | Satu had masa harian, satu umur, satu zon ibu bapa untuk semua game |
 | `normalize(state, age)` dalam setiap game | Data lama atau rosak dibetulkan; tukar umur menetapkan semula tahap tanpa perlu memuat semua modul |

@@ -1,6 +1,6 @@
-# Peta jalan: 30 game
+# Peta jalan: 40 game
 
-Sasaran: 30 game merangkumi 8 bidang kemahiran untuk umur 3–6 tahun, sejajar dengan tunjang **KSPK** (Kurikulum Standard Prasekolah Kebangsaan): Komunikasi, Sains & Teknologi (matematik awal, sains awal), Kemanusiaan, Fizikal & Estetika, Keterampilan Diri, Kerohanian/Sikap/Nilai.
+Sasaran: 40 game (30 asal + 10 tambahan) merangkumi 8 bidang kemahiran untuk umur 3–6 tahun, sejajar dengan tunjang **KSPK** (Kurikulum Standard Prasekolah Kebangsaan): Komunikasi, Sains & Teknologi (matematik awal, sains awal), Kemanusiaan, Fizikal & Estetika, Keterampilan Diri, Kerohanian/Sikap/Nilai.
 Setiap game: satu kemahiran, tahap menyesuaikan diri, latihan berpandu, tiada kalah, suara Hafiz, misi dunia sebenar.
 
 **Keutamaan**: game **Bahasa** dan **Nombor** didahulukan. Itulah yang ibu bapa Malaysia paling cari dan sanggup bayar. Game fungsi eksekutif (3 yang sedia ada) menjadi pembeza kita.
@@ -53,7 +53,7 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 
 Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu).
 
-**Kiraan semasa: 37 game.** (Sasaran asal 30 tercapai; tambahan 10 sedang dibina.)
+**Kiraan semasa: 40 game.** (Sasaran asal 30 + tambahan 10 selesai.)
 
 ## Tambahan v0.7: 10 game, cara main baharu, bidang paling nipis diutamakan
 | # | Game | Bidang | Cara main | Status |
@@ -65,9 +65,9 @@ Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak war
 | 35 | Ikut Bunyi | Ingatan | Ulang urutan gendang menyala bernada (nada WebAudio); urutan +1 bila betul, −1 bila silap, disimpan merentas sesi | ✅ v0.1 |
 | 36 | Pusing Gambar | Visual | Butang ↺/↻ putar gambar sampai sama dengan bayang ("tepat" = arah terdekat); tahap 3 pilih dalam kepala, tahap 4 ada imej cermin | ✅ v0.1 |
 | 37 | Dengar Perasaan | Emosi | Teka perasaan dari suara; tahap 3–4 ayat sama, nada berbeza (prosodi sahaja) | ✅ v0.1 |
-| 38 | Tangkap Rama-rama | Motor | Sasaran bergerak; tahap tinggi jangan tangkap lebah | |
-| 39 | Mewarna | Motor | Warna dengan jari di dalam garisan | |
-| 40 | Cari Jalan | Fleksibiliti | Bina laluan; jalan tiba-tiba ditutup, cari jalan lain | |
+| 38 | Tangkap Rama-rama | Motor + kawalan diri | Sasaran bergerak (laluan melengkung); tahap 3–4 lebah turut terbang, jangan tangkap; perlahan sendiri bila anak lama tak dapat | ✅ v0.1 |
+| 39 | Mewarna | Motor halus | Warna dengan jari; liputan + ketepatan dalam garisan diukur pada grid 100×100; berus mengecil ikut tahap | ✅ v0.1 |
+| 40 | Cari Jalan | Fleksibiliti + perancangan | Bina jalan petak demi petak untuk kereta bomba; tahap 2–4 jalan ditutup di tengah perjalanan, cari jalan lain | ✅ v0.1 |
 
 ## v0.6: laman utama untuk 30 game
 - **Cabaran hari ini**: 3 game dari 3 bidang berbeza, dipilih dari sejarah main anak: (1) bidang paling kurang dilatih minggu ini, (2) game baharu atau lama tak dimain, (3) kegemaran. Pilihan disimpan untuk hari itu (tidak bertukar selepas bermain), tanda ✓ dan "1/3 selesai" membina tabiat harian.
