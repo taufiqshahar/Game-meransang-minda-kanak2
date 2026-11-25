@@ -53,7 +53,7 @@ Maklum balas pemilik: game terlalu serupa dan hanya haiwan. Mulai v0.8 setiap ga
 
 Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak warna), **Lampu Isyarat Kereta** (giliran dan menunggu).
 
-**Kiraan semasa: 34 game.** (Sasaran asal 30 tercapai; tambahan 10 sedang dibina.)
+**Kiraan semasa: 37 game.** (Sasaran asal 30 tercapai; tambahan 10 sedang dibina.)
 
 ## Tambahan v0.7: 10 game, cara main baharu, bidang paling nipis diutamakan
 | # | Game | Bidang | Cara main | Status |
@@ -62,9 +62,9 @@ Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak war
 | 32 | Lumba Sudu Telur | Motor + kawalan diri | Seret sudu sepanjang trek; terlalu laju atau keluar trek = telur jatuh, mula dari bendera terakhir | ✅ v0.1 |
 | 33 | Apa Yang Hilang? | Ingatan | Hafal dulang, kain tutup, satu barang hilang; tahap 4 barang bertukar tempat | ✅ v0.1 |
 | 34 | Campur Warna | Sains | Teka dulu, kemudian tuang; mod songsang "nak dapat hijau, campur apa?" | ✅ v0.1 |
-| 35 | Ikut Bunyi | Ingatan | Ulang urutan gendang menyala bernada | |
-| 36 | Pusing Gambar | Visual | Putar gambar sampai sama dengan bayang; tahap tinggi pusing dalam kepala | |
-| 37 | Dengar Perasaan | Emosi | Teka perasaan dari nada suara sahaja | |
+| 35 | Ikut Bunyi | Ingatan | Ulang urutan gendang menyala bernada (nada WebAudio); urutan +1 bila betul, −1 bila silap, disimpan merentas sesi | ✅ v0.1 |
+| 36 | Pusing Gambar | Visual | Butang ↺/↻ putar gambar sampai sama dengan bayang ("tepat" = arah terdekat); tahap 3 pilih dalam kepala, tahap 4 ada imej cermin | ✅ v0.1 |
+| 37 | Dengar Perasaan | Emosi | Teka perasaan dari suara; tahap 3–4 ayat sama, nada berbeza (prosodi sahaja) | ✅ v0.1 |
 | 38 | Tangkap Rama-rama | Motor | Sasaran bergerak; tahap tinggi jangan tangkap lebah | |
 | 39 | Mewarna | Motor | Warna dengan jari di dalam garisan | |
 | 40 | Cari Jalan | Fleksibiliti | Bina laluan; jalan tiba-tiba ditutup, cari jalan lain | |

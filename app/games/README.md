@@ -51,6 +51,7 @@ Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan)
 
 ## Senarai semak game baharu
 1. **Kawalan aktif hanya semasa mendengar**: butang/kad dibuat `disabled` semasa Hafiz bercakap atau semasa maklum balas, dan aktif hanya bila `ctx.tap()` sedang menunggu. Jika tidak, tekanan awal hilang tanpa disedari (pepijat yang ditemui dalam Kira Rambutan dan Bunyi Mula).
+1. **Bekas kosong jangan menutup butang**: bekas susun atur penuh-lebar (cth. `.xx-opts`) yang bertindih dengan kawalan lain mesti `pointer-events: none` (anak-anaknya `auto`). Jika tidak, tekanan pada butang di bawahnya hilang (pepijat Pusing Gambar). Ujian bot dengan `click()` biasa (tanpa `force`) menangkap masalah ini.
 1. **Reka bentuk**: satu kemahiran, berasaskan penyelidikan, tahap menyesuaikan diri, latihan berpandu untuk pusingan pertama, tiada kalah, salah = petunjuk + tunjuk jawapan, nada positif untuk skor rendah.
 2. **Skrip suara** (`SKRIP-SUARA.md`): BM Malaysia (tekan, adik, dah, kat, tak). Jana dengan ElevenLabs Hafiz `LkSPBLr5WF7APTCqF4ZJ`, `eleven_v4`, 1 versi setiap baris.
 3. **Audio**: 64 kbps mono; −18 LUFS (baris `[softly]` −20 LUFS); puncak ≤ −1.5 dBTP. Resipi: `prototype/lampu-isyarat-haiwan/SKRIP-SUARA.md`.
