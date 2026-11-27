@@ -1,0 +1,29 @@
+# Ujian automatik. Setiap push: ujian pantas (statik + 40 game dibuka + PWA luar talian, ~3 minit).
+# Pull request dan larian manual: ujian penuh termasuk bot main 20 game sehingga tamat (~10 minit).
+name: Ujian
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ujian-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ujian:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Ujian pantas
+        if: github.event_name == 'push'
+        run: npm run test:quick
+      - name: Ujian penuh
+        if: github.event_name != 'push'
+        run: npm test

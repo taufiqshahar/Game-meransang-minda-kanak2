@@ -56,5 +56,5 @@ Aset seni kongsi: `kit/art.js` (6 haiwan, topi), `kit/vehicles.js` (8 kenderaan)
 2. **Skrip suara** (`SKRIP-SUARA.md`): BM Malaysia (tekan, adik, dah, kat, tak). Jana dengan suara ElevenLabs `LkSPBLr5WF7APTCqF4ZJ` (watak Sayf), `eleven_v4`, 1 versi setiap baris. Dalam prompt, eja nama watak **"Saif"** supaya sebutan BM betul.
 3. **Audio**: 64 kbps mono; −18 LUFS (baris `[softly]` −20 LUFS); puncak ≤ −1.5 dBTP. Resipi: `prototype/lampu-isyarat-haiwan/SKRIP-SUARA.md`.
 4. **Kod**: `games/<id>/index.js` ikut kontrak di atas; tambah entri dalam `registry.js`.
-5. **Uji**: bot Playwright main satu pusingan penuh pada lebar 390 px (latihan, salah, betul, naik/turun tahap), semak tiada ralat konsol dan semua audio dimuat, satu tangkapan skrin pentas dan keputusan.
+5. **Uji**: tambah pemandu bot dalam `tests/drivers.mjs` (gunakan `stage.dataset.answer` sebagai petunjuk jawapan), kemudian `npm test -- --only <id> --shots /tmp/shots` dan semak tangkapan skrin. Ujian statik dan asap meliputi game baharu secara automatik.
 6. **Kemas kini** `ROADMAP.md` (status) dan terbitkan semula artifact.

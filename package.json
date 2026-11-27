@@ -1,0 +1,14 @@
+{
+  "name": "rangsang-minda",
+  "private": true,
+  "type": "module",
+  "description": "Permainan minda untuk kanak-kanak 3–6 tahun (BM). Aplikasi statik dalam app/, tiada langkah binaan.",
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "test:quick": "node tests/run.mjs --quick",
+    "start": "node -e \"import('./tests/serve.mjs').then(async (m) => { const s = await m.serve(); console.log('Buka ' + s.url); })\""
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

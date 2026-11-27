@@ -69,6 +69,12 @@ Idea seterusnya dengan interaksi berbeza: **Corak Kon Jalan** (sambung corak war
 | 39 | Mewarna | Motor halus | Warna dengan jari; liputan + ketepatan dalam garisan diukur pada grid 100×100; berus mengecil ikut tahap | ✅ v0.1 |
 | 40 | Cari Jalan | Fleksibiliti + perancangan | Bina jalan petak demi petak untuk kereta bomba; tahap 2–4 jalan ditutup di tengah perjalanan, cari jalan lain | ✅ v0.1 |
 
+## v0.9: sedia untuk diuji keluarga sebenar
+- **Ujian automatik dalam repo** (`npm test`): statik, asap 40 game, PWA luar talian, bot main penuh 20 game. CI GitHub Actions setiap push/PR. Disahkan boleh gagal (fail audio dibuang dan pepijat sengaja kedua-duanya dikesan).
+- **PWA**: boleh dipasang di skrin utama (manifest + ikon, termasuk maskable), service worker untuk main tanpa internet, butang "Simpan semua game untuk luar talian" (~3 MB) dalam zon ibu bapa. Disahkan: rangkaian diputus → app dibuka → game dimain dengan audio.
+- **Hos awam**: `tools/build.mjs` + GitHub Pages (automatik dari branch lalai). Membetulkan masalah tersembunyi: `index.html` serpihan akan berjalan dalam quirks mode tanpa viewport di hos biasa.
+- **Seterusnya** (ikut data dari 5–10 keluarga): profil berbilang anak, ganjaran jangka panjang, modul Kerohanian, pemandu bot untuk 20 game awal.
+
 ## v0.6: laman utama untuk 30 game
 - **Cabaran hari ini**: 3 game dari 3 bidang berbeza, dipilih dari sejarah main anak: (1) bidang paling kurang dilatih minggu ini, (2) game baharu atau lama tak dimain, (3) kegemaran. Pilihan disimpan untuk hari itu (tidak bertukar selepas bermain), tanda ✓ dan "1/3 selesai" membina tabiat harian.
 - **Laporan minggu ini** (zon ibu bapa): hari aktif, rentetan hari, pusingan & minit; bar penguasaan 9 bidang (kedudukan tahap semasa dalam julat setiap game, `lv` dalam registry); cerapan automatik (kekuatan ≥ 3 pusingan, naik tahap, perlu perhatian + misi rumah); butang **Kongsi** (Web Share / salin teks untuk WhatsApp). Nama anak pilihan dalam tetapan. Calon ciri premium.

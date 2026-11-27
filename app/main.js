@@ -4,6 +4,7 @@ import { ART_DEFS, BALLOON_SVG, HAND_SVG } from './kit/art.js';
 import { createVoice, SHARED_LINES } from './kit/voice.js';
 import { CANCEL, sleep, anim, todayStr, toPct, shuffle, fmtDate, meter } from './kit/util.js';
 import { GAMES, SKILLS } from './games/registry.js';
+import * as pwa from './kit/pwa.js';
 
 const $ = (s) => document.querySelector(s);
 const STORE_KEY = 'rangsang-minda.v1';
@@ -483,6 +484,7 @@ async function renderParent() {
   $('#reset-confirm').hidden = true; $('#btn-reset').hidden = false;
   $('#restore-confirm').hidden = true; pendingRestore = null;
   renderBackupInfo();
+  renderAppSec();
 }
 async function openParent() { await renderParent(); $('#parent').hidden = false; $('#parent-close').focus(); }
 $('#parent-close').addEventListener('click', () => { $('#parent').hidden = true; renderHome(); });
@@ -604,6 +606,39 @@ document.addEventListener('keydown', (e) => {
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden && !$('#scr-game').hidden) goHome(); });
 
+// ---------- Pasang app & luar talian (kit/pwa.js) ----------
+let offlineBusy = false;
+function renderAppSec() {
+  $('#app-sec').hidden = !pwa.swSupported;
+  if (!pwa.swSupported) return;
+  $('#install-help').textContent = pwa.installHelp();
+  $('#btn-install').hidden = !pwa.canPrompt();
+  if (offlineBusy) return;
+  const st = pwa.offlineStatus(), info = $('#offline-info');
+  info.classList.toggle('ok', !!st);
+  $('#btn-offline').textContent = st ? 'Kemas kini simpanan luar talian' : 'Simpan semua game untuk luar talian';
+  info.textContent = st
+    ? `Sedia untuk main tanpa internet ✓ (${st.games} game, ${st.mb} MB, disimpan ${fmtDate(st.at)}). Simpan semula selepas app dikemas kini.`
+    : 'Game dimuat bila dimain. Simpan semua sekarang (kira-kira 3 MB) supaya anak boleh main dalam kereta atau tanpa internet.';
+}
+$('#btn-install').addEventListener('click', async () => { await pwa.promptInstall(); renderAppSec(); });
+$('#btn-offline').addEventListener('click', async () => {
+  if (offlineBusy) return;
+  offlineBusy = true;
+  const btn = $('#btn-offline'), bar = $('#offline-bar'), info = $('#offline-info');
+  btn.disabled = true; bar.hidden = false; info.classList.remove('ok');
+  try {
+    await pwa.cacheAll(GAMES, (f) => { bar.firstElementChild.style.width = Math.round(f * 100) + '%'; info.textContent = `Menyimpan… ${Math.round(f * 100)}%`; });
+    offlineBusy = false; renderAppSec();
+  } catch (e) {
+    offlineBusy = false;
+    info.textContent = e.message === 'nosw'
+      ? 'Belum sedia. Tutup dan buka semula app, kemudian cuba lagi.'
+      : 'Sebahagian fail gagal dimuat turun. Pastikan internet stabil dan cuba lagi.';
+  } finally { btn.disabled = false; bar.hidden = true; bar.firstElementChild.style.width = '0'; }
+});
+pwa.onChange(() => { if (!$('#parent').hidden) renderAppSec(); });
+pwa.initPwa();
 
 renderHome();
 show('home');

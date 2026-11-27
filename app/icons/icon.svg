@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#173F30"/>
+  <circle cx="256" cy="270" r="168" fill="#1F4433"/>
+  <!-- Tunas: dua daun tumbuh dari tanah (minda yang bercambah) -->
+  <path d="M256 400 V250" stroke="#79C27A" stroke-width="22" stroke-linecap="round"/>
+  <path d="M256 290 C176 300 128 250 124 176 C204 168 252 214 256 290 Z" fill="#5DB36A"/>
+  <path d="M256 250 C330 262 384 216 392 140 C310 132 262 180 256 250 Z" fill="#79C27A"/>
+  <path d="M150 196 C190 214 222 244 246 280 M372 158 C334 176 300 206 268 244" stroke="#173F30" stroke-width="6" fill="none" stroke-linecap="round" opacity=".35"/>
+  <ellipse cx="256" cy="404" rx="96" ry="22" fill="#C99456"/>
+  <!-- Percikan idea -->
+  <path d="M396 64 L410 104 L450 118 L410 132 L396 172 L382 132 L342 118 L382 104 Z" fill="#F5B82E"/>
+  <circle cx="120" cy="96" r="12" fill="#F5B82E" opacity=".8"/>
+</svg>

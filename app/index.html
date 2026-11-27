@@ -1,4 +1,13 @@
 <title>Rangsang Minda</title>
+<meta name="description" content="Permainan minda untuk kanak-kanak 3–6 tahun dalam Bahasa Melayu: ingatan, bahasa, nombor, emosi dan kawalan diri.">
+<meta name="theme-color" content="#173F30">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rangsang Minda">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,6 +210,9 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; li
 .backup { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--garis); padding-top: 14px; }
 .backup-row { display: flex; gap: 10px; flex-wrap: wrap; }
 #backup-info.warn { color: var(--merah); font-weight: 700; }
+.offline-bar { height: 8px; border-radius: 99px; background: var(--garis); overflow: hidden; }
+.offline-bar i { display: block; height: 100%; width: 0; background: var(--hijau); transition: width .2s; }
+#offline-info.ok { color: var(--hijau-tekan); font-weight: 700; }
 .restore-confirm { border: 1px solid var(--merah); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; background: rgba(229, 72, 77, .05); }
 .gsec { border: 1px solid var(--garis); border-radius: 16px; padding: 0 14px; }
 .gsec summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 12px 0; cursor: pointer; }
@@ -397,6 +409,16 @@ th { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .04
         <div class="backup-row"><button class="btn-sm danger" id="btn-restore-yes" type="button">Ya, ganti data</button><button class="btn-sm" id="btn-restore-no" type="button">Batal</button></div>
       </div>
       <p class="sub" id="backup-msg" role="status" aria-live="polite"></p>
+    </section>
+    <section class="backup" id="app-sec" aria-labelledby="app-title" hidden>
+      <h3 id="app-title">Pasang app &amp; main tanpa internet</h3>
+      <p class="sub" id="install-help"></p>
+      <p class="sub" id="offline-info" role="status" aria-live="polite"></p>
+      <div class="offline-bar" id="offline-bar" hidden><i></i></div>
+      <div class="backup-row">
+        <button class="btn-sm go" id="btn-install" type="button" hidden>Pasang di skrin utama</button>
+        <button class="btn-sm" id="btn-offline" type="button">Simpan semua game untuk luar talian</button>
+      </div>
     </section>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--garis);padding-top:14px">
       <button class="btn-sm danger" id="btn-reset" type="button">Padam semua data</button>
